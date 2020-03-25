@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   users$: Observable<User[]>;
   error$: Observable<string>;
   showUsername$: Observable<boolean>;
-  currentUserId: string;
+  currentUserId$: Observable<string>;
 
   constructor(
     private store: Store<State>
@@ -28,6 +28,7 @@ export class UserListComponent implements OnInit {
     this.users$ = this.store.pipe(select(getAllUsers));
     this.error$ = this.store.pipe(select(getError));
     this.showUsername$ = this.store.pipe(select(getShowUsername));
+    this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
   }
 
   checkChange(value) {
@@ -35,7 +36,6 @@ export class UserListComponent implements OnInit {
   }
 
   setCurrentUser(id) {
-    this.currentUserId = id;
     this.store.dispatch(new userActions.SetCurrentUserId(id));
   }
 

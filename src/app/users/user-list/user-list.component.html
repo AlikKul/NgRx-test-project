@@ -2,7 +2,7 @@
   <li
     *ngFor="let user of users"
     (click)="setCurrentUser(user.id)"
-    [ngClass]="{'selected': user.id === currentUserId}"
+    [ngClass]="{'selected': user.id === (currentUserId$ | async)}"
   >{{ user.name }} <span *ngIf="showUsername$ | async">({{ user.username }})</span></li>
   <div class="actions">
     <input
