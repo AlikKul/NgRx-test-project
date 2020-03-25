@@ -72,6 +72,7 @@ export class UserEditComponent implements OnInit {
 
   cancel() {
     this.store.dispatch(new ClearCurrentUserId());
+    this.currentUser = null;
   }
 
 }
