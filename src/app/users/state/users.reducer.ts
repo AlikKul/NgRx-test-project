@@ -74,9 +74,14 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.SaveUser:
-      const updatedUsers = state.users.map(
-        user => action.payload.id === user.id ? action.payload : user
-      );
+      let updatedUsers: User[];
+      if (!state.users.find(user => user.id === action.payload.id)) {
+        updatedUsers = [...state.users, action.payload];
+      } else {
+        updatedUsers = state.users.map(
+          user => action.payload.id === user.id ? action.payload : user
+        );
+      }
       return {
         ...state,
         users: updatedUsers

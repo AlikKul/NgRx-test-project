@@ -37,16 +37,24 @@ export class UserEditComponent implements OnInit {
   displayCurrentUser(id) {
     this.store.pipe(select(getAllUsers))
       .subscribe(users => this.currentUser = users.find(user => user.id === id));
-    if (this.currentUser) {
-      this.form.patchValue({
-        id: this.currentUser.id,
-        name: this.currentUser.name,
-        username: this.currentUser.username,
-        email: this.currentUser.email,
-        phone: this.currentUser.phone,
-        website: this.currentUser.website
-      });
+    if (!this.currentUser) {
+      this.currentUser = {
+        id: '',
+        name: '',
+        username: '',
+        email: '',
+        phone: '',
+        website: ''
+      };
     }
+    this.form.patchValue({
+      id: this.currentUser.id,
+      name: this.currentUser.name,
+      username: this.currentUser.username,
+      email: this.currentUser.email,
+      phone: this.currentUser.phone,
+      website: this.currentUser.website
+    });
   }
 
   submit() {

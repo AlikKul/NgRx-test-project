@@ -12,7 +12,7 @@
       [checked]="showUsername$ | async"
     >
     <label for="show-username">Show username</label>
-    <button class="btn">Add new</button>
+    <button (click)="addUser()" class="btn">Add new</button>
     <button (click)="deleteUser()" class="btn">Delete</button>
   </div>
 </ul>

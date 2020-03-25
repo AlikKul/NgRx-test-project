@@ -39,6 +39,10 @@ export class UserListComponent implements OnInit {
     this.store.dispatch(new userActions.SetCurrentUserId(id));
   }
 
+  addUser() {
+    this.store.dispatch(new userActions.SetCurrentUserId('0'));
+  }
+
   deleteUser() {
     const currentUserId = this.getCurrenUserIdFromState();
     if (currentUserId) {
