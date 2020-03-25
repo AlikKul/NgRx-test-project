@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  font-size: 18px;
+}
+
+.btn {
+  width: 100px;
+  height: 40px;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 2px solid #1976D2;
+}
+
+.btn:hover {
+  border: 3px solid #1976D2;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .user-list-container {
+    width: 40%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 15px;
+  }
+
+  .user-edit-section {
+    width: 60%;
+    margin-left: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 15px;
+  }
+}

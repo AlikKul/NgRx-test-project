@@ -1,0 +1,44 @@
+ul {
+
+  li + li {
+    margin-top: 5px;
+  }
+
+  li {
+    padding: 5px;
+    border-radius: 5px;
+    background: rgb(0, 226, 226);
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  li:hover {
+    background: rgb(0, 196, 196);
+  }
+
+  .selected {
+    background: rgb(0, 196, 196);
+  }
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.error-section {
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 30px;
+
+  span {
+    color: red;;
+  }
+}

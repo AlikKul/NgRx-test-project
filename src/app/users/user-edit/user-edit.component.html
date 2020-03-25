@@ -1,0 +1,12 @@
+<form *ngIf="currentUser" (ngSubmit)="submit()" [formGroup]="form">
+  <input id="id" formControlName="id" type="text" placeholder="ID">
+  <input id="name" formControlName="name" type="text" placeholder="Name">
+  <input id="username" formControlName="username" type="text" placeholder="Username">
+  <input id="email" formControlName="email" type="text" placeholder="Email">
+  <input id="phone" formControlName="phone" type="text" placeholder="Phone">
+  <input id="website" formControlName="website" type="text" placeholder="Website">
+  <div class="controls">
+    <button type="submit" class="btn">Save</button>
+    <button (click)="cancel()" class="btn">Cancel</button>
+  </div>
+</form>
