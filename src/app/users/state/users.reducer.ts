@@ -33,6 +33,12 @@ export const getAllUsers = createSelector(
   state => state.users
 );
 
+export const getCurrentUser = createSelector(
+  getAllUsers,
+  getCurrentUserId,
+  (users, id) => users.find(user => user.id === id)
+);
+
 export const getError = createSelector(
   getUsersFeatureState,
   state => state.error

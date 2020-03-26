@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../user';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getShowUsername, getAllUsers, getError, getCurrentUserId } from '../../state/users.reducer';
+import { getShowUsername, getAllUsers, getError, getCurrentUserId, getCurrentUser } from '../../state/users.reducer';
 import * as userActions from '../../state/users.actions';
 import { Observable } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class UserShellComponent implements OnInit {
     this.error$ = this.store.pipe(select(getError));
     this.showUsername$ = this.store.pipe(select(getShowUsername));
     this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
+    this.currentUser$ = this.store.pipe(select(getCurrentUser));
   }
 
   checkChange(value) {
