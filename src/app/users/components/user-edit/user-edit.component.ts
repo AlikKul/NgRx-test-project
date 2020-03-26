@@ -20,7 +20,6 @@ export class UserEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
     this.form = new FormGroup({
       id: new FormControl(''),
       name: new FormControl(''),

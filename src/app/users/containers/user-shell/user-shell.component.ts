@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { User } from '../../user';
-import { Store, select } from '@ngrx/store';
-import { State } from 'src/app/state/app.state';
-import { getShowUsername, getAllUsers, getError, getCurrentUserId, getCurrentUser } from '../../state/users.reducer';
-import * as userActions from '../../state/users.actions';
-import { Observable } from 'rxjs';
+import { UsersFacade } from '../../state/users.facade';
 
 @Component({
   selector: 'app-user-shell',
@@ -21,41 +18,41 @@ export class UserShellComponent implements OnInit {
   currentUser$: Observable<User>;
 
   constructor(
-    private store: Store<State>
+    private usersFacade: UsersFacade
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(new userActions.Load());
+    this.usersFacade.load();
 
-    this.users$ = this.store.pipe(select(getAllUsers));
-    this.error$ = this.store.pipe(select(getError));
-    this.showUsername$ = this.store.pipe(select(getShowUsername));
-    this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
-    this.currentUser$ = this.store.pipe(select(getCurrentUser));
+    this.users$ = this.usersFacade.users$;
+    this.error$ = this.usersFacade.error$;
+    this.showUsername$ = this.usersFacade.showUsername$;
+    this.currentUserId$ = this.usersFacade.currentUserId$;
+    this.currentUser$ = this.usersFacade.currentUser$;
   }
 
   checkChange(value) {
-    this.store.dispatch(new userActions.ToggleUsername(value));
+    this.usersFacade.toggleUsername(value);
   }
 
   setCurrentUser(id) {
-    this.store.dispatch(new userActions.SetCurrentUserId(id));
+    this.usersFacade.setCurrentUserId(id);
   }
 
   addUser() {
-    this.store.dispatch(new userActions.SetCurrentUserId('0'));
+    this.usersFacade.setCurrentUserId('0');
   }
 
   deleteUser(id) {
-    this.store.dispatch(new userActions.DeleteUser(id));
+    this.usersFacade.deleteUser(id);
   }
 
   clearCurruntUserId() {
-    this.store.dispatch(new userActions.ClearCurrentUserId());
+    this.usersFacade.clearCurruntUserId();
   }
 
   updateUser(updatedUser) {
-    this.store.dispatch(new userActions.SaveUser(updatedUser));
+    this.usersFacade.updateUser(updatedUser);
   }
 
 }

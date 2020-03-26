@@ -36,7 +36,19 @@ export const getAllUsers = createSelector(
 export const getCurrentUser = createSelector(
   getAllUsers,
   getCurrentUserId,
-  (users, id) => users.find(user => user.id === id)
+  (users, id) => {
+    if (users.find(user => user.id === id)) {
+      return users.find(user => user.id === id);
+    }
+    return {
+      id: '',
+      name: '',
+      username: '',
+      email: '',
+      phone: '',
+      website: ''
+    };
+  }
 );
 
 export const getError = createSelector(
