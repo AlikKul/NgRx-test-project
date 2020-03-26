@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl} from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { getCurrentUserId, getAllUsers } from '../state/users.reducer';
-import { User } from '../user';
-import { ClearCurrentUserId, SaveUser } from '../state/users.actions';
+import { getCurrentUserId, getAllUsers } from '../../state/users.reducer';
+import { User } from '../../user';
+import { ClearCurrentUserId, SaveUser } from '../../state/users.actions';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements OnInit, OnChanges {
+
+  @Input() users: User[];
+  @Input() currentUserId: string;
+  @Output() updatedUser = new EventEmitter<User>();
+  @Output() clearCurruntUserId = new EventEmitter<void>();
 
   form: FormGroup;
   currentUser: User;
 
-  constructor(
-    private store: Store
-  ) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -30,13 +33,12 @@ export class UserEditComponent implements OnInit {
       website: new FormControl('')
     });
 
-    this.store.pipe(select(getCurrentUserId)).subscribe(id => this.displayCurrentUser(id));
-
   }
 
-  displayCurrentUser(id) {
-    this.store.pipe(select(getAllUsers))
-      .subscribe(users => this.currentUser = users.find(user => user.id === id));
+  ngOnChanges() {
+
+    this.currentUser = this.users.find(user => user.id === this.currentUserId);
+
     if (!this.currentUser) {
       this.currentUser = {
         id: '',
@@ -58,21 +60,18 @@ export class UserEditComponent implements OnInit {
   }
 
   submit() {
-    const updatedUser: User = {
+    this.updatedUser.emit({
       id: this.form.get('id').value,
       name: this.form.get('name').value,
       username: this.form.get('username').value,
       email: this.form.get('email').value,
       phone: this.form.get('phone').value,
       website: this.form.get('website').value
-    };
-
-    this.store.dispatch(new SaveUser(updatedUser));
+    });
   }
 
   cancel() {
-    this.store.dispatch(new ClearCurrentUserId());
-    this.currentUser = null;
+    this.clearCurruntUserId.emit();
   }
 
 }

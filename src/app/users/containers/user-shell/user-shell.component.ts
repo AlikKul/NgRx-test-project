@@ -1,26 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
+
+import { User } from '../../user';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getShowUsername, getAllUsers, getError, getCurrentUserId } from '../state/users.reducer';
-import * as userActions from '../state/users.actions';
+import { getShowUsername, getAllUsers, getError, getCurrentUserId } from '../../state/users.reducer';
+import * as userActions from '../../state/users.actions';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: 'app-user-shell',
+  templateUrl: './user-shell.component.html',
+  styleUrls: ['./user-shell.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserShellComponent implements OnInit {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
   showUsername$: Observable<boolean>;
   currentUserId$: Observable<string>;
+  currentUser$: Observable<User>;
 
   constructor(
     private store: Store<State>
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(new userActions.Load());
@@ -43,18 +45,16 @@ export class UserListComponent implements OnInit {
     this.store.dispatch(new userActions.SetCurrentUserId('0'));
   }
 
-  deleteUser() {
-    const currentUserId = this.getCurrenUserIdFromState();
-    if (currentUserId) {
-      this.store.dispatch(new userActions.DeleteUser(currentUserId));
-    }
+  deleteUser(id) {
+    this.store.dispatch(new userActions.DeleteUser(id));
   }
 
-  getCurrenUserIdFromState() {
-    let currentUserId: string;
-    this.store.pipe(select(getCurrentUserId))
-      .subscribe(id => currentUserId = id);
-    return currentUserId;
+  clearCurruntUserId() {
+    this.store.dispatch(new userActions.ClearCurrentUserId());
+  }
+
+  updateUser(updatedUser) {
+    this.store.dispatch(new userActions.SaveUser(updatedUser));
   }
 
 }

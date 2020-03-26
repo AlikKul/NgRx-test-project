@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { UserEditComponent } from './user-edit/user-edit.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserShellComponent } from './user-shell/user-shell.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserShellComponent } from './containers/user-shell/user-shell.component';
 
 // NgRx
 import { StoreModule } from '@ngrx/store';

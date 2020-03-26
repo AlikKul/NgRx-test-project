@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="user-list-container">
+    <div class="title">USERS LIST:</div>
+    <app-user-list
+      [users]="users$ | async"
+      [currentUserId]="currentUserId$ | async"
+      [showUsername]="showUsername$ | async"
+      [error]="error$ | async"
+      (showUsernameFlag)="checkChange($event)"
+      (selectedUserId)="setCurrentUser($event)"
+      (initializeNewUser)="addUser()"
+      (deleteUserId)="deleteUser($event)"
+
+    ></app-user-list>
+  </div>
+  <div class="user-edit-section">
+    <app-user-edit
+    [users]="users$ | async"
+    [currentUserId]="currentUserId$ | async"
+    (updatedUser)="updateUser($event)"
+    (clearCurruntUserId)="clearCurruntUserId()"
+    ></app-user-edit>
+  </div>
+</div>

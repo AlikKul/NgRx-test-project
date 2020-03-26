@@ -1,0 +1,23 @@
+<ul *ngIf="users">
+  <li
+    *ngFor="let user of users"
+    (click)="selectUser(user.id)"
+    [ngClass]="{'selected': user.id === currentUserId}"
+  >{{ user.name }} <span *ngIf="showUsername">({{ user.username }})</span></li>
+  <div class="actions">
+    <input
+      type="checkbox"
+      id="show-username"
+      (change)="checkChange($event.target.checked)"
+      [checked]="showUsername"
+    >
+    <label for="show-username">Show username</label>
+    <button (click)="addUser()" class="btn">Add new</button>
+    <button (click)="deleteUser(currentUserId)" class="btn">Delete</button>
+  </div>
+</ul>
+
+<div *ngIf="error" class="error-section">
+  An error occurred: <span>{{ error }}</span> <br>
+  Try reload the page.
+</div>
