@@ -45,4 +45,8 @@ export class UsersFacade {
   updateUser(updatedUser) {
     this.store.dispatch(new userActions.SaveUser(updatedUser));
   }
+
+  addNewUser(user) {
+    this.store.dispatch(new userActions.AddNewUser(user));
+  }
 }

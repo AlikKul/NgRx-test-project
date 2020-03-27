@@ -11,7 +11,7 @@ export interface UsersState {
 
 const initialState: UsersState = {
   showUsername: true,
-  currentUserId: null,
+  currentUserId: '',
   users: [],
   error: ''
 };
@@ -91,7 +91,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         users: []
       };
 
-    case UsersActionTypes.SaveUser:
+    case UsersActionTypes.SaveUserSuccess:
       let updatedUsers: User[];
       if (!state.users.find(user => user.id === action.payload.id)) {
         updatedUsers = [...state.users, action.payload];
@@ -102,7 +102,27 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       }
       return {
         ...state,
-        users: updatedUsers
+        users: updatedUsers,
+        currentUserId: '',
+      };
+
+    case UsersActionTypes.SaveUserFail:
+      return {
+        ...state,
+        error: action.payload
+      };
+
+    case UsersActionTypes.AddNewUserSuccess:
+      return {
+        ...state,
+        users: [...state.users, action.payload],
+        currentUserId: ''
+      };
+
+    case UsersActionTypes.AddNewUserFail:
+      return {
+        ...state,
+        error: action.payload
       };
 
     case UsersActionTypes.DeleteUser:

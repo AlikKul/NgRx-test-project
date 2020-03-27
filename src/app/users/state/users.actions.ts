@@ -9,6 +9,11 @@ export enum UsersActionTypes {
   LoadSuccess = '[Users] Load Success',
   LoadFail = '[Users] Load Fail',
   SaveUser = '[Users] Save User',
+  SaveUserSuccess = '[Users] Save User Success',
+  SaveUserFail = '[Users] Save User Fail',
+  AddNewUser = '[Uers] Add New User',
+  AddNewUserSuccess = '[Uers] Add New User Success',
+  AddNewUserFail = '[Uers] Add New User Fail',
   DeleteUser = '[Users] Delete User'
 }
 
@@ -50,6 +55,36 @@ export class SaveUser implements Action {
   constructor(public payload: User) {}
 }
 
+export class SaveUserSuccess implements Action {
+  readonly type = UsersActionTypes.SaveUserSuccess;
+
+  constructor(public payload: User) {}
+}
+
+export class SaveUserFail implements Action {
+  readonly type = UsersActionTypes.SaveUserFail;
+
+  constructor(public payload: string) {}
+}
+
+export class AddNewUser implements Action {
+  readonly type = UsersActionTypes.AddNewUser;
+
+  constructor(public payload: User) {}
+}
+
+export class AddNewUserSuccess implements Action {
+  readonly type = UsersActionTypes.AddNewUserSuccess;
+
+  constructor(public payload: User) {}
+}
+
+export class AddNewUserFail implements Action {
+  readonly type = UsersActionTypes.AddNewUserFail;
+
+  constructor(public payload: string) {}
+}
+
 export class DeleteUser implements Action {
   readonly type = UsersActionTypes.DeleteUser;
 
@@ -63,4 +98,9 @@ export type UsersActions = ToggleUsername
   | LoadSuccess
   | LoadFail
   | SaveUser
+  | SaveUserSuccess
+  | SaveUserFail
+  | AddNewUser
+  | AddNewUserSuccess
+  | AddNewUserFail
   | DeleteUser;

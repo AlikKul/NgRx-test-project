@@ -18,6 +18,7 @@
     [users]="users$ | async"
     [currentUserId]="currentUserId$ | async"
     [currentUser]="currentUser$ | async"
+    (addNewUser)="addNewUser($event)"
     (updatedUser)="updateUser($event)"
     (clearCurruntUserId)="clearCurruntUserId()"
     ></app-user-edit>

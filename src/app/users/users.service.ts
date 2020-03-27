@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { User } from './user';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -14,7 +15,11 @@ export class UsersService {
       .pipe(map(item => Object.values(item)));
   }
 
-  saveUser(id, user) {
-    return this.http.patch(`https://ngrx-test-project.firebaseio.com/users/${id}.json`, user);
+  saveUser(user: User) {
+    return this.http.patch(`https://ngrx-test-project.firebaseio.com/users/${user.id}.json`, user);
+  }
+
+  addNewUser(user: User) {
+    return this.http.post('https://ngrx-test-project.firebaseio.com/users.json', user);
   }
 }

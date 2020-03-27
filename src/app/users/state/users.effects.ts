@@ -4,7 +4,8 @@ import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { User } from '../user';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class UsersEffects {
@@ -15,12 +16,40 @@ export class UsersEffects {
   ) { }
 
   @Effect()
-  loadUsers$ = this.actions$.pipe(
+  loadUsers$: Observable<Action> = this.actions$.pipe(
     ofType(usersActions.UsersActionTypes.Load),
     mergeMap((action: usersActions.Load) => this.usersService.getAllUsers().pipe(
       map((users: User[]) => (new usersActions.LoadSuccess(users))),
       catchError(error => of(new usersActions.LoadFail(error.message)))  // of() operator returns an observable
     ))
+  );
+
+  @Effect()
+  saveUser$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.SaveUser),
+    map((action: usersActions.SaveUser) => action.payload),
+    mergeMap((user: User) =>
+      this.usersService.saveUser(user).pipe(
+        map((updatedUser: User) => (new usersActions.SaveUserSuccess(updatedUser))),
+        catchError(error => of(new usersActions.SaveUserFail(error.message)))
+      ))
+  );
+
+  @Effect()
+  addNewUser$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.AddNewUser),
+    map((action: usersActions.AddNewUser) => action.payload),
+    mergeMap((user: User) =>
+      this.usersService.addNewUser(user).pipe(
+        map(resp => {
+          return {
+            ...user,
+            id: resp.name
+          };
+        }),
+        map((addedUser: User) => (new usersActions.AddNewUserSuccess(addedUser))),
+        catchError(error => of(new usersActions.AddNewUserFail(error.message)))
+      ))
   );
 
 }

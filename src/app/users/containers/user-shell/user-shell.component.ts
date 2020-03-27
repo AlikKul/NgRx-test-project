@@ -55,4 +55,8 @@ export class UserShellComponent implements OnInit {
     this.usersFacade.updateUser(updatedUser);
   }
 
+  addNewUser(user: User) {
+    this.usersFacade.addNewUser(user);
+  }
+
 }
