@@ -34,8 +34,8 @@ export class UserListComponent implements OnInit {
     this.initializeNewUser.emit();
   }
 
-  deleteUser(id) {
-    this.deleteUserId.emit(id);
+  deleteUser() {
+    this.deleteUserId.emit(this.currentUserId);
   }
 
 }

@@ -22,4 +22,8 @@ export class UsersService {
   addNewUser(user: User) {
     return this.http.post('https://ngrx-test-project.firebaseio.com/users.json', user);
   }
+
+  deleteUser(id: string) {
+    return this.http.delete(`https://ngrx-test-project.firebaseio.com/users/${id}.json`)
+  }
 }

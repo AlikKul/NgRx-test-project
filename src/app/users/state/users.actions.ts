@@ -14,7 +14,9 @@ export enum UsersActionTypes {
   AddNewUser = '[Uers] Add New User',
   AddNewUserSuccess = '[Uers] Add New User Success',
   AddNewUserFail = '[Uers] Add New User Fail',
-  DeleteUser = '[Users] Delete User'
+  DeleteUser = '[Users] Delete User',
+  DeleteUserSuccess = '[Users] Delete User Success',
+  DeleteUserFail = '[Users] Delete User Fail'
 }
 
 export class ToggleUsername implements Action {
@@ -91,6 +93,18 @@ export class DeleteUser implements Action {
   constructor(public payload: string) {}
 }
 
+export class DeleteUserSuccess implements Action {
+  readonly type = UsersActionTypes.DeleteUserSuccess;
+
+  constructor(public payload: string) {}
+}
+
+export class DeleteUserFail implements Action {
+  readonly type = UsersActionTypes.DeleteUserFail;
+
+  constructor(public payload: string) {}
+}
+
 export type UsersActions = ToggleUsername
   | SetCurrentUserId
   | ClearCurrentUserId
@@ -103,4 +117,6 @@ export type UsersActions = ToggleUsername
   | AddNewUser
   | AddNewUserSuccess
   | AddNewUserFail
-  | DeleteUser;
+  | DeleteUser
+  | DeleteUserSuccess
+  | DeleteUserFail;

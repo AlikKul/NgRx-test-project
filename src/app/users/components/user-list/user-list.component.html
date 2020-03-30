@@ -13,7 +13,7 @@
     >
     <label for="show-username">Show username</label>
     <button (click)="addUser()" class="btn">Add new</button>
-    <button (click)="deleteUser(currentUserId)" class="btn">Delete</button>
+    <button (click)="deleteUser()" class="btn" [disabled]="!currentUserId">Delete</button>
   </div>
 </ul>
 

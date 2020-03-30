@@ -125,7 +125,8 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         error: action.payload
       };
 
-    case UsersActionTypes.DeleteUser:
+    case UsersActionTypes.DeleteUserSuccess:
+      console.log(action.payload)
       const filteredUsers = state.users.filter(
         user => user.id !== action.payload
       );
@@ -133,6 +134,12 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         ...state,
         users: filteredUsers,
         currentUserId: ''
+      };
+
+    case UsersActionTypes.DeleteUserFail:
+      return {
+        ...state,
+        error: action.payload
       };
 
     default:

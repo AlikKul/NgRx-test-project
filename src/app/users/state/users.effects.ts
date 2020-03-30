@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { User } from '../user';
+import { User, FirebaseResponse } from '../user';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 
@@ -41,7 +41,7 @@ export class UsersEffects {
     map((action: usersActions.AddNewUser) => action.payload),
     mergeMap((user: User) =>
       this.usersService.addNewUser(user).pipe(
-        map(resp => {
+        map((resp: FirebaseResponse) => {
           return {
             ...user,
             id: resp.name
@@ -50,6 +50,18 @@ export class UsersEffects {
         map((addedUser: User) => (new usersActions.AddNewUserSuccess(addedUser))),
         catchError(error => of(new usersActions.AddNewUserFail(error.message)))
       ))
+  );
+
+  @Effect()
+  deleteUser$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.DeleteUser),
+    map((action: usersActions.DeleteUser) => action.payload),
+    mergeMap((id: string) =>
+      this.usersService.deleteUser(id).pipe(
+        map(() => (new usersActions.DeleteUserSuccess(id))),
+        catchError(error => of(new usersActions.AddNewUserFail(error.message)))
+      )
+    )
   );
 
 }

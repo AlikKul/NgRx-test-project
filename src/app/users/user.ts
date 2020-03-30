@@ -6,3 +6,7 @@ export interface User {
   phone: string;
   website: string;
 }
+
+export interface FirebaseResponse {
+  name: string;
+}
