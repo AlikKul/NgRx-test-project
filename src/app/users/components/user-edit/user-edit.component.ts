@@ -33,28 +33,15 @@ export class UserEditComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.currentUserId) {
-      this.form.get('id').patchValue(this.currentUser.id);
-      this.form.get('name').patchValue(this.currentUser.name);
-      this.form.get('username').patchValue(this.currentUser.username);
-      this.form.get('email').patchValue(this.currentUser.email);
-      this.form.get('phone').patchValue(this.currentUser.phone);
-      this.form.get('website').patchValue(this.currentUser.website);
+      this.form.patchValue(this.currentUser);
     }
   }
 
   submit() {
-    const user: User = {
-      id: this.form.get('id').value,
-      name: this.form.get('name').value,
-      username: this.form.get('username').value,
-      email: this.form.get('email').value,
-      phone: this.form.get('phone').value,
-      website: this.form.get('website').value
-    };
     if (this.currentUserId === '0') {
-      this.addNewUser.emit(user);
+      this.addNewUser.emit(this.form.value);
     } else {
-      this.updatedUser.emit(user);
+      this.updatedUser.emit(this.form.value);
     }
   }
 

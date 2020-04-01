@@ -10,17 +10,16 @@
       (selectedUserId)="setCurrentUser($event)"
       (initializeNewUser)="addUser()"
       (deleteUserId)="deleteUser($event)"
-
     ></app-user-list>
   </div>
   <div class="user-edit-section">
     <app-user-edit
-    [users]="users$ | async"
-    [currentUserId]="currentUserId$ | async"
-    [currentUser]="currentUser$ | async"
-    (addNewUser)="addNewUser($event)"
-    (updatedUser)="updateUser($event)"
-    (clearCurruntUserId)="clearCurruntUserId()"
+      [users]="users$ | async"
+      [currentUserId]="currentUserId$ | async"
+      [currentUser]="currentUser$ | async"
+      (addNewUser)="addNewUser($event)"
+      (updatedUser)="updateUser($event)"
+      (clearCurruntUserId)="clearCurruntUserId()"
     ></app-user-edit>
   </div>
 </div>
