@@ -1,19 +1,20 @@
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User } from '../user';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
-export interface UsersState {
+export interface UsersState extends EntityState<User> {
   showUsername: boolean;
   currentUserId: string;
-  users: User[];
   error: string;
 }
 
-const initialState: UsersState = {
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+
+const initialState: UsersState = adapter.getInitialState({
   showUsername: true,
   currentUserId: '',
-  users: [],
   error: ''
-};
+});
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
   switch (action.type) {
@@ -37,33 +38,16 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.LoadSuccess:
-      return {
-        ...state,
-        users: action.payload,
-        error: ''
-      };
+      return adapter.addMany(action.payload, state);
 
     case UsersActionTypes.LoadFail:
       return {
         ...state,
         error: action.payload,
-        users: []
       };
 
     case UsersActionTypes.SaveUserSuccess:
-      let updatedUsers: User[];
-      if (!state.users.find(user => user.id === action.payload.id)) {
-        updatedUsers = [...state.users, action.payload];
-      } else {
-        updatedUsers = state.users.map(
-          user => action.payload.id === user.id ? action.payload : user
-        );
-      }
-      return {
-        ...state,
-        users: updatedUsers,
-        currentUserId: '',
-      };
+      return adapter.upsertOne(action.payload, {...state, currentUserId: ''});
 
     case UsersActionTypes.SaveUserFail:
       return {
@@ -72,11 +56,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.AddNewUserSuccess:
-      return {
-        ...state,
-        users: [...state.users, action.payload],
-        currentUserId: ''
-      };
+      return adapter.addOne(action.payload, {...state, currentUserId: ''});
 
     case UsersActionTypes.AddNewUserFail:
       return {
@@ -85,15 +65,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.DeleteUserSuccess:
-      console.log(action.payload)
-      const filteredUsers = state.users.filter(
-        user => user.id !== action.payload
-      );
-      return {
-        ...state,
-        users: filteredUsers,
-        currentUserId: ''
-      };
+      return adapter.removeOne(action.payload, {...state, currentUserId: ''});
 
     case UsersActionTypes.DeleteUserFail:
       return {

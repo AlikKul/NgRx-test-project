@@ -15,15 +15,15 @@ export const getCurrentUserId = createSelector(
 
 export const getAllUsers = createSelector(
   getUsersFeatureState,
-  state => state.users
+  state => state.entities
 );
 
 export const getCurrentUser = createSelector(
   getAllUsers,
   getCurrentUserId,
   (users, id) => {
-    if (users.find(user => user.id === id)) {
-      return users.find(user => user.id === id);
+    if (users[id]) {
+      return users[id];
     }
     return {
       id: '',

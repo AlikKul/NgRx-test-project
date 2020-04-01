@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { User } from '../../user';
 import { UsersFacade } from '../../state/users.facade';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-shell',
@@ -24,7 +25,9 @@ export class UserShellComponent implements OnInit {
   ngOnInit() {
     this.usersFacade.load();
 
-    this.users$ = this.usersFacade.users$;
+    this.users$ = this.usersFacade.users$.pipe(
+      map(entitys => Object.keys(entitys).map(k => entitys[k]))
+    );
     this.error$ = this.usersFacade.error$;
     this.showUsername$ = this.usersFacade.showUsername$;
     this.currentUserId$ = this.usersFacade.currentUserId$;
