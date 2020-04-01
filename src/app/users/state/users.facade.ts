@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { UsersState, getAllUsers, getError, getShowUsername, getCurrentUserId, getCurrentUser } from './users.reducer';
+import { UsersState } from './users.reducer';
+import { getAllUsers, getError, getShowUsername, getCurrentUserId, getCurrentUser } from './users.selectors';
 import { Observable } from 'rxjs';
 import { User } from '../user';
 import * as userActions from './users.actions';
