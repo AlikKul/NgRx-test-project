@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { User } from './user';
+import { User } from '../shared/interfaces';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {

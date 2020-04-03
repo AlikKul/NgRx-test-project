@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from '../user';
+import { User, AccessType } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   ToggleUsername = '[Users] Toggle Username',
@@ -16,7 +16,9 @@ export enum UsersActionTypes {
   AddNewUserFail = '[Uers] Add New User Fail',
   DeleteUser = '[Users] Delete User',
   DeleteUserSuccess = '[Users] Delete User Success',
-  DeleteUserFail = '[Users] Delete User Fail'
+  DeleteUserFail = '[Users] Delete User Fail',
+  SetLoggenInUserEmail = '[Users] Set Loggen In User Email',
+  SetAccessType = '[Users] Set Access Type'
 }
 
 export class ToggleUsername implements Action {
@@ -105,6 +107,18 @@ export class DeleteUserFail implements Action {
   constructor(public payload: string) {}
 }
 
+export class SetLoggenInUserEmail implements Action {
+  readonly type = UsersActionTypes.SetLoggenInUserEmail;
+
+  constructor(public payload: string) {}
+}
+
+export class SetAccessType implements Action {
+  readonly type = UsersActionTypes.SetAccessType;
+
+  constructor(public payload: AccessType) {}
+}
+
 export type UsersActions = ToggleUsername
   | SetCurrentUserId
   | ClearCurrentUserId
@@ -119,4 +133,6 @@ export type UsersActions = ToggleUsername
   | AddNewUserFail
   | DeleteUser
   | DeleteUserSuccess
-  | DeleteUserFail;
+  | DeleteUserFail
+  | SetLoggenInUserEmail
+  | SetAccessType;

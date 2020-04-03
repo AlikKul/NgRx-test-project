@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { User } from '../../user';
+import { User, AccessType } from '../../../shared/interfaces';
 
 
 @Component({
@@ -13,6 +13,7 @@ export class UserListComponent implements OnInit {
   @Input() currentUserId: string;
   @Input() showUsername: boolean;
   @Input() error: string;
+  @Input() accessType: AccessType;
   @Output() showUsernameFlag = new EventEmitter<boolean>();
   @Output() selectedUserId = new EventEmitter<string>();
   @Output() initializeNewUser = new EventEmitter<void>();
@@ -23,7 +24,9 @@ export class UserListComponent implements OnInit {
   ngOnInit() {}
 
   selectUser(id) {
-    this.selectedUserId.emit(id);
+    if (this.accessType !== 'visitor') {
+      this.selectedUserId.emit(id);
+    }
   }
 
   checkChange(value) {

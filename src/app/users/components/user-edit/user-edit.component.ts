@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl} from '@angular/forms';
-import { User } from '../../user';
+import { User, AccessType } from '../../../shared/interfaces';
 
 @Component({
   selector: 'app-user-edit',
@@ -12,6 +12,7 @@ export class UserEditComponent implements OnInit, OnChanges {
   @Input() users: User[];
   @Input() currentUserId: string;
   @Input() currentUser: User;
+  @Input() accessType: AccessType;
   @Output() addNewUser = new EventEmitter<User>();
   @Output() updatedUser = new EventEmitter<User>();
   @Output() clearCurruntUserId = new EventEmitter<void>();
@@ -27,12 +28,16 @@ export class UserEditComponent implements OnInit, OnChanges {
       username: new FormControl(''),
       email: new FormControl(''),
       phone: new FormControl(''),
-      website: new FormControl('')
+      website: new FormControl(''),
+      accessType: new FormControl('')
     });
+    if (this.currentUserId) {  // when navigating back to the page
+      this.form.patchValue(this.currentUser);
+    }
   }
 
   ngOnChanges() {
-    if (this.currentUserId) {
+    if (this.currentUserId && this.form) {
       this.form.patchValue(this.currentUser);
     }
   }

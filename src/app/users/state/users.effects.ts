@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { User, FirebaseResponse } from '../user';
+import { User, FirebaseResponse } from '../../shared/interfaces';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 

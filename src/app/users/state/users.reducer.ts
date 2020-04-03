@@ -1,11 +1,13 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { User } from '../user';
+import { User, AccessType } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
 export interface UsersState extends EntityState<User> {
   showUsername: boolean;
   currentUserId: string;
   error: string;
+  loggenInUserEmail: string;
+  accessType: AccessType;
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
@@ -13,7 +15,9 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 const initialState: UsersState = adapter.getInitialState({
   showUsername: true,
   currentUserId: '',
-  error: ''
+  error: '',
+  loggenInUserEmail: '',
+  accessType: AccessType.Visitor
 });
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
@@ -38,7 +42,10 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.LoadSuccess:
-      return adapter.addMany(action.payload, state);
+      return adapter.addMany(action.payload, {
+        ...state,
+        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === state.loggenInUserEmail).accessType
+      });
 
     case UsersActionTypes.LoadFail:
       return {
@@ -71,6 +78,18 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       return {
         ...state,
         error: action.payload
+      };
+
+    case UsersActionTypes.SetLoggenInUserEmail:
+      return {
+        ...state,
+        loggenInUserEmail: action.payload
+      };
+
+    case UsersActionTypes.SetAccessType:
+      return {
+        ...state,
+        accessType: action.payload
       };
 
     default:

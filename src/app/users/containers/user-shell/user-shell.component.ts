@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { User } from '../../user';
+import { User, AccessType } from '../../../shared/interfaces';
 import { UsersFacade } from '../../state/users.facade';
 import { map } from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ export class UserShellComponent implements OnInit {
   showUsername$: Observable<boolean>;
   currentUserId$: Observable<string>;
   currentUser$: Observable<User>;
+  accessType$: Observable<AccessType>;
 
   constructor(
     private usersFacade: UsersFacade
@@ -32,6 +33,7 @@ export class UserShellComponent implements OnInit {
     this.showUsername$ = this.usersFacade.showUsername$;
     this.currentUserId$ = this.usersFacade.currentUserId$;
     this.currentUser$ = this.usersFacade.currentUser$;
+    this.accessType$ = this.usersFacade.accessType$;
   }
 
   checkChange(value) {

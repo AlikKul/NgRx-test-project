@@ -2,9 +2,12 @@ form {
   display: flex;
   flex-direction: column;
 
+  label {
+    margin-top: 10px;
+  }
+
   input {
     padding: 5px;
-    margin-top: 10px;
     border: 1px solid black;
     border-radius: 5px;
   }

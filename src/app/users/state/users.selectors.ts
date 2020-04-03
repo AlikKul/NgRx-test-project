@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsersState } from './users.reducer';
+import { AccessType } from 'src/app/shared/interfaces';
 
 const getUsersFeatureState = createFeatureSelector<UsersState>('users');
 
@@ -31,7 +32,8 @@ export const getCurrentUser = createSelector(
       username: '',
       email: '',
       phone: '',
-      website: ''
+      website: '',
+      accessType: AccessType.Visitor
     };
   }
 );
@@ -39,4 +41,9 @@ export const getCurrentUser = createSelector(
 export const getError = createSelector(
   getUsersFeatureState,
   state => state.error
+);
+
+export const getAccessType = createSelector(
+  getUsersFeatureState,
+  state => state.accessType
 );

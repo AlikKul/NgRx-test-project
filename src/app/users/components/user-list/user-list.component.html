@@ -4,7 +4,7 @@
     (click)="selectUser(user.id)"
     [ngClass]="{'selected': user.id === currentUserId}"
   >{{ user.name }} <span *ngIf="showUsername">({{ user.username }})</span></li>
-  <div class="actions">
+  <div *ngIf="accessType === 'admin'" class="actions">
     <input
       type="checkbox"
       id="show-username"
