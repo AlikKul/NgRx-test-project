@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginData, FirebaseAuthResponse } from '../shared/interfaces';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { UsersFacade } from '../users/state/users.facade';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-container',
   templateUrl: './login-container.component.html'
 })
-export class LoginContainerComponent implements OnInit {
+export class LoginContainerComponent implements OnInit, OnDestroy {
 
   loginError$: Observable<string>;
+  sub: Subscription;
 
   constructor(
     private router: Router,
@@ -22,8 +23,12 @@ export class LoginContainerComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
   login(loginData: LoginData) {
-    this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
+    this.sub = this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
       .subscribe(
         (resp: FirebaseAuthResponse) => {
           this.facade.setLoggedInUserEmail(resp.email);
