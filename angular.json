@@ -33,6 +33,13 @@
             "scripts": []
           },
           "configurations": {
+            "ru": {
+              "aot": true,
+              "i18nFile": "src/locale/messages.ru.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ru",
+              "i18nMissingTranslation": "error"
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -70,6 +77,9 @@
             "browserTarget": "ngrx-test-project:build"
           },
           "configurations": {
+            "ru": {
+              "browserTarget": "ngrx-test-project:build:ru"
+            },
             "production": {
               "browserTarget": "ngrx-test-project:build:production"
             }

@@ -11,13 +11,17 @@
       (change)="checkChange($event.target.checked)"
       [checked]="showUsername"
     >
-    <label for="show-username">Show username</label>
-    <button (click)="addUser()" class="btn">Add new</button>
-    <button (click)="deleteUser()" class="btn" [disabled]="!currentUserId">Delete</button>
+    <label i18n for="show-username">Show username</label>
+    <button i18n (click)="addUser()" class="btn">Add new</button>
+    <button i18n (click)="deleteUser()" class="btn" [disabled]="!currentUserId">Delete</button>
   </div>
 </ul>
 
-<div *ngIf="error" class="error-section">
+<div
+  i18n
+  *ngIf="error"
+  class="error-section"
+>
   An error occurred: <span>{{ error }}</span> <br>
   Try reload the page.
 </div>
