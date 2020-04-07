@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginData } from '../shared/interfaces';
+import { FirebaseAccessData } from '../../environments/env';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
 
-  apiKey = 'AIzaSyBbnI8xmRCs8P2HoxuczP3MESM-j8mISqo';
+  apiKey = FirebaseAccessData.apiKey;
 
   constructor(
     private http: HttpClient
