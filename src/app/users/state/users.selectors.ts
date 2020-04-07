@@ -47,3 +47,8 @@ export const getAccessType = createSelector(
   getUsersFeatureState,
   state => state.accessType
 );
+
+export const getLoggedinUserEmail = createSelector(
+  getUsersFeatureState,
+  state => state.loggenInUserEmail
+);

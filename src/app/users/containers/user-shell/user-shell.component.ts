@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
 import { User, AccessType } from '../../../shared/interfaces';
 import { UsersFacade } from '../../state/users.facade';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-shell',
   templateUrl: './user-shell.component.html',
-  styleUrls: ['./user-shell.component.scss']
+  styleUrls: ['./user-shell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserShellComponent implements OnInit {
+export class UserShellComponent implements OnInit, OnDestroy {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
@@ -19,11 +21,19 @@ export class UserShellComponent implements OnInit {
   currentUser$: Observable<User>;
   accessType$: Observable<AccessType>;
 
+  sub: Subscription;
+
   constructor(
-    private usersFacade: UsersFacade
+    private usersFacade: UsersFacade,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.sub = this.usersFacade.loggedinUserEmail$.subscribe(val => {
+      if (!val) {
+        this.router.navigate(['']);
+      }
+    });
     this.usersFacade.load();
 
     this.users$ = this.usersFacade.users$.pipe(
@@ -34,6 +44,10 @@ export class UserShellComponent implements OnInit {
     this.currentUserId$ = this.usersFacade.currentUserId$;
     this.currentUser$ = this.usersFacade.currentUser$;
     this.accessType$ = this.usersFacade.accessType$;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   checkChange(value) {
