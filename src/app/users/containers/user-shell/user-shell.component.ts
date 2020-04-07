@@ -30,20 +30,21 @@ export class UserShellComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.usersFacade.loggedinUserEmail$.subscribe(val => {
-      if (!val) {
+      if (val) {
+        this.usersFacade.load();
+
+        this.users$ = this.usersFacade.users$.pipe(
+          map(entitys => Object.keys(entitys).map(k => entitys[k]))
+        );
+        this.error$ = this.usersFacade.error$;
+        this.showUsername$ = this.usersFacade.showUsername$;
+        this.currentUserId$ = this.usersFacade.currentUserId$;
+        this.currentUser$ = this.usersFacade.currentUser$;
+        this.accessType$ = this.usersFacade.accessType$;
+      } else {
         this.router.navigate(['']);
       }
     });
-    this.usersFacade.load();
-
-    this.users$ = this.usersFacade.users$.pipe(
-      map(entitys => Object.keys(entitys).map(k => entitys[k]))
-    );
-    this.error$ = this.usersFacade.error$;
-    this.showUsername$ = this.usersFacade.showUsername$;
-    this.currentUserId$ = this.usersFacade.currentUserId$;
-    this.currentUser$ = this.usersFacade.currentUser$;
-    this.accessType$ = this.usersFacade.accessType$;
   }
 
   ngOnDestroy() {

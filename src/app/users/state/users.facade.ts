@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { UsersState } from './users.reducer';
-import { getAllUsers, getError, getShowUsername, getCurrentUserId, getCurrentUser, getAccessType, getLoggedinUserEmail } from './users.selectors';
+import {
+  getAllUsers,
+  getError,
+  getShowUsername,
+  getCurrentUserId,
+  getCurrentUser,
+  getAccessType,
+  getLoggedinUserEmail } from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType } from '../../shared/interfaces';
 import * as userActions from './users.actions';
@@ -62,4 +69,5 @@ export class UsersFacade {
   setAccessType(value) {
     this.store.dispatch(new userActions.SetAccessType(value));
   }
+
 }
