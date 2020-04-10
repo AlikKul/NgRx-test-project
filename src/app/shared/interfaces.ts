@@ -15,6 +15,7 @@ export interface FirebaseResponse {
 export interface FirebaseAuthResponse {
   email: string;
   idToken: string;
+  expiresIn: string;
 }
 
 export interface LoginData {

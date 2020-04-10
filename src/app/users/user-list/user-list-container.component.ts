@@ -5,6 +5,7 @@ import { User, AccessType } from '../../shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/login/login.service';
 
 @Component({
   selector: 'app-user-list-container',
@@ -25,30 +26,37 @@ export class UserListContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private usersFacade: UsersFacade,
-    private router: Router
-  ) {}
+    private router: Router,
+    private loginService: LoginService
+  ) {
+    this.users$ = this.usersFacade.users$.pipe(
+      map(entitys => Object.keys(entitys).map(k => entitys[k]))
+    );
+    this.error$ = this.usersFacade.error$;
+    this.showUsername$ = this.usersFacade.showUsername$;
+    this.currentUserId$ = this.usersFacade.currentUserId$;
+    this.currentUser$ = this.usersFacade.currentUser$;
+    this.accessType$ = this.usersFacade.accessType$;
+  }
 
   ngOnInit() {
-    this.sub = this.usersFacade.loggedinUserEmail$.subscribe(val => {
-      if (val) {
-        this.usersFacade.load();
+    if (this.loginService.isAuthenticated()) {
+      this.usersFacade.load();
+    } else {
+      this.router.navigate(['']);
+    }
 
-        this.users$ = this.usersFacade.users$.pipe(
-          map(entitys => Object.keys(entitys).map(k => entitys[k]))
-        );
-        this.error$ = this.usersFacade.error$;
-        this.showUsername$ = this.usersFacade.showUsername$;
-        this.currentUserId$ = this.usersFacade.currentUserId$;
-        this.currentUser$ = this.usersFacade.currentUser$;
-        this.accessType$ = this.usersFacade.accessType$;
-      } else {
-        this.router.navigate(['']);
-      }
-    });
+    // this.sub = this.usersFacade.loggedinUserEmail$.subscribe(val => {
+    //   if (val) {
+    //     this.usersFacade.load();
+    //   } else {
+    //     this.router.navigate(['']);
+    //   }
+    // });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   checkChange(value) {
