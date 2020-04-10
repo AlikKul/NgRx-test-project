@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsersState } from './users.reducer';
-import { AccessType } from 'src/app/shared/interfaces';
+import { AccessType } from '../../shared/interfaces';
 
 const getUsersFeatureState = createFeatureSelector<UsersState>('users');
 

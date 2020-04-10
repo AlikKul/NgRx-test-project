@@ -1,0 +1,9 @@
+<app-user-edit
+  [users]="users$ | async"
+  [currentUserId]="currentUserId$ | async"
+  [currentUser]="currentUser$ | async"
+  [accessType]="accessType$ | async"
+  (addNewUser)="addNewUser($event)"
+  (updatedUser)="updateUser($event)"
+  (cancelChanges)="cancelChanges()"
+></app-user-edit>

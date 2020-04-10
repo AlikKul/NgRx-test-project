@@ -1,18 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-import { User, AccessType } from '../../../shared/interfaces';
-import { UsersFacade } from '../../state/users.facade';
+import { User, AccessType } from '../../shared/interfaces';
+import { UsersFacade } from '../state/users.facade';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user-shell',
-  templateUrl: './user-shell.component.html',
-  styleUrls: ['./user-shell.component.scss'],
+  selector: 'app-user-list-container',
+  templateUrl: './user-list-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserShellComponent implements OnInit, OnDestroy {
+
+export class UserListContainerComponent implements OnInit, OnDestroy {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
@@ -59,24 +59,17 @@ export class UserShellComponent implements OnInit, OnDestroy {
     this.usersFacade.setCurrentUserId(id);
   }
 
-  addUser() {
-    this.usersFacade.setCurrentUserId('0');
-  }
-
   deleteUser(id) {
     this.usersFacade.deleteUser(id);
   }
 
-  clearCurruntUserId() {
-    this.usersFacade.clearCurruntUserId();
+  addUser() {
+    this.usersFacade.setCurrentUserId('0');
+    this.router.navigate(['user-edit']);
   }
 
-  updateUser(updatedUser) {
-    this.usersFacade.updateUser(updatedUser);
-  }
-
-  addNewUser(user: User) {
-    this.usersFacade.addNewUser(user);
+  editUser() {
+    this.router.navigate(['user-edit']);
   }
 
 }

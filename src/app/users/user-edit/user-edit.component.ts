@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl} from '@angular/forms';
-import { User, AccessType } from '../../../shared/interfaces';
+import { User, AccessType } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-user-edit',
@@ -8,7 +8,7 @@ import { User, AccessType } from '../../../shared/interfaces';
   styleUrls: ['./user-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserEditComponent implements OnInit, OnChanges {
+export class UserEditComponent implements OnInit {
 
   @Input() users: User[];
   @Input() currentUserId: string;
@@ -16,7 +16,7 @@ export class UserEditComponent implements OnInit, OnChanges {
   @Input() accessType: AccessType;
   @Output() addNewUser = new EventEmitter<User>();
   @Output() updatedUser = new EventEmitter<User>();
-  @Output() clearCurruntUserId = new EventEmitter<void>();
+  @Output() cancelChanges = new EventEmitter<void>();
 
   form: FormGroup;
 
@@ -32,16 +32,16 @@ export class UserEditComponent implements OnInit, OnChanges {
       website: new FormControl(''),
       accessType: new FormControl('')
     });
-    if (this.currentUserId) {  // when navigating back to the page
+    if (this.currentUserId !== '0') {
       this.form.patchValue(this.currentUser);
     }
   }
 
-  ngOnChanges() {
-    if (this.currentUserId && this.form) {
-      this.form.patchValue(this.currentUser);
-    }
-  }
+  // ngOnChanges() {
+  //   if (this.currentUserId && this.form) {
+  //     this.form.patchValue(this.currentUser);
+  //   }
+  // }
 
   submit() {
     if (this.currentUserId === '0') {
@@ -52,7 +52,7 @@ export class UserEditComponent implements OnInit, OnChanges {
   }
 
   cancel() {
-    this.clearCurruntUserId.emit();
+    this.cancelChanges.emit();
   }
 
 }

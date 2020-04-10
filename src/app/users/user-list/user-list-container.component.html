@@ -1,0 +1,12 @@
+<app-user-list
+  [users]="users$ | async"
+  [currentUserId]="currentUserId$ | async"
+  [showUsername]="showUsername$ | async"
+  [error]="error$ | async"
+  [accessType]="accessType$ | async"
+  (showUsernameFlag)="checkChange($event)"
+  (selectedUserId)="setCurrentUser($event)"
+  (initializeNewUser)="addUser()"
+  (deleteUserId)="deleteUser($event)"
+  (editUserId)="editUser($event)"
+></app-user-list>

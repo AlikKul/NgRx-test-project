@@ -1,4 +1,5 @@
-<form *ngIf="currentUserId" (ngSubmit)="submit()" [formGroup]="form">
+<form class="card" (ngSubmit)="submit()" [formGroup]="form">
+  <div class="title"><p>User Edit Page</p></div>
   <label for="id">ID</label>
   <input id="id" formControlName="id" type="text" placeholder="ID" disabled>
   <label i18n for="name">Name</label>
@@ -12,7 +13,12 @@
   <label i18n for="website">Website</label>
   <input id="website" formControlName="website" type="text" i18n-placeholder placeholder="Website...">
   <label i18n for="access-type">Access type</label>
-  <input id="access-type" formControlName="accessType" type="text" i18n-placeholder placeholder="Access type...">
+  <select id="access-type" formControlName="accessType">
+    <option value="admin">admin</option>
+    <option value="user">user</option>
+    <option value="visitor">visitor</option>
+  </select>
+  <!-- <input id="access-type" formControlName="accessType" type="text" i18n-placeholder placeholder="Access type..."> -->
   <div *ngIf="accessType === 'admin'" class="controls">
     <button i18n type="submit" class="btn">Save</button>
     <button i18n type="button" (click)="cancel()" class="btn">Cancel</button>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { User, AccessType } from '../../../shared/interfaces';
+import { User, AccessType } from '../../shared/interfaces';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class UserListComponent implements OnInit {
   @Output() selectedUserId = new EventEmitter<string>();
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();
+  @Output() editUserId = new EventEmitter<string>();
 
   constructor() {}
 
@@ -40,6 +41,10 @@ export class UserListComponent implements OnInit {
 
   deleteUser() {
     this.deleteUserId.emit(this.currentUserId);
+  }
+
+  editUser() {
+    this.editUserId.emit(this.currentUserId);
   }
 
 }

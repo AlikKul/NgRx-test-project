@@ -32,7 +32,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
       .subscribe(
         (resp: FirebaseAuthResponse) => {
           this.facade.setLoggedInUserEmail(resp.email);
-          this.router.navigate(['users']);
+          this.router.navigate(['user-list']);
         },
         error => this.loginError$ = of(error.error.error.message)
       );
