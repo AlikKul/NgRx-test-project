@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoginData, FirebaseAuthResponse } from '../shared/interfaces';
+import { LoginData, FirebaseAuthResponse, AccessType } from '../shared/interfaces';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { UsersFacade } from '../users/state/users.facade';
 import { Observable, of, Subscription } from 'rxjs';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-login-container',
@@ -17,11 +18,10 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private facade: UsersFacade
+    private facade: UsersFacade,
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.sub.unsubscribe();

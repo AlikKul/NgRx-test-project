@@ -18,7 +18,6 @@
     <option value="user">user</option>
     <option value="visitor">visitor</option>
   </select>
-  <!-- <input id="access-type" formControlName="accessType" type="text" i18n-placeholder placeholder="Access type..."> -->
   <div *ngIf="accessType === 'admin'" class="controls">
     <button i18n type="submit" class="btn">Save</button>
     <button i18n type="button" (click)="cancel()" class="btn">Cancel</button>
