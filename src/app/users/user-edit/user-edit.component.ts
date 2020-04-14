@@ -37,12 +37,6 @@ export class UserEditComponent implements OnInit {
     }
   }
 
-  // ngOnChanges() {
-  //   if (this.currentUserId && this.form) {
-  //     this.form.patchValue(this.currentUser);
-  //   }
-  // }
-
   submit() {
     if (this.currentUserId === '0') {
       this.addNewUser.emit(this.form.value);

@@ -42,6 +42,7 @@ export class UsersEffects {
     mergeMap((user: User) =>
       this.usersService.addNewUser(user).pipe(
         map((resp: FirebaseResponse) => {
+          this.usersService.saveUser({...user, id: resp.name}).subscribe(() => {});
           return {
             ...user,
             id: resp.name
