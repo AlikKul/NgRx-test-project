@@ -1,25 +1,11 @@
+@import "~bootstrap/scss/bootstrap";
+
 * {
   font-size: 18px;
 }
 
-.btn {
-  width: 100px;
-  height: 40px;
-  border-style: none;
-  border-radius: 3px;
-  cursor: pointer;
-  background: #5D2EB2;
-  color: white;
-  font-size: 20px;
-  margin: 10px;
-}
-
-.btn:disabled {
-  color: #8D8D8D;
-}
-
-.btn:hover {
-  box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.2);
+.btn + .btn {
+  margin-left: 20px;
 }
 
 .card {

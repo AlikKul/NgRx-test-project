@@ -17,7 +17,6 @@ export class UserListContainerComponent implements OnInit, OnDestroy {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
-  showUsername$: Observable<boolean>;
   currentUserId$: Observable<string>;
   currentUser$: Observable<User>;
   accessType$: Observable<AccessType>;
@@ -33,7 +32,6 @@ export class UserListContainerComponent implements OnInit, OnDestroy {
       map(entitys => Object.keys(entitys).map(k => entitys[k]))
     );
     this.error$ = this.usersFacade.error$;
-    this.showUsername$ = this.usersFacade.showUsername$;
     this.currentUserId$ = this.usersFacade.currentUserId$;
     this.currentUser$ = this.usersFacade.currentUser$;
     this.accessType$ = this.usersFacade.accessType$;
@@ -59,24 +57,17 @@ export class UserListContainerComponent implements OnInit, OnDestroy {
     // this.sub.unsubscribe();
   }
 
-  checkChange(value) {
-    this.usersFacade.toggleUsername(value);
-  }
-
-  setCurrentUser(id) {
-    this.usersFacade.setCurrentUserId(id);
-  }
-
   deleteUser(id) {
     this.usersFacade.deleteUser(id);
   }
 
-  addUser() {
-    this.usersFacade.setCurrentUserId('0');
+  editUser(id) {
+    this.usersFacade.setCurrentUserId(id);
     this.router.navigate(['user-edit']);
   }
 
-  editUser() {
+  addUser() {
+    this.usersFacade.setCurrentUserId('0');
     this.router.navigate(['user-edit']);
   }
 

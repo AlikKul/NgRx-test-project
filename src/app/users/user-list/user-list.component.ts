@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { User, AccessType } from '../../shared/interfaces';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -12,39 +13,42 @@ export class UserListComponent implements OnInit {
 
   @Input() users: User[];
   @Input() currentUserId: string;
-  @Input() showUsername: boolean;
   @Input() error: string;
   @Input() accessType: AccessType;
-  @Output() showUsernameFlag = new EventEmitter<boolean>();
-  @Output() selectedUserId = new EventEmitter<string>();
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();
   @Output() editUserId = new EventEmitter<string>();
 
-  constructor() {}
+  name: string;
+  id: string;
+
+  constructor(
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {}
-
-  selectUser(id) {
-    if (this.accessType !== 'visitor') {
-      this.selectedUserId.emit(id);
-    }
-  }
-
-  checkChange(value) {
-    this.showUsernameFlag.emit(value);
-  }
 
   addUser() {
     this.initializeNewUser.emit();
   }
 
-  deleteUser() {
-    this.deleteUserId.emit(this.currentUserId);
+  showDeleteModal(content, user: User) {
+    this.modalService.open(content, { centered: true });
+    this.name = user.name;
+    this.id = user.id;
   }
 
-  editUser() {
-    this.editUserId.emit(this.currentUserId);
+  deleteConfirmed() {
+    this.deleteUserId.emit(this.id);
+    this.modalService.dismissAll();
+  }
+
+  deleteCanceled() {
+    this.modalService.dismissAll();
+  }
+
+  editUser(id) {
+    this.editUserId.emit(id);
   }
 
 }

@@ -2,7 +2,6 @@ import { Action } from '@ngrx/store';
 import { User, AccessType } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
-  ToggleUsername = '[Users] Toggle Username',
   SetCurrentUserId = '[Users] Set Current User ID',
   ClearCurrentUserId = '[Users] Clear Current User Id',
   Load = '[Users] Load',
@@ -19,12 +18,6 @@ export enum UsersActionTypes {
   DeleteUserFail = '[Users] Delete User Fail',
   SetLoggenInUserEmail = '[Users] Set Loggen In User Email',
   SetAccessType = '[Users] Set Access Type'
-}
-
-export class ToggleUsername implements Action {
-  readonly type = UsersActionTypes.ToggleUsername;
-
-  constructor(public payload: boolean) {}
 }
 
 export class SetCurrentUserId implements Action {
@@ -119,8 +112,7 @@ export class SetAccessType implements Action {
   constructor(public payload: AccessType) {}
 }
 
-export type UsersActions = ToggleUsername
-  | SetCurrentUserId
+export type UsersActions = SetCurrentUserId
   | ClearCurrentUserId
   | Load
   | LoadSuccess

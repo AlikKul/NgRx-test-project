@@ -1,7 +1,7 @@
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
   <div class="title"><p>User Edit Page</p></div>
   <label for="id">ID</label>
-  <input id="id" formControlName="id" type="text" placeholder="ID" disabled>
+  <input id="id" formControlName="id" type="text" placeholder="ID is assigned by the server" disabled>
   <label i18n for="name">Name</label>
   <input id="name" formControlName="name" type="text" i18n-placeholder placeholder="Name...">
   <label i18n for="username">Username</label>
@@ -19,7 +19,7 @@
     <option value="visitor">visitor</option>
   </select>
   <div *ngIf="accessType === 'admin'" class="controls">
-    <button i18n type="submit" class="btn">Save</button>
-    <button i18n type="button" (click)="cancel()" class="btn">Cancel</button>
+    <button i18n type="submit" class="btn btn-primary">Save</button>
+    <button i18n type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
   </div>
 </form>

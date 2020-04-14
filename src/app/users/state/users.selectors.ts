@@ -4,11 +4,6 @@ import { AccessType } from '../../shared/interfaces';
 
 const getUsersFeatureState = createFeatureSelector<UsersState>('users');
 
-export const getShowUsername = createSelector(
-  getUsersFeatureState,
-  state => state.showUsername
-);
-
 export const getCurrentUserId = createSelector(
   getUsersFeatureState,
   state => state.currentUserId

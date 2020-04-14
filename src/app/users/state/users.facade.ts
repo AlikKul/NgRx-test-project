@@ -18,7 +18,6 @@ export class UsersFacade {
 
   users$: Observable<any>;
   error$: Observable<string>;
-  showUsername$: Observable<boolean>;
   currentUserId$: Observable<string>;
   currentUser$: Observable<User>;
   accessType$: Observable<AccessType>;
@@ -27,7 +26,6 @@ export class UsersFacade {
   constructor(private store: Store<UsersState>) {
     this.users$ = this.store.pipe(select(getAllUsers));
     this.error$ = this.store.pipe(select(getError));
-    this.showUsername$ = this.store.pipe(select(getShowUsername));
     this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
     this.currentUser$ = this.store.pipe(select(getCurrentUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
@@ -36,10 +34,6 @@ export class UsersFacade {
 
   load() {
     this.store.dispatch(new userActions.Load());
-  }
-
-  toggleUsername(value) {
-    this.store.dispatch(new userActions.ToggleUsername(value));
   }
 
   setCurrentUserId(id) {

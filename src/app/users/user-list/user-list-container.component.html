@@ -1,7 +1,6 @@
 <app-user-list
   [users]="users$ | async"
   [currentUserId]="currentUserId$ | async"
-  [showUsername]="showUsername$ | async"
   [error]="error$ | async"
   [accessType]="accessType$ | async"
   (showUsernameFlag)="checkChange($event)"

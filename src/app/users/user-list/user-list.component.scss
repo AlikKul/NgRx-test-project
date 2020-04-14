@@ -1,48 +1,7 @@
-.user-list-container {
-  margin: 100px auto 0 auto;
+.buttons-container {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: fit-content;
-
-  .title {
-    font-weight: bold;
-  }
-}
-
-ul {
-
-  li + li {
-    margin-top: 5px;
-  }
-
-  li {
-    padding: 5px;
-    border-radius: 5px;
-    background: rgb(0, 226, 226);
-    cursor: pointer;
-    transition: .2s;
-  }
-
-  li:hover {
-    background: rgb(0, 196, 196);
-  }
-
-  .selected {
-    background: rgb(0, 196, 196);
-  }
-
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 10px;
 }
 
 .error-section {

@@ -3,7 +3,6 @@ import { User, AccessType } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
 export interface UsersState extends EntityState<User> {
-  showUsername: boolean;
   currentUserId: string;
   error: string;
   loggenInUserEmail: string;
@@ -22,12 +21,6 @@ const initialState: UsersState = adapter.getInitialState({
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
   switch (action.type) {
-
-    case UsersActionTypes.ToggleUsername:
-      return {
-        ...state,
-        showUsername: action.payload
-      };
 
     case UsersActionTypes.SetCurrentUserId:
       return {

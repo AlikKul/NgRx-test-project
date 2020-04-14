@@ -1,31 +1,61 @@
-<div *ngIf="users" class="user-list-container card">
-  <div i18n class="title">USERS LIST:</div>
-  <ul>
-    <li
-      *ngFor="let user of users"
-      (click)="selectUser(user.id)"
-      [ngClass]="{'selected': user.id === currentUserId}"
-    >{{ user.name }} <span *ngIf="showUsername">({{ user.username }})</span></li>
-    <div *ngIf="accessType === 'admin'" class="actions">
-      <input
-        type="checkbox"
-        id="show-username"
-        (change)="checkChange($event.target.checked)"
-        [checked]="showUsername"
-      >
-      <label i18n for="show-username">Show username</label>
-      <button i18n (click)="addUser()" class="btn">Add new</button>
-      <button i18n (click)="editUser()" class="btn" [disabled]="!currentUserId">Edit</button>
-      <button i18n (click)="deleteUser()" class="btn" [disabled]="!currentUserId">Delete</button>
-    </div>
-  </ul>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Website</th>
+      <th scope="col">Access type</th>
+      <th *ngIf="accessType === 'admin'" scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ user.name }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.website }}</td>
+      <td>{{ user.accessType }}</td>
+      <td *ngIf="accessType === 'admin'">
+        <button (click)="editUser(user.id)" class="btn btn-primary">Edit</button>
+        <button (click)="showDeleteModal(confirmDeleteModal, user)" class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <div
-    i18n
-    *ngIf="error"
-    class="error-section"
-  >
-    An error occurred: <span>{{ error }}</span> <br>
-    Try reload the page.
-  </div>
+<div class="buttons-container">
+  <button (click)="addUser()" class="btn btn-primary">Add new</button>
 </div>
+
+<div
+  i18n
+  *ngIf="error"
+  class="error-section"
+>
+  An error occurred: <span>{{ error }}</span> <br>
+  Try reload the page.
+</div>
+
+<ng-template #confirmDeleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Profile deletion</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to delete <span class="text-primary">"{{ name }}"</span> profile?</strong></p>
+    <p>All information associated to this user profile will be permanently deleted.
+    <span class="text-danger">This operation can not be undone.</span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteConfirmed()">Yes</button>
+    <button type="button" ngbAutofocus class="btn btn-primary" (click)="deleteCanceled()">Cancel</button>
+  </div>
+</ng-template>
+
