@@ -15,14 +15,16 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { LoginComponent } from './login/login.component';
 import { LoginContainerComponent } from './login/login-container.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LoginContainerComponent,
+    LoginContainerComponent
   ],
   imports: [
+    SharedModule,
     NgbModule,
     BrowserModule,
     AppRoutingModule,

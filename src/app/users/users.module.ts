@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -15,6 +16,7 @@ import { UserEditContainerComponent } from './user-edit/user-edit-container.comp
 
 @NgModule({
   imports: [
+    SharedModule,
     StoreModule,
     CommonModule,
     FormsModule,

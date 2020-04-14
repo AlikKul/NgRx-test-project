@@ -21,7 +21,9 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
     private facade: UsersFacade,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    localStorage.clear();
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -31,7 +33,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
     this.sub = this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
       .subscribe(
         (resp: FirebaseAuthResponse) => {
-          this.facade.setLoggedInUserEmail(resp.email);
+          localStorage.setItem('loggedInUserEmail', resp.email);
           this.router.navigate(['user-list']);
         },
         error => this.loginError$ = of(error.error.error.message)

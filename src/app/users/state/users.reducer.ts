@@ -37,7 +37,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
     case UsersActionTypes.LoadSuccess:
       return adapter.addMany(action.payload, {
         ...state,
-        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === state.loggenInUserEmail).accessType
+        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')).accessType
       });
 
     case UsersActionTypes.LoadFail:

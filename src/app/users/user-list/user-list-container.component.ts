@@ -41,6 +41,7 @@ export class UserListContainerComponent implements OnInit, OnDestroy {
     if (this.loginService.isAuthenticated()) {
       this.usersFacade.load();
     } else {
+      localStorage.clear();
       this.router.navigate(['']);
     }
 

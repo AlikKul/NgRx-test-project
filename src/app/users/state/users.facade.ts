@@ -21,7 +21,6 @@ export class UsersFacade {
   currentUserId$: Observable<string>;
   currentUser$: Observable<User>;
   accessType$: Observable<AccessType>;
-  loggedinUserEmail$: Observable<string>;
 
   constructor(private store: Store<UsersState>) {
     this.users$ = this.store.pipe(select(getAllUsers));
@@ -29,7 +28,6 @@ export class UsersFacade {
     this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
     this.currentUser$ = this.store.pipe(select(getCurrentUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
-    this.loggedinUserEmail$ = this.store.pipe(select(getLoggedinUserEmail));
   }
 
   load() {
@@ -54,10 +52,6 @@ export class UsersFacade {
 
   addNewUser(user) {
     this.store.dispatch(new userActions.AddNewUser(user));
-  }
-
-  setLoggedInUserEmail(email) {
-    this.store.dispatch(new userActions.SetLoggenInUserEmail(email));
   }
 
   setAccessType(value) {
