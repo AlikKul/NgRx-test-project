@@ -4,6 +4,12 @@ form {
   width: 500px;
   margin: 0 auto;
 
+  span {
+    color: red;
+    margin-left: 20px;
+    font-size: small;
+  }
+
   .title {
     font-weight: bold;
     text-align: center;
@@ -17,6 +23,10 @@ form {
     padding: 5px;
     border: 1px solid black;
     border-radius: 5px;
+  }
+
+  .input-field {
+    border: 1px solid black;
   }
 
   .controls {

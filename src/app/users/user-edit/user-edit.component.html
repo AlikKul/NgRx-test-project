@@ -1,25 +1,76 @@
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
-  <div class="title"><p>User Edit Page</p></div>
+  <div class="title">
+    <p>User Edit Page</p>
+  </div>
+
   <label for="id">ID</label>
-  <input id="id" formControlName="id" type="text" placeholder="ID is assigned by the server" disabled>
-  <label i18n for="name">Name</label>
+  <input id="id" formControlName="id" type="text" placeholder="ID is assigned by the server">
+
+  <label i18n for="name">
+    Name
+    <span *ngIf="name.invalid && name.touched">
+      <span *ngIf="name.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="name.errors.minlength">
+        Minimum length is {{ minNameLength }} chracters, actual: {{ name.errors.minlength.actualLength }}
+      </span>
+    </span>
+  </label>
   <input id="name" formControlName="name" type="text" i18n-placeholder placeholder="Name...">
-  <label i18n for="username">Username</label>
+
+  <label i18n for="username">
+    Username
+    <span *ngIf="username.invalid && username.touched">
+      <span *ngIf="username.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="username.errors.minlength">
+        Minimum length is {{ minUserNameLength }} chracters, actual: {{ username.errors.minlength.actualLength }}
+      </span>
+    </span>
+  </label>
   <input id="username" formControlName="username" type="text" i18n-placeholder placeholder="Username...">
-  <label i18n for="email">Email</label>
+
+  <label i18n for="email">
+    Email
+    <span *ngIf="email.invalid && email.touched">
+      <span *ngIf="email.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="email.errors.email">
+        Your email doesn't look right
+      </span>
+    </span>
+  </label>
   <input id="email" formControlName="email" type="text" i18n-placeholder placeholder="Email...">
-  <label i18n for="phone">Phone</label>
+
+  <label i18n for="phone">
+    Phone
+    <span *ngIf="phone.invalid && phone.touched">
+      <span *ngIf="phone.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="phone.errors.pattern">
+        Phone number should contain only digits
+      </span>
+    </span>
+  </label>
   <input id="phone" formControlName="phone" type="text" i18n-placeholder placeholder="Phone...">
+
   <label i18n for="website">Website</label>
   <input id="website" formControlName="website" type="text" i18n-placeholder placeholder="Website...">
+
   <label i18n for="access-type">Access type</label>
   <select id="access-type" formControlName="accessType">
     <option value="admin">admin</option>
     <option value="user">user</option>
     <option value="visitor">visitor</option>
   </select>
-  <div *ngIf="accessType === 'admin'" class="controls">
-    <button i18n type="submit" class="btn btn-primary">Save</button>
+
+  <div class="controls">
+    <button i18n [disabled]="form.invalid" type="submit" class="btn btn-primary">Save</button>
     <button i18n type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
   </div>
+
 </form>
