@@ -47,3 +47,8 @@ export const getLoggedinUserEmail = createSelector(
   getUsersFeatureState,
   state => state.loggenInUserEmail
 );
+
+export const getLoggedinUserName = createSelector(
+  getUsersFeatureState,
+  state => state.loggenInUserName
+);

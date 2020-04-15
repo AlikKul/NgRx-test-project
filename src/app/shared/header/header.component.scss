@@ -1,0 +1,42 @@
+.header-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #292929;
+  color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  span {
+    color: rgb(185, 247, 60);
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .user-info-name {
+      color: rgb(185, 247, 60);
+    }
+  }
+
+  .navigation {
+    .header-navigation-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+    }
+
+    .header-navigation-btn:hover {
+      text-decoration: underline;
+      text-decoration-color: rgb(185, 247, 60);
+    }
+  }
+}

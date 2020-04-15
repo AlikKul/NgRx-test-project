@@ -6,16 +6,17 @@ export interface UsersState extends EntityState<User> {
   currentUserId: string;
   error: string;
   loggenInUserEmail: string;
+  loggenInUserName: string;
   accessType: AccessType;
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 const initialState: UsersState = adapter.getInitialState({
-  showUsername: true,
   currentUserId: '',
   error: '',
   loggenInUserEmail: '',
+  loggenInUserName: '',
   accessType: AccessType.Visitor
 });
 
@@ -37,7 +38,11 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
     case UsersActionTypes.LoadSuccess:
       return adapter.addMany(action.payload, {
         ...state,
-        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')).accessType
+        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')).accessType,
+        loggenInUserName:
+          action.payload.find(user =>
+              user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')
+            ).name
       });
 
     case UsersActionTypes.LoadFail:

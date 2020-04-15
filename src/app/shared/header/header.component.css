@@ -1,0 +1,54 @@
+.header-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #292929;
+  color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.header-section span {
+  color: #b9f73c;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.header-section .title {
+  font-size: 24px;
+}
+
+.header-section .user-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header-section .user-info .user-info-name {
+  color: #b9f73c;
+}
+
+.header-section .navigation .header-navigation-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+.header-section .navigation .header-navigation-btn:hover {
+  text-decoration: underline;
+  -webkit-text-decoration-color: #b9f73c;
+          text-decoration-color: #b9f73c;
+}
+/*# sourceMappingURL=header.component.css.map */

@@ -5,6 +5,7 @@ import { LoginService } from './login.service';
 import { UsersFacade } from '../users/state/users.facade';
 import { Observable, of, Subscription } from 'rxjs';
 import { UsersService } from '../users/users.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login-container',
@@ -18,7 +19,6 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private facade: UsersFacade,
   ) { }
 
   ngOnInit() {

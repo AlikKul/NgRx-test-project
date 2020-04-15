@@ -4,11 +4,10 @@ import { UsersState } from './users.reducer';
 import {
   getAllUsers,
   getError,
-  getShowUsername,
   getCurrentUserId,
   getCurrentUser,
   getAccessType,
-  getLoggedinUserEmail } from './users.selectors';
+  getLoggedinUserName } from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType } from '../../shared/interfaces';
 import * as userActions from './users.actions';
@@ -21,6 +20,7 @@ export class UsersFacade {
   currentUserId$: Observable<string>;
   currentUser$: Observable<User>;
   accessType$: Observable<AccessType>;
+  loggedinUserName$: Observable<string>;
 
   constructor(private store: Store<UsersState>) {
     this.users$ = this.store.pipe(select(getAllUsers));
@@ -28,6 +28,7 @@ export class UsersFacade {
     this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
     this.currentUser$ = this.store.pipe(select(getCurrentUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
+    this.loggedinUserName$ = store.pipe(select(getLoggedinUserName));
   }
 
   load() {
