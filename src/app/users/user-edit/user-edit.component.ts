@@ -80,7 +80,10 @@ export class UserEditComponent implements OnInit {
     if (this.currentUserId === '0') {
       this.addNewUser.emit(this.form.value);
     } else {
-      this.updatedUser.emit(this.form.value);
+      this.updatedUser.emit({
+        ...this.form.value,
+        id: this.form.get('id').value
+      });
     }
   }
 
