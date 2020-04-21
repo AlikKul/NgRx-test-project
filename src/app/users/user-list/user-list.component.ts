@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
-import { User, AccessType, SortDirection, SortColumn, SortEvent } from '../../shared/interfaces';
+import { User, SortDirection, SortColumn, SortEvent } from '../../shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 

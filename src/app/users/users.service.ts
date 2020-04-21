@@ -5,17 +5,20 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 @Injectable({providedIn: 'root'})
 export class UsersService {
 
-  private usersCollection: AngularFirestoreCollection<User>;
+  private usersRef: AngularFirestoreCollection<User>;
 
   constructor(
     private readonly afs: AngularFirestore
   ) {}
 
   getAllUsers(sortColumn, direction) {
-    this.usersCollection = this.afs.collection('users', ref => ref
-      .orderBy(sortColumn, direction)
-    );
-    return this.usersCollection.valueChanges({ idField: 'id' });
+    this.usersRef = this.afs.collection('users', ref => {
+      if (direction) {
+        return ref.orderBy(sortColumn, direction);
+      }
+      return ref.orderBy(sortColumn);
+    });
+    return this.usersRef.valueChanges({ idField: 'id' });
   }
 
   getLoggedinUser(email) {
@@ -23,14 +26,14 @@ export class UsersService {
   }
 
   saveUser(user: User) {
-    return this.usersCollection.doc(user.id).update(user);
+    return this.usersRef.doc(user.id).update(user);
   }
 
   addNewUser(user: User) {
-    return this.usersCollection.add(user);
+    return this.usersRef.add(user);
   }
 
   deleteUser(id: string) {
-    return this.usersCollection.doc(id).delete();
+    return this.usersRef.doc(id).delete();
   }
 }
