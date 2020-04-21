@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 import { UserEditComponent } from './user-edit/user-edit.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserEditContainerComponent } from './user-edit/user-edit-container.component';
+import { UserListComponent, NgbdSortableHeader } from './user-list/user-list.component';
 import { UserListContainerComponent } from './user-list/user-list-container.component';
 
 // NgRx
@@ -12,7 +13,6 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/users.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './state/users.effects';
-import { UserEditContainerComponent } from './user-edit/user-edit-container.component';
 
 @NgModule({
   imports: [
@@ -28,7 +28,8 @@ import { UserEditContainerComponent } from './user-edit/user-edit-container.comp
     UserEditComponent,
     UserListComponent,
     UserListContainerComponent,
-    UserEditContainerComponent
+    UserEditContainerComponent,
+    NgbdSortableHeader
   ]
 })
 

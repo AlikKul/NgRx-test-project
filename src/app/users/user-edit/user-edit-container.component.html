@@ -2,8 +2,7 @@
 
 <app-user-edit
   [users]="users$ | async"
-  [currentUserId]="currentUserId$ | async"
-  [currentUser]="currentUser$ | async"
+  [editUser]="editUser$ | async"
   [accessType]="accessType$ | async"
   (addNewUser)="addNewUser($event)"
   (updatedUser)="updateUser($event)"

@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginData, FirebaseAuthResponse } from '../shared/interfaces';
-import { FirebaseAccessData } from '../../environments/env';
-import { tap } from 'rxjs/operators';
+import { firebaseConfig } from '../../environments/env';
+import { tap, map, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { UsersService } from '../users/users.service';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
 
-  private apiKey = FirebaseAccessData.apiKey;
+  private apiKey = firebaseConfig.apiKey;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private usersSrevice: UsersService
   ) {}
 
-  login(loginData: LoginData) {
+  login(loginData: LoginData): Observable<any> {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`, loginData)
       .pipe(
-        tap(this.setToken)
+        tap(this.setToken),
+        flatMap((resp: FirebaseAuthResponse) => {
+          return this.usersSrevice.getLoggedinUser(resp.email);
+        })
       );
   }
 
   private setToken(response: FirebaseAuthResponse | null) {
     if (response) {
+      localStorage.setItem('userEmail', response.email);
       localStorage.setItem('idToken', response.idToken);
       localStorage.setItem('tokenExpDate', (new Date().getTime() + parseInt(response.expiresIn) * 1000).toString());
     } else {

@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACjB,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;CACxB;;AAED,AAAA,cAAc,CAAC;EACb,MAAM,EAAE,aAAa;EACrB,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,IAAI;CAKjB;;AATD,AAME,cANY,CAMZ,IAAI,CAAC;EACH,KAAK,EAAE,GAAG;CACX",
-    "sources": [
-        "user-list.component.scss"
-    ],
-    "names": [],
-    "file": "user-list.component.css"
-}

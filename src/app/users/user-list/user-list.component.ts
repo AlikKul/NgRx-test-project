@@ -1,7 +1,29 @@
-import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { User, AccessType } from '../../shared/interfaces';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
+import { User, AccessType, SortDirection, SortColumn, SortEvent } from '../../shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
+const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+@Directive({
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()'
+  }
+})
+export class NgbdSortableHeader {
+
+  @Input() sortable: SortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<SortEvent>();
+
+  rotate() {
+    this.direction = rotate[this.direction];
+    this.sort.emit({column: this.sortable, direction: this.direction});
+  }
+}
 
 @Component({
   selector: 'app-user-list',
@@ -9,15 +31,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./user-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class UserListComponent implements OnInit {
+
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   @Input() users: User[];
   @Input() currentUserId: string;
   @Input() error: string;
-  @Input() accessType: AccessType;
+  @Input() accessType: string;
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();
-  @Output() editUserId = new EventEmitter<string>();
+  @Output() editUser = new EventEmitter<User>();
+  @Output() sort = new EventEmitter<SortEvent>();
 
   name: string;
   id: string;
@@ -47,8 +73,17 @@ export class UserListComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  editUser(id) {
-    this.editUserId.emit(id);
+  edit(user) {
+    this.editUser.emit(user);
+  }
+
+  onSort({column, direction}: SortEvent) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+    this.sort.emit({column, direction});
   }
 
 }

@@ -1,49 +1,34 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { User, AccessType } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
-export interface UsersState extends EntityState<User> {
-  currentUserId: string;
+export interface UsersState {
+  editUser: User | null;
   error: string;
-  loggenInUserEmail: string;
-  loggenInUserName: string;
+  loggedInUserName: string;
   accessType: AccessType;
 }
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
-
-const initialState: UsersState = adapter.getInitialState({
-  currentUserId: '',
+const initialState: UsersState = {
+  editUser: null,
   error: '',
-  loggenInUserEmail: '',
-  loggenInUserName: '',
-  accessType: AccessType.Visitor
-});
+  loggedInUserName: '',
+  accessType: AccessType.Visitor,
+};
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
   switch (action.type) {
 
-    case UsersActionTypes.SetCurrentUserId:
+    case UsersActionTypes.SetEditUser:
       return {
         ...state,
-        currentUserId: action.payload
+        editUser: action.payload
       };
 
-    case UsersActionTypes.ClearCurrentUserId:
+    case UsersActionTypes.ClearEditUser:
       return {
         ...state,
-        currentUserId: ''
+        editUser: null
       };
-
-    case UsersActionTypes.LoadSuccess:
-      return adapter.addMany(action.payload, {
-        ...state,
-        accessType: action.payload.find(user => user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')).accessType,
-        loggenInUserName:
-          action.payload.find(user =>
-              user.email.toLocaleLowerCase() === localStorage.getItem('loggedInUserEmail')
-            ).name
-      });
 
     case UsersActionTypes.LoadFail:
       return {
@@ -52,7 +37,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.SaveUserSuccess:
-      return adapter.upsertOne(action.payload, {...state, currentUserId: ''});
+      return state;
 
     case UsersActionTypes.SaveUserFail:
       return {
@@ -61,7 +46,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.AddNewUserSuccess:
-      return adapter.addOne(action.payload, {...state, currentUserId: ''});
+      return state;
 
     case UsersActionTypes.AddNewUserFail:
       return {
@@ -70,7 +55,7 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       };
 
     case UsersActionTypes.DeleteUserSuccess:
-      return adapter.removeOne(action.payload, {...state, currentUserId: ''});
+      return state;
 
     case UsersActionTypes.DeleteUserFail:
       return {
@@ -78,10 +63,10 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         error: action.payload
       };
 
-    case UsersActionTypes.SetLoggenInUserEmail:
+    case UsersActionTypes.SetLoggedInUserName:
       return {
         ...state,
-        loggenInUserEmail: action.payload
+        loggedInUserName: action.payload
       };
 
     case UsersActionTypes.SetAccessType:

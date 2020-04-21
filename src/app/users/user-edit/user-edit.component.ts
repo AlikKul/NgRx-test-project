@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
 export class UserEditComponent implements OnInit {
 
   @Input() users: User[];
-  @Input() currentUserId: string;
-  @Input() currentUser: User;
+  @Input() editUser: User;
   @Input() accessType: AccessType;
   @Output() addNewUser = new EventEmitter<User>();
   @Output() updatedUser = new EventEmitter<User>();
@@ -52,10 +51,10 @@ export class UserEditComponent implements OnInit {
       accessType: new FormControl('visitor')
     });
 
-    if (!this.currentUserId) {
+    if (!this.editUser && this.editUser !== null) {
       this.router.navigate(['user-list']);
-    } else if (this.currentUserId !== '0') {
-      this.form.patchValue(this.currentUser);
+    } else if (this.editUser !== null) {
+      this.form.patchValue(this.editUser);
     }
 
   }
@@ -77,12 +76,12 @@ export class UserEditComponent implements OnInit {
   }
 
   submit() {
-    if (this.currentUserId === '0') {
+    if (!this.form.get('id').value) {
       this.addNewUser.emit(this.form.value);
     } else {
       this.updatedUser.emit({
         ...this.form.value,
-        id: this.form.get('id').value
+        id: this.editUser.id
       });
     }
   }

@@ -2,49 +2,47 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { UsersState } from './users.reducer';
 import {
-  getAllUsers,
   getError,
-  getCurrentUserId,
-  getCurrentUser,
   getAccessType,
-  getLoggedinUserName } from './users.selectors';
+  getLoggedinUserName,
+  getEditUser} from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType } from '../../shared/interfaces';
 import * as userActions from './users.actions';
+import { UsersService } from '../users.service';
 
 @Injectable({providedIn: 'root'})
 export class UsersFacade {
 
-  users$: Observable<any>;
   error$: Observable<string>;
-  currentUserId$: Observable<string>;
-  currentUser$: Observable<User>;
+  editUser$: Observable<User>;
   accessType$: Observable<AccessType>;
   loggedinUserName$: Observable<string>;
 
-  constructor(private store: Store<UsersState>) {
-    this.users$ = this.store.pipe(select(getAllUsers));
+  constructor(
+    private store: Store<UsersState>,
+    private usersService: UsersService
+  ) {
     this.error$ = this.store.pipe(select(getError));
-    this.currentUserId$ = this.store.pipe(select(getCurrentUserId));
-    this.currentUser$ = this.store.pipe(select(getCurrentUser));
+    this.editUser$ = this.store.pipe(select(getEditUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
     this.loggedinUserName$ = store.pipe(select(getLoggedinUserName));
   }
 
-  load() {
-    this.store.dispatch(new userActions.Load());
+  load(sortColumn, direction) {
+    return this.usersService.getAllUsers(sortColumn, direction);
   }
 
-  setCurrentUserId(id) {
-    this.store.dispatch(new userActions.SetCurrentUserId(id));
+  setEditUser(user) {
+    this.store.dispatch(new userActions.SetEditUser(user));
   }
 
   deleteUser(id) {
     this.store.dispatch(new userActions.DeleteUser(id));
   }
 
-  clearCurruntUserId() {
-    this.store.dispatch(new userActions.ClearCurrentUserId());
+  clearEditUser() {
+    this.store.dispatch(new userActions.ClearEditUser());
   }
 
   updateUser(updatedUser) {
@@ -52,11 +50,15 @@ export class UsersFacade {
   }
 
   addNewUser(user) {
-    this.store.dispatch(new userActions.AddNewUser(user));
+    return this.usersService.addNewUser(user);
   }
 
   setAccessType(value) {
     this.store.dispatch(new userActions.SetAccessType(value));
+  }
+
+  setLoggedinUserName(name) {
+    this.store.dispatch(new userActions.SetLoggedInUserName(name));
   }
 
 }

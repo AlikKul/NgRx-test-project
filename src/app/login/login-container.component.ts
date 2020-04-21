@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoginData, FirebaseAuthResponse, AccessType } from '../shared/interfaces';
+import { LoginData, User } from '../shared/interfaces';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { UsersFacade } from '../users/state/users.facade';
 import { Observable, of, Subscription } from 'rxjs';
-import { UsersService } from '../users/users.service';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login-container',
   templateUrl: './login-container.component.html'
 })
+
 export class LoginContainerComponent implements OnInit, OnDestroy {
 
   loginError$: Observable<string>;
@@ -19,6 +18,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private loginService: LoginService,
+    private usersFacade: UsersFacade
   ) { }
 
   ngOnInit() {
@@ -31,12 +31,12 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
 
   login(loginData: LoginData) {
     this.sub = this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
-      .subscribe(
-        (resp: FirebaseAuthResponse) => {
-          localStorage.setItem('loggedInUserEmail', resp.email);
-          this.router.navigate(['user-list']);
-        },
-        error => this.loginError$ = of(error.error.error.message)
+      .subscribe((resp: User[]) => {
+        this.usersFacade.setLoggedinUserName(resp[0].name);
+        this.usersFacade.setAccessType(resp[0].accessType);
+        this.router.navigate(['user-list']);
+      },
+      error => this.loginError$ = of(error.error.error.message)
       );
   }
 

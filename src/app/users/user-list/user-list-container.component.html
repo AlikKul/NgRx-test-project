@@ -2,10 +2,10 @@
 
 <app-user-list
   [users]="users$ | async"
-  [currentUserId]="currentUserId$ | async"
   [error]="error$ | async"
   [accessType]="accessType$ | async"
   (initializeNewUser)="addUser()"
   (deleteUserId)="deleteUser($event)"
-  (editUserId)="editUser($event)"
+  (editUser)="editUser($event)"
+  (sort)="onSort($event)"
 ></app-user-list>

@@ -16,23 +16,14 @@ export class UsersEffects {
   ) { }
 
   @Effect()
-  loadUsers$: Observable<Action> = this.actions$.pipe(
-    ofType(usersActions.UsersActionTypes.Load),
-    mergeMap((action: usersActions.Load) => this.usersService.getAllUsers().pipe(
-      map((users: User[]) => (new usersActions.LoadSuccess(users))),
-      catchError(error => of(new usersActions.LoadFail(error.message)))  // of() operator returns an observable
-    ))
-  );
-
-  @Effect()
   saveUser$: Observable<Action> = this.actions$.pipe(
     ofType(usersActions.UsersActionTypes.SaveUser),
     map((action: usersActions.SaveUser) => action.payload),
     mergeMap((user: User) =>
-      this.usersService.saveUser(user).pipe(
-        map((updatedUser: User) => (new usersActions.SaveUserSuccess(updatedUser))),
-        catchError(error => of(new usersActions.SaveUserFail(error.message)))
-      ))
+      this.usersService.saveUser(user)
+      .then(() => (new usersActions.SaveUserSuccess()))
+      .catch(error => (new usersActions.AddNewUserFail(error)))
+    )
   );
 
   @Effect()
@@ -40,17 +31,10 @@ export class UsersEffects {
     ofType(usersActions.UsersActionTypes.AddNewUser),
     map((action: usersActions.AddNewUser) => action.payload),
     mergeMap((user: User) =>
-      this.usersService.addNewUser(user).pipe(
-        map((resp: FirebaseResponse) => {
-          this.usersService.saveUser({...user, id: resp.name}).subscribe(() => {});
-          return {
-            ...user,
-            id: resp.name
-          };
-        }),
-        map((addedUser: User) => (new usersActions.AddNewUserSuccess(addedUser))),
-        catchError(error => of(new usersActions.AddNewUserFail(error.message)))
-      ))
+      this.usersService.addNewUser(user)
+        .then(() => (new usersActions.AddNewUserSuccess()))
+        .catch(error => (new usersActions.AddNewUserFail(error)))
+    )
   );
 
   @Effect()
@@ -58,10 +42,9 @@ export class UsersEffects {
     ofType(usersActions.UsersActionTypes.DeleteUser),
     map((action: usersActions.DeleteUser) => action.payload),
     mergeMap((id: string) =>
-      this.usersService.deleteUser(id).pipe(
-        map(() => (new usersActions.DeleteUserSuccess(id))),
-        catchError(error => of(new usersActions.AddNewUserFail(error.message)))
-      )
+      this.usersService.deleteUser(id)
+      .then(() => (new usersActions.DeleteUserSuccess()))
+      .catch(error => new usersActions.AddNewUserFail(error.message))
     )
   );
 

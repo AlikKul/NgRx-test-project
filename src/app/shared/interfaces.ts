@@ -8,6 +8,11 @@ export interface User {
   accessType: AccessType;
 }
 
+export interface LoggedinUserInfo {
+  name: string;
+  accessType: AccessType;
+}
+
 export interface FirebaseResponse {
   name: string;
 }
@@ -26,6 +31,12 @@ export interface LoginData {
 
 export enum AccessType {
   Visitor = 'visitor',
-  User = 'user',
   Admin = 'admin'
+}
+
+export type SortColumn = keyof User | '';
+export type SortDirection = 'asc' | 'desc' | '';
+export interface SortEvent {
+  column: SortColumn;
+  direction: SortDirection;
 }

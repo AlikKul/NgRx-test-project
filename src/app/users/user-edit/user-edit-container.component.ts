@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { User, AccessType } from 'src/app/shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/login/login.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-user-edit-container',
@@ -11,20 +13,18 @@ import { Router } from '@angular/router';
 export class UserEditContainerComponent implements OnInit {
 
   users$: Observable<User[]>;
-  currentUserId$: Observable<string>;
-  currentUser$: Observable<User>;
+  editUser$: Observable<User>;
   accessType$: Observable<AccessType>;
 
   constructor(
     private usersFacade: UsersFacade,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
-    this.currentUserId$ = this.usersFacade.currentUserId$;
-    this.currentUser$ = this.usersFacade.currentUser$;
+    private router: Router,
+  ) {
+    this.editUser$ = this.usersFacade.editUser$;
     this.accessType$ = this.usersFacade.accessType$;
   }
+
+  ngOnInit() {}
 
   addNewUser(user: User) {
     this.usersFacade.addNewUser(user);
@@ -37,7 +37,7 @@ export class UserEditContainerComponent implements OnInit {
   }
 
   cancelChanges() {
-    this.usersFacade.clearCurruntUserId();
+    this.usersFacade.clearEditUser();
     this.router.navigate(['user-list']);
   }
 

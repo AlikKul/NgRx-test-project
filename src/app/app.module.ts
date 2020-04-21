@@ -1,21 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UsersModule } from './users/users.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { LoginContainerComponent } from './login/login-container.component';
+import { SharedModule } from './shared/shared.module';
 
 // NgRx
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { LoginComponent } from './login/login.component';
-import { LoginContainerComponent } from './login/login-container.component';
-import { SharedModule } from './shared/shared.module';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { firebaseConfig } from '../environments/env';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,9 @@ import { SharedModule } from './shared/shared.module';
       name: 'NgRx test',
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

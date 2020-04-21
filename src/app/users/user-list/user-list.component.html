@@ -2,9 +2,9 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Username</th>
-      <th scope="col">Email</th>
+      <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+      <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
+      <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Website</th>
       <th scope="col">Access type</th>
@@ -21,14 +21,14 @@
       <td>{{ user.website }}</td>
       <td>{{ user.accessType }}</td>
       <td *ngIf="accessType === 'admin'">
-        <button (click)="editUser(user.id)" class="btn btn-primary">Edit</button>
+        <button (click)="edit(user)" class="btn btn-primary">Edit</button>
         <button (click)="showDeleteModal(confirmDeleteModal, user)" class="btn btn-danger">Delete</button>
       </td>
     </tr>
   </tbody>
 </table>
 
-<div class="buttons-container">
+<div *ngIf="accessType === 'admin'" class="buttons-container">
   <button (click)="addUser()" class="btn btn-primary">Add new</button>
 </div>
 

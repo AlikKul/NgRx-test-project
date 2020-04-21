@@ -1,29 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { User } from '../shared/interfaces';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
 
+  private usersCollection: AngularFirestoreCollection<User>;
+
   constructor(
-    private http: HttpClient
+    private readonly afs: AngularFirestore
   ) {}
 
-  getAllUsers() {
-    return this.http.get(`https://ngrx-test-project.firebaseio.com/users.json?auth=${localStorage.getItem('idToken')}`)
-      .pipe(map(item => Object.values(item)));
+  getAllUsers(sortColumn, direction) {
+    this.usersCollection = this.afs.collection('users', ref => ref
+      .orderBy(sortColumn, direction)
+    );
+    return this.usersCollection.valueChanges({ idField: 'id' });
+  }
+
+  getLoggedinUser(email) {
+    return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges();
   }
 
   saveUser(user: User) {
-    return this.http.patch(`https://ngrx-test-project.firebaseio.com/users/${user.id}.json?auth=${localStorage.getItem('idToken')}`, user);
+    return this.usersCollection.doc(user.id).update(user);
   }
 
   addNewUser(user: User) {
-    return this.http.post(`https://ngrx-test-project.firebaseio.com/users.json?auth=${localStorage.getItem('idToken')}`, user);
+    return this.usersCollection.add(user);
   }
 
   deleteUser(id: string) {
-    return this.http.delete(`https://ngrx-test-project.firebaseio.com/users/${id}.json?auth=${localStorage.getItem('idToken')}`);
+    return this.usersCollection.doc(id).delete();
   }
 }
