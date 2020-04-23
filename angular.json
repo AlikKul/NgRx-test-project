@@ -132,8 +132,13 @@
               "devServerTarget": "ngrx-test-project:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ngrx-test-project"
 }

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ngrx-test-project": {
+      "hosting": {
+        "ngrx-test-project": [
+          "ngrx-test-project"
+        ]
+      }
+    }
+  }
+}
