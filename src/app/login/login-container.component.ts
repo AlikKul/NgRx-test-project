@@ -7,7 +7,12 @@ import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-container',
-  templateUrl: './login-container.component.html'
+  template: `
+    <app-login
+      [errorLogin]="loginError$ | async"
+      (loginData)=login($event);
+    ></app-login>
+  `
 })
 
 export class LoginContainerComponent implements OnInit, OnDestroy {
