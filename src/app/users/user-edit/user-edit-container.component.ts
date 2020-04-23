@@ -1,27 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, AccessType } from 'src/app/shared/interfaces';
+import { User } from 'src/app/shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
-import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-user-edit-container',
-  templateUrl: './user-edit-container.component.html',
+  template: `
+    <app-header></app-header>
+
+    <app-user-edit
+      [editUser]="editUser$ | async"
+      (addNewUser)="addNewUser($event)"
+      (updatedUser)="updateUser($event)"
+      (cancelChanges)="cancelChanges()"
+    ></app-user-edit>
+  `
 })
 export class UserEditContainerComponent implements OnInit {
 
-  users$: Observable<User[]>;
   editUser$: Observable<User>;
-  accessType$: Observable<AccessType>;
 
   constructor(
     private usersFacade: UsersFacade,
     private router: Router,
   ) {
     this.editUser$ = this.usersFacade.editUser$;
-    this.accessType$ = this.usersFacade.accessType$;
   }
 
   ngOnInit() {}

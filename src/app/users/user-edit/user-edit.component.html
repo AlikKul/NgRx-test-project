@@ -1,10 +1,10 @@
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
-  <div class="title">
+  <div *ngIf="!editUser.id" class="title">
+    <p>Add New User Page</p>
+  </div>
+  <div *ngIf="editUser.id" class="title">
     <p>User Edit Page</p>
   </div>
-
-  <label for="id">ID</label>
-  <input id="id" formControlName="id" type="text" placeholder="ID is assigned by the server">
 
   <label i18n for="name">
     Name

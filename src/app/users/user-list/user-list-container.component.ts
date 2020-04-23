@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { User, AccessType, SortEvent } from '../../shared/interfaces';
@@ -8,8 +8,19 @@ import { LoginService } from 'src/app/login/login.service';
 
 @Component({
   selector: 'app-user-list-container',
-  templateUrl: './user-list-container.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `
+    <app-header></app-header>
+
+    <app-user-list
+      [users]="users$ | async"
+      [error]="error$ | async"
+      [accessType]="accessType$ | async"
+      (initializeNewUser)="addUser()"
+      (deleteUserId)="deleteUser($event)"
+      (editUser)="editUser($event)"
+      (sort)="onSort($event)"
+    ></app-user-list>
+  `
 })
 
 export class UserListContainerComponent implements OnInit {

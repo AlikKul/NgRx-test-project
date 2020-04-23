@@ -11,9 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UserEditComponent implements OnInit {
 
-  @Input() users: User[];
   @Input() editUser: User;
-  @Input() accessType: AccessType;
   @Output() addNewUser = new EventEmitter<User>();
   @Output() updatedUser = new EventEmitter<User>();
   @Output() cancelChanges = new EventEmitter<void>();
@@ -53,7 +51,9 @@ export class UserEditComponent implements OnInit {
 
     if (!this.editUser && this.editUser !== null) {
       this.router.navigate(['user-list']);
-    } else if (this.editUser !== null) {
+      return;
+    }
+    if (this.editUser !== null) {
       this.form.patchValue(this.editUser);
     }
 
@@ -78,12 +78,12 @@ export class UserEditComponent implements OnInit {
   submit() {
     if (!this.form.get('id').value) {
       this.addNewUser.emit(this.form.value);
-    } else {
-      this.updatedUser.emit({
-        ...this.form.value,
-        id: this.editUser.id
-      });
+      return;
     }
+    this.updatedUser.emit({
+      ...this.form.value,
+      id: this.editUser.id
+    });
   }
 
   cancel() {
