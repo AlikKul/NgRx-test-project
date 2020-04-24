@@ -6,6 +6,8 @@
     <div class="user-info-access-type">Access type: {{ accessType$ |async }}</div>
   </div>
   <div class="navigation">
+    <button (click)=navToPoductList() class="header-navigation-btn">Product List</button>
+    <button (click)=navToUserList() class="header-navigation-btn">User List</button>
     <button (click)=logout() class="header-navigation-btn">Log out</button>
   </div>
 </div>

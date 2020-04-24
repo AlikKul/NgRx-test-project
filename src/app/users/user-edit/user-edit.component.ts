@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit {
   ngOnInit() {
 
     this.form = new FormGroup({
-      id: new FormControl({value: '', disabled: true}),
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(this.minNameLength)
@@ -76,7 +75,7 @@ export class UserEditComponent implements OnInit {
   }
 
   submit() {
-    if (!this.form.get('id').value) {
+    if (!this.editUser.id) {
       this.addNewUser.emit(this.form.value);
       return;
     }

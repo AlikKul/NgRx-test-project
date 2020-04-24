@@ -17,7 +17,6 @@ import { UsersEffects } from './state/users.effects';
 @NgModule({
   imports: [
     SharedModule,
-    StoreModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

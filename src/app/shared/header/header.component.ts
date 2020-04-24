@@ -34,6 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  navToPoductList() {
+    this.router.navigate(['product-list']);
+  }
+
+  navToUserList() {
+    this.router.navigate(['user-list']);
+  }
+
   logout() {
     this.router.navigate(['']);
   }

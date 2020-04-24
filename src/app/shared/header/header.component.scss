@@ -5,7 +5,6 @@
   background-color: #292929;
   color: #ffffff;
   padding: 20px;
-  margin-bottom: 20px;
 
   span {
     color: rgb(185, 247, 60);
@@ -29,6 +28,7 @@
 
   .navigation {
     .header-navigation-btn {
+      margin-left: 40px;
       background: transparent;
       border: none;
       color: #ffffff;
@@ -39,4 +39,9 @@
       text-decoration-color: rgb(185, 247, 60);
     }
   }
+}
+
+.active {
+  text-decoration: underline;
+  text-decoration-color: rgb(185, 247, 60);
 }

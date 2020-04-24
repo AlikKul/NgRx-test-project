@@ -1,0 +1,16 @@
+.buttons-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.error-section {
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 30px;
+
+  span {
+    color: red;;
+  }
+}

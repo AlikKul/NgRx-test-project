@@ -8,7 +8,7 @@ export class UsersService {
   private usersRef: AngularFirestoreCollection<User>;
 
   constructor(
-    private readonly afs: AngularFirestore
+    private afs: AngularFirestore
   ) {}
 
   getAllUsers(sortColumn, direction) {

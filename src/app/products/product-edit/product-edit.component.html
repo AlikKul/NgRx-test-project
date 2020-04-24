@@ -1,0 +1,42 @@
+<form class="card" (ngSubmit)="submit()" [formGroup]="form">
+  <div *ngIf="!editProduct.id" class="title">
+    <p>Add New Product Page</p>
+  </div>
+  <div *ngIf="editProduct.id" class="title">
+    <p>Product Edit Page</p>
+  </div>
+
+  <label for="name">
+    Product Name
+    <span *ngIf="name.invalid && name.touched">
+      <span *ngIf="name.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="name.errors.minlength">
+        Minimum length is {{ minProductNameLength }} chracters, actual: {{ name.errors.minlength.actualLength }}
+      </span>
+    </span>
+  </label>
+  <input id="name" formControlName="name" type="text" placeholder="Product Name...">
+
+  <label for="description">Description</label>
+  <input id="description" formControlName="description" type="text" placeholder="Description...">
+
+  <label for="price">
+    Price
+    <span *ngIf="price.invalid && price.touched">
+      <span *ngIf="price.errors.required">
+        This field is required
+      </span>
+      <span *ngIf="price.errors.pattern">
+        Price should contain only digits
+      </span>
+    </span>
+  </label>
+  <input id="price" formControlName="price" type="text" placeholder="Price...">
+
+  <div class="controls">
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Save</button>
+    <button type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
+  </div>
+</form>

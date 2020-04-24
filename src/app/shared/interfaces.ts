@@ -8,6 +8,13 @@ export interface User {
   accessType: AccessType;
 }
 
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
 export interface LoggedinUserInfo {
   name: string;
   accessType: AccessType;
