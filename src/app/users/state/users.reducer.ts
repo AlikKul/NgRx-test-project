@@ -2,14 +2,14 @@ import { User, AccessType } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
 export interface UsersState {
-  editUser: User | null;
+  selectedUser: User | null;
   error: string;
   loggedInUserName: string;
   accessType: AccessType;
 }
 
 const initialState: UsersState = {
-  editUser: null,
+  selectedUser: null,
   error: '',
   loggedInUserName: '',
   accessType: AccessType.Visitor,
@@ -18,16 +18,16 @@ const initialState: UsersState = {
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
   switch (action.type) {
 
-    case UsersActionTypes.SetEditUser:
+    case UsersActionTypes.SetSelectedUser:
       return {
         ...state,
-        editUser: action.payload
+        selectedUser: action.payload
       };
 
-    case UsersActionTypes.ClearEditUser:
+    case UsersActionTypes.ClearSelectedUser:
       return {
         ...state,
-        editUser: null
+        selectedUser: null
       };
 
     case UsersActionTypes.LoadFail:

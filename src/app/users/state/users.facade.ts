@@ -5,7 +5,7 @@ import {
   getError,
   getAccessType,
   getLoggedinUserName,
-  getEditUser} from './users.selectors';
+  getSelectedUser} from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType } from '../../shared/interfaces';
 import * as userActions from './users.actions';
@@ -15,7 +15,7 @@ import { UsersService } from '../users.service';
 export class UsersFacade {
 
   error$: Observable<string>;
-  editUser$: Observable<User>;
+  selectedUser$: Observable<User>;
   accessType$: Observable<AccessType>;
   loggedinUserName$: Observable<string>;
 
@@ -24,7 +24,7 @@ export class UsersFacade {
     private usersService: UsersService
   ) {
     this.error$ = this.store.pipe(select(getError));
-    this.editUser$ = this.store.pipe(select(getEditUser));
+    this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
     this.loggedinUserName$ = store.pipe(select(getLoggedinUserName));
   }
@@ -33,16 +33,16 @@ export class UsersFacade {
     return this.usersService.getAllUsers(sortColumn, direction);
   }
 
-  setEditUser(user) {
-    this.store.dispatch(new userActions.SetEditUser(user));
+  setSelectedUser(user) {
+    this.store.dispatch(new userActions.SetSelectedUser(user));
   }
 
   deleteUser(id) {
     this.store.dispatch(new userActions.DeleteUser(id));
   }
 
-  clearEditUser() {
-    this.store.dispatch(new userActions.ClearEditUser());
+  clearSelectedUser() {
+    this.store.dispatch(new userActions.ClearSelectedUser());
   }
 
   updateUser(updatedUser) {

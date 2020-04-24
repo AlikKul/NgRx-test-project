@@ -3,9 +3,9 @@ import { UsersState } from './users.reducer';
 
 const getUsersFeatureState = createFeatureSelector<UsersState>('users');
 
-export const getEditUser = createSelector(
+export const getSelectedUser = createSelector(
   getUsersFeatureState,
-  state => state.editUser
+  state => state.selectedUser
 );
 
 export const getError = createSelector(

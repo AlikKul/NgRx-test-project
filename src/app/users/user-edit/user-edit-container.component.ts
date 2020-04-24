@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
     <app-header></app-header>
 
     <app-user-edit
-      [editUser]="editUser$ | async"
+      [selectedUser]="selectedUser$ | async"
       (addNewUser)="addNewUser($event)"
       (updatedUser)="updateUser($event)"
       (cancelChanges)="cancelChanges()"
@@ -19,13 +19,13 @@ import { Router } from '@angular/router';
 })
 export class UserEditContainerComponent implements OnInit {
 
-  editUser$: Observable<User>;
+  selectedUser$: Observable<User>;
 
   constructor(
     private usersFacade: UsersFacade,
     private router: Router,
   ) {
-    this.editUser$ = this.usersFacade.editUser$;
+    this.selectedUser$ = this.usersFacade.selectedUser$;
   }
 
   ngOnInit() {}
@@ -41,7 +41,7 @@ export class UserEditContainerComponent implements OnInit {
   }
 
   cancelChanges() {
-    this.usersFacade.clearEditUser();
+    this.usersFacade.clearSelectedUser();
     this.router.navigate(['user-list']);
   }
 

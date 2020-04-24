@@ -1,8 +1,8 @@
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
-  <div *ngIf="!editUser.id" class="title">
+  <div *ngIf="!selectedUser.id" class="title">
     <p>Add New User Page</p>
   </div>
-  <div *ngIf="editUser.id" class="title">
+  <div *ngIf="selectedUser.id" class="title">
     <p>User Edit Page</p>
   </div>
 
