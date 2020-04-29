@@ -36,4 +36,9 @@ export class UsersService {
   deleteUser(id: string) {
     return this.usersRef.doc(id).delete();
   }
+
+  getAllPurchases(id: string) {
+    this.usersRef = this.afs.collection('users').doc(id).collection('purchases');
+    return this.usersRef.valueChanges({ idField: 'id' });
+  }
 }

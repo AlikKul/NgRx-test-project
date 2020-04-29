@@ -17,7 +17,8 @@ import { LoginService } from 'src/app/login/login.service';
       [accessType]="accessType$ | async"
       (initializeNewUser)="addUser()"
       (deleteUserId)="deleteUser($event)"
-      (selectedUser)="selectedUser($event)"
+      (edit)="onEdit($event)"
+      (showPurchases)="onShowPurchases($event)"
       (sort)="onSort($event)"
     ></app-user-list>
   `
@@ -51,9 +52,14 @@ export class UserListContainerComponent implements OnInit {
     this.usersFacade.deleteUser(id);
   }
 
-  selectedUser(user) {
+  onEdit(user) {
     this.usersFacade.setSelectedUser(user);
     this.router.navigate(['user-edit']);
+  }
+
+  onShowPurchases(user) {
+    this.usersFacade.setSelectedUser(user);
+    this.router.navigate(['user-purchases']);
   }
 
   addUser() {

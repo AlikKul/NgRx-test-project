@@ -13,6 +13,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/users.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './state/users.effects';
+import { UserPurchasesComponent } from './user-purchases/user-purchases.component';
+import { UserPurchasesContainerComponent } from './user-purchases/user-purchases-container.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { UsersEffects } from './state/users.effects';
     UserListComponent,
     UserListContainerComponent,
     UserEditContainerComponent,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    UserPurchasesComponent,
+    UserPurchasesContainerComponent
   ]
 })
 

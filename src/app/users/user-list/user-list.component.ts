@@ -41,7 +41,8 @@ export class UserListComponent implements OnInit {
   @Input() accessType: string;
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();
-  @Output() selectedUser = new EventEmitter<User>();
+  @Output() edit = new EventEmitter<User>();
+  @Output() showPurchases = new EventEmitter<User>();
   @Output() sort = new EventEmitter<SortEvent>();
 
   name: string;
@@ -72,8 +73,8 @@ export class UserListComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  edit(user) {
-    this.selectedUser.emit(user);
+  editUser(user) {
+    this.edit.emit(user);
   }
 
   onSort({column, direction}: SortEvent) {
@@ -85,6 +86,8 @@ export class UserListComponent implements OnInit {
     this.sort.emit({column, direction});
   }
 
-  showPurchases(user: User) {}
+  showUserPurchases(user: User) {
+    this.showPurchases.emit(user);
+  }
 
 }
