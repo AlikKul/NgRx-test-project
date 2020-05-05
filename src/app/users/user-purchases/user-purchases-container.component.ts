@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, forkJoin, combineLatest, of, Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { UsersService } from '../users.service';
 import { UsersFacade } from '../state/users.facade';
-import { User, PurchaseDetailsQuery, Product } from 'src/app/shared/interfaces';
-import { mergeMap } from 'rxjs/operators';
+import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
+import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/products/produts.service';
 
@@ -15,18 +15,18 @@ import { ProductsService } from 'src/app/products/produts.service';
     <app-user-purchases
       [purchases]="purchases$ | async"
       [selectedUser]="selectedUser$ | async"
-      [purchasedProducts]="purchasedProducts"
+      [purchasedProducts]="purchasedProducts$ | async"
       (navBack)="onNavBack()"
       (showPurchaseDitails)="onShowPurchaseDitails($event)"
     ></app-user-purchases>
   `
 })
-export class UserPurchasesContainerComponent implements OnInit, OnDestroy {
+export class UserPurchasesContainerComponent {
 
   selectedUser$: Observable<User>;
   purchases$: Observable<any>;
-  purchasedProducts: Product[] = [];
-  sub: Subscription;
+  purchasedProducts$: Observable<Product[]>;
+  purchaseDetailsQuery$: Subject<PurchaseDetailsQuery> = new Subject<PurchaseDetailsQuery>()
 
   constructor(
     private usersService: UsersService,
@@ -36,31 +36,24 @@ export class UserPurchasesContainerComponent implements OnInit, OnDestroy {
   ) {
     this.selectedUser$ = this.usersFacade.selectedUser$;
     this.purchases$ = this.selectedUser$.pipe(
-      mergeMap((user: User) => {
+      switchMap((user: User) => {
         return this.usersService.getAllPurchases(user.id);
       })
     );
-  }
-
-  ngOnInit() {}
-
-  ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.purchasedProducts$ = this.purchaseDetailsQuery$.pipe(
+      switchMap((purchaseDetailsQuery) => combineLatest(
+        this.productsService.getAllProducts(),
+        this.usersService.getPurchaseDetails(purchaseDetailsQuery)),
+      ),
+      map(([products, itemIds]) =>
+        itemIds.map(id => products.find(product => product.id === id.itemId),
+        ),
+      ),
+    );
   }
 
   onShowPurchaseDitails(purchaseDetailsQuery: PurchaseDetailsQuery) {
-    this.sub = combineLatest(
-      this.productsService.getAllProducts(),
-      this.usersService.getPurchaseDetails(purchaseDetailsQuery)
-    ).subscribe(([products, itemIds]) => {
-      this.purchasedProducts = itemIds.map(id =>
-        products.find(product =>
-          product.id === id.itemId
-        )
-      );
-    });
+    this.purchaseDetailsQuery$.next(purchaseDetailsQuery);
   }
 
   onNavBack() {
