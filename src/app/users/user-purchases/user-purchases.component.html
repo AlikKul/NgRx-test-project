@@ -2,9 +2,9 @@
 
 <div class="content-container">
 
-  <div *ngIf="!purchases.length">This user didn't make any purchases yet.</div>
+  <div *ngIf="!purchases?.length">This user didn't make any purchases yet.</div>
 
-  <div *ngIf="purchases.length" class="purchases-list">
+  <div *ngIf="purchases?.length" class="purchases-list">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -27,7 +27,7 @@
     </table>
   </div>
 
-  <div *ngIf="purchasedProducts.length" class="purchase-ditails">
+  <div *ngIf="purchasedProducts?.length" class="purchase-ditails">
     <div class="purchase-title">Purchase was made on {{ date }} in {{ location }}</div>
     <table class="table table-striped">
       <thead>

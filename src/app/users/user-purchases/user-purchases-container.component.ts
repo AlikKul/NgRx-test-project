@@ -45,7 +45,9 @@ export class UserPurchasesContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   onShowPurchaseDitails(purchaseDetailsQuery: PurchaseDetailsQuery) {
