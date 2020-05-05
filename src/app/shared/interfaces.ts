@@ -15,6 +15,21 @@ export interface Product {
   price: number;
 }
 
+export interface Purchase {
+  id: string;
+  date: string;
+  location: string;
+}
+
+export interface PurchaseDetailsQuery {
+  userId: string;
+  purchaseId: string;
+}
+
+export interface PurchasedItem {
+  id: string;
+}
+
 export interface LoggedinUserInfo {
   name: string;
   accessType: AccessType;

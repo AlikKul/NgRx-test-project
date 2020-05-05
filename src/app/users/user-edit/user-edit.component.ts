@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { User, AccessType } from '../../shared/interfaces';
+import { User } from '../../shared/interfaces';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Purchase, User, PurchaseDetailsQuery, Product } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-user-purchases',
@@ -7,11 +8,31 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserPurchasesComponent implements OnInit {
 
-  @Input() purchases;
+  @Input() purchases: Purchase[];
+  @Input() selectedUser: User;
+  @Input() purchasedProducts: Product[];
+  @Output() showPurchaseDitails = new EventEmitter<PurchaseDetailsQuery>();
+  @Output() navBack = new EventEmitter<void>();
+
+  date: string;
+  location: string;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  back() {
+    this.navBack.emit();
+  }
+
+  purchaseDetails(purchase: Purchase) {
+    this.showPurchaseDitails.emit({
+      userId: this.selectedUser.id,
+      purchaseId: purchase.id
+    });
+    this.date = purchase.date;
+    this.location = purchase.location;
   }
 
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginData, FirebaseAuthResponse } from '../shared/interfaces';
 import { firebaseConfig } from '../../environments/env';
-import { tap, map, flatMap } from 'rxjs/operators';
+import { tap, mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UsersService } from '../users/users.service';
 
@@ -20,7 +20,7 @@ export class LoginService {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`, loginData)
       .pipe(
         tap(this.setToken),
-        flatMap((resp: FirebaseAuthResponse) => {
+        mergeMap((resp: FirebaseAuthResponse) => {
           return this.usersSrevice.getLoggedinUser(resp.email);
         })
       );

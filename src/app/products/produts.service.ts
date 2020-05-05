@@ -5,8 +5,6 @@ import { Product } from '../shared/interfaces';
 @Injectable({providedIn: 'root'})
 export class ProductsService {
 
-  // private productsRef: AngularFirestoreCollection<Product>;
-
   constructor(
     private afs: AngularFirestore
   ) {}

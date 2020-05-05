@@ -1,6 +1,53 @@
-<p>user-purchases works!</p>
+<div class="page-title">{{ selectedUser.name }}'s Purchases</div>
 
+<div class="content-container">
 
-<ul>
-  <li *ngFor="let purchase of purchases">{{purchase.date}}</li>
-</ul>
+  <div *ngIf="!purchases.length">This user didn't make any purchases yet.</div>
+
+  <div *ngIf="purchases.length" class="purchases-list">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date of purchase</th>
+          <th scope="col">Loaction</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let purchase of purchases; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ purchase.date }}</td>
+          <td>{{ purchase.location }}</td>
+          <td>
+            <button (click)="purchaseDetails(purchase)" class="btn btn-primary">Show details</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="purchasedProducts.length" class="purchase-ditails">
+    <div class="purchase-title">Purchase was made on {{ date }} in {{ location }}</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name of product</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of purchasedProducts; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="buttons-container">
+  <button (click)="back()" class="btn btn-primary">Back</button>
+</div>
