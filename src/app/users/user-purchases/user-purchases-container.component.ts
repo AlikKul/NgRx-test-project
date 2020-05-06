@@ -3,7 +3,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { UsersService } from '../users.service';
 import { UsersFacade } from '../state/users.facade';
 import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/products/produts.service';
 

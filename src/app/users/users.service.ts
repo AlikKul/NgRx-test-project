@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User, PurchaseDetailsQuery } from '../shared/interfaces';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, from } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -25,16 +26,16 @@ export class UsersService {
     return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges();
   }
 
-  saveUser(user: User) {
-    return this.usersRef.doc(user.id).update(user);
+  saveUser(user: User): Observable<any> {
+    return from(this.usersRef.doc(user.id).update(user));
   }
 
-  addNewUser(user: User) {
-    return this.usersRef.add(user);
+  addNewUser(user: User): Observable<any> {
+    return from(this.usersRef.add(user));
   }
 
-  deleteUser(id: string) {
-    return this.usersRef.doc(id).delete();
+  deleteUser(id: string): Observable<any> {
+    return from(this.usersRef.doc(id).delete());
   }
 
   getAllPurchases(id: string) {
