@@ -5,10 +5,11 @@ import {
   getError,
   getAccessType,
   getLoggedInUserName,
-  getSelectedUser} from './users.selectors';
+  getSelectedUser,
+  getUsersPurchases} from './users.selectors';
 import { Observable } from 'rxjs';
-import { User, AccessType } from '../../shared/interfaces';
-import * as userActions from './users.actions';
+import { User, AccessType, Purchase } from '../../shared/interfaces';
+import * as usersActions from './users.actions';
 import { UsersService } from '../users.service';
 
 @Injectable({providedIn: 'root'})
@@ -16,6 +17,7 @@ export class UsersFacade {
 
   error$: Observable<string>;
   selectedUser$: Observable<User>;
+  usersPurchases$: Observable<Purchase[]>;
   accessType$: Observable<AccessType>;
   loggedInUserName$: Observable<string>;
 
@@ -25,6 +27,7 @@ export class UsersFacade {
   ) {
     this.error$ = this.store.pipe(select(getError));
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
+    this.usersPurchases$ = this.store.pipe(select(getUsersPurchases));
     this.accessType$ = this.store.pipe(select(getAccessType));
     this.loggedInUserName$ = store.pipe(select(getLoggedInUserName));
   }
@@ -34,31 +37,39 @@ export class UsersFacade {
   }
 
   setSelectedUser(user) {
-    this.store.dispatch(new userActions.SetSelectedUser(user));
+    this.store.dispatch(new usersActions.SetSelectedUser(user));
   }
 
   deleteUser(id) {
-    this.store.dispatch(new userActions.DeleteUser(id));
+    this.store.dispatch(new usersActions.DeleteUser(id));
   }
 
   clearSelectedUser() {
-    this.store.dispatch(new userActions.ClearSelectedUser());
+    this.store.dispatch(new usersActions.ClearSelectedUser());
   }
 
   updateUser(updatedUser) {
-    this.store.dispatch(new userActions.SaveUser(updatedUser));
+    this.store.dispatch(new usersActions.SaveUser(updatedUser));
   }
 
   addNewUser(user) {
     return this.usersService.addNewUser(user);
   }
 
+  getUsersPurchases(id) {
+    this.store.dispatch(new usersActions.GetUsersPurchases(id));
+  }
+
+  clearUsersPurchases() {
+    this.store.dispatch(new usersActions.ClearUsersPurchases());
+  }
+
   setAccessType(value) {
-    this.store.dispatch(new userActions.SetAccessType(value));
+    this.store.dispatch(new usersActions.SetAccessType(value));
   }
 
   setLoggedInUserName(name) {
-    this.store.dispatch(new userActions.SetLoggedInUserName(name));
+    this.store.dispatch(new usersActions.SetLoggedInUserName(name));
   }
 
 }

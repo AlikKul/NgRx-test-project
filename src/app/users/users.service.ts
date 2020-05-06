@@ -38,9 +38,9 @@ export class UsersService {
     return from(this.usersRef.doc(id).delete());
   }
 
-  getAllPurchases(id: string) {
+  getAllPurchases(id: string): Observable<any> {
     this.usersRef = this.afs.collection('users').doc(id).collection('purchases');
-    return this.usersRef.valueChanges({ idField: 'id' });
+    return from(this.usersRef.valueChanges({ idField: 'id' }));
   }
 
   getPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {

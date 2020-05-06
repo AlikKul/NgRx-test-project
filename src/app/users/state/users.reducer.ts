@@ -1,8 +1,9 @@
-import { User, AccessType } from '../../shared/interfaces';
+import { User, AccessType, Purchase } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
 export interface UsersState {
   selectedUser: User | null;
+  usersPurchases: Purchase[];
   error: string;
   loggedInUserName: string;
   accessType: AccessType;
@@ -10,6 +11,7 @@ export interface UsersState {
 
 const initialState: UsersState = {
   selectedUser: null,
+  usersPurchases: [],
   error: '',
   loggedInUserName: '',
   accessType: AccessType.Visitor,
@@ -61,6 +63,24 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       return {
         ...state,
         error: action.payload
+      };
+
+    case UsersActionTypes.GetUsersPurchasesSuccess:
+      return {
+        ...state,
+        usersPurchases: action.payload
+      };
+
+    case UsersActionTypes.GetUsersPurchasesFail:
+      return {
+        ...state,
+        error: action.payload
+      };
+
+    case UsersActionTypes.ClearUsersPurchases:
+      return {
+        ...state,
+        usersPurchases: []
       };
 
     case UsersActionTypes.SetLoggedInUserName:

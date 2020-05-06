@@ -5,6 +5,7 @@ import { User, AccessType, SortEvent } from '../../shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/login/login.service';
+import { ProductsFacade } from 'src/app/products/state/products.facade';
 
 @Component({
   selector: 'app-user-list-container',
@@ -33,6 +34,7 @@ export class UserListContainerComponent implements OnInit {
 
   constructor(
     private usersFacade: UsersFacade,
+    private productsFacade: ProductsFacade,
     private router: Router,
     private loginService: LoginService
   ) {
@@ -46,6 +48,7 @@ export class UserListContainerComponent implements OnInit {
       localStorage.clear();
       this.router.navigate(['']);
     }
+    this.usersFacade.clearUsersPurchases();
   }
 
   deleteUser(id) {
@@ -59,6 +62,7 @@ export class UserListContainerComponent implements OnInit {
 
   onShowPurchases(user) {
     this.usersFacade.setSelectedUser(user);
+    this.productsFacade.getAllProducts();
     this.router.navigate(['user-purchases']);
   }
 

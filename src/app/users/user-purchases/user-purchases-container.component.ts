@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { UsersService } from '../users.service';
 import { UsersFacade } from '../state/users.facade';
 import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/products/products.service';
+import { ProductsFacade } from 'src/app/products/state/products.facade';
 
 @Component({
   selector: 'app-user-purchases-container',
@@ -21,7 +22,7 @@ import { ProductsService } from 'src/app/products/products.service';
     ></app-user-purchases>
   `
 })
-export class UserPurchasesContainerComponent {
+export class UserPurchasesContainerComponent implements OnInit {
 
   selectedUser$: Observable<User>;
   purchases$: Observable<any>;
@@ -30,19 +31,18 @@ export class UserPurchasesContainerComponent {
 
   constructor(
     private usersService: UsersService,
-    private productsService: ProductsService,
+    private productsFacade: ProductsFacade,
     private usersFacade: UsersFacade,
     private router: Router
   ) {
-    this.selectedUser$ = this.usersFacade.selectedUser$;
-    this.purchases$ = this.selectedUser$.pipe(
-      switchMap((user: User) => {
-        return this.usersService.getAllPurchases(user.id);
-      })
-    );
+    this.selectedUser$ = this.usersFacade.selectedUser$
+      .pipe(
+        tap((user: User) => this.usersFacade.getUsersPurchases(user.id))
+      );
+    this.purchases$ = usersFacade.usersPurchases$;
     this.purchasedProducts$ = this.purchaseDetailsQuery$.pipe(
       switchMap((purchaseDetailsQuery) => combineLatest(
-        this.productsService.getAllProducts(),
+        this.productsFacade.products$,
         this.usersService.getPurchaseDetails(purchaseDetailsQuery)),
       ),
       map(([products, itemIds]) =>
@@ -51,6 +51,8 @@ export class UserPurchasesContainerComponent {
       ),
     );
   }
+
+  ngOnInit() {}
 
   onShowPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {
     this.purchaseDetailsQuery$.next(purchaseDetailsQuery);

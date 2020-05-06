@@ -8,6 +8,11 @@ export const getSelectedUser = createSelector(
   state => state.selectedUser
 );
 
+export const getUsersPurchases = createSelector(
+  getUsersFeatureState,
+  state => state.usersPurchases
+);
+
 export const getError = createSelector(
   getUsersFeatureState,
   state => state.error

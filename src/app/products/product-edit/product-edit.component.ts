@@ -13,6 +13,7 @@ export class ProductEditComponent implements OnInit {
 
   form: FormGroup;
   @Input() editProduct: Product;
+  @Input() error: string;
   @Output() addNewProduct = new EventEmitter<Product>();
   @Output() updateProduct = new EventEmitter<Product>();
   @Output() cancelChanges = new EventEmitter<void>();

@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { User } from '../../shared/interfaces';
+import { User, Purchase } from '../../shared/interfaces';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 
@@ -47,6 +47,18 @@ export class UsersEffects {
       this.usersService.deleteUser(id).pipe(
         map(() => (new usersActions.DeleteUserSuccess())),
         catchError(error => of(new usersActions.AddNewUserFail(error.message)))
+      )
+    )
+  );
+
+  @Effect()
+  getUsersPurchases$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.GetUsersPurchases),
+    map((action: usersActions.GetUsersPurchases) => action.payload),
+    switchMap((id: string) =>
+      this.usersService.getAllPurchases(id).pipe(
+        map((purchases: Purchase[]) => (new usersActions.GetUsersPurchasesSuccess(purchases))),
+        catchError(error => of(new usersActions.GetUsersPurchasesFail(error.message)))
       )
     )
   );

@@ -10,6 +10,8 @@ import { ProductEditContainerComponent } from './product-edit/product-edit-conta
 // NgRx
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/products.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from './state/products.effects';
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import { reducer } from './state/products.reducer';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('products', reducer)
+    StoreModule.forFeature('products', reducer),
+    EffectsModule.forFeature([ProductsEffects])
   ],
   declarations: [
     ProductListComponent,

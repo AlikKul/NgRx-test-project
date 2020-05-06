@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
-import { getEditProduct } from '../state/products.selectors';
-import { ClearEditProduct } from '../state/products.actions';
+import { getEditProduct, getError } from '../state/products.selectors';
 import { Router } from '@angular/router';
-import { ProductsService } from '../products.service';
+import { ProductsFacade } from '../state/products.facade';
 
 @Component({
   selector: 'app-product-edit-container',
@@ -23,32 +22,29 @@ import { ProductsService } from '../products.service';
 export class ProductEditContainerComponent implements OnInit {
 
   editProduct$: Observable<Product>;
+  error$: Observable<string>;
 
   constructor(
     private store: Store,
     private router: Router,
-    private productService: ProductsService
+    private productsFacade: ProductsFacade
   ) {
     this.editProduct$ = this.store.pipe(select(getEditProduct));
+    this.error$ = this.store.pipe(select(getError));
   }
 
   ngOnInit() {
   }
 
   addNewProduct(product) {
-    this.productService.addNewProduct(product);
-    this.store.dispatch(new ClearEditProduct());
-    this.router.navigate(['product-list']);
+    this.productsFacade.addNewProduct(product);
   }
 
   updateProduct(product) {
-    this.productService.updateProduct(product);
-    this.store.dispatch(new ClearEditProduct());
-    this.router.navigate(['product-list']);
+    this.productsFacade.saveEditedProduct(product);
   }
 
   cancelChanges() {
-    this.store.dispatch(new ClearEditProduct());
     this.router.navigate(['product-list']);
   }
 

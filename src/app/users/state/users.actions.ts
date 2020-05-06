@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, AccessType } from '../../shared/interfaces';
+import { User, AccessType, Purchase } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   SetSelectedUser = '[Users] Set Selected User',
@@ -14,6 +14,10 @@ export enum UsersActionTypes {
   DeleteUser = '[Users] Delete User',
   DeleteUserSuccess = '[Users] Delete User Success',
   DeleteUserFail = '[Users] Delete User Fail',
+  GetUsersPurchases = '[Users] Get Users Purchases',
+  GetUsersPurchasesSuccess = '[Users] Get Users Purchases Success',
+  GetUsersPurchasesFail = '[Users] Get Users Purchases Fail',
+  ClearUsersPurchases = '[Users] Clear Users Purchases',
   SetLoggedInUserName = '[Users] Set LoggedIn User Name',
   SetAccessType = '[Users] Set Access Type',
 }
@@ -34,7 +38,6 @@ export class LoadFail implements Action {
 
 export class SaveUser implements Action {
   readonly type = UsersActionTypes.SaveUser;
-
   constructor(public payload: User) {}
 }
 
@@ -75,6 +78,25 @@ export class DeleteUserFail implements Action {
   constructor(public payload: string) {}
 }
 
+export class GetUsersPurchases implements Action {
+  readonly type = UsersActionTypes.GetUsersPurchases;
+  constructor(public payload: string) {}
+}
+
+export class GetUsersPurchasesSuccess implements Action {
+  readonly type = UsersActionTypes.GetUsersPurchasesSuccess;
+  constructor(public payload: Purchase[]) {}
+}
+
+export class GetUsersPurchasesFail implements Action {
+  readonly type = UsersActionTypes.GetUsersPurchasesFail;
+  constructor(public payload: string) {}
+}
+
+export class ClearUsersPurchases implements Action {
+  readonly type = UsersActionTypes.ClearUsersPurchases;
+}
+
 export class SetLoggedInUserName implements Action {
   readonly type = UsersActionTypes.SetLoggedInUserName;
   constructor(public payload: string) {}
@@ -97,5 +119,9 @@ export type UsersActions = SetSelectedUser
   | DeleteUser
   | DeleteUserSuccess
   | DeleteUserFail
+  | GetUsersPurchases
+  | GetUsersPurchasesSuccess
+  | GetUsersPurchasesFail
+  | ClearUsersPurchases
   | SetLoggedInUserName
   | SetAccessType;

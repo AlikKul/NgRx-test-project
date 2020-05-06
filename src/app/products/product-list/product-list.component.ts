@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ProductListComponent implements OnInit {
 
   @Input() products: Product[];
+  @Input() error: string;
   @Output() editProduct = new EventEmitter<Product>();
   @Output() deleteProductId = new EventEmitter<string>();
   @Output() initializeNewProduct = new EventEmitter<void>();

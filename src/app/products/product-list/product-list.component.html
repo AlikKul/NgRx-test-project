@@ -27,6 +27,8 @@
   <button (click)="addProduct()" class="btn btn-primary">Add new</button>
 </div>
 
+<div *ngIf="error" class="error-section">Error occurred: <span>{{ error }}</span> Try reload the page.</div>
+
 <ng-template #confirmDeleteModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Product deletion</h4>
