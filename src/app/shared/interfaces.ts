@@ -30,7 +30,7 @@ export interface PurchasedItem {
   id: string;
 }
 
-export interface LoggedinUserInfo {
+export interface LoggedInUserInfo {
   name: string;
   accessType: AccessType;
 }

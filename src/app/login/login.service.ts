@@ -21,7 +21,7 @@ export class LoginService {
       .pipe(
         tap(this.setToken),
         mergeMap((resp: FirebaseAuthResponse) => {
-          return this.usersSrevice.getLoggedinUser(resp.email);
+          return this.usersSrevice.getLoggedInUser(resp.email);
         })
       );
   }

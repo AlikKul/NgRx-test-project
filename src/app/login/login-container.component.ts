@@ -37,7 +37,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   login(loginData: LoginData) {
     this.sub = this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
       .subscribe((resp: User[]) => {
-        this.usersFacade.setLoggedinUserName(resp[0].name);
+        this.usersFacade.setLoggedInUserName(resp[0].name);
         this.usersFacade.setAccessType(resp[0].accessType);
         this.router.navigate(['user-list']);
       },

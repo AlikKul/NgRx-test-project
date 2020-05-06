@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, AccessType, SortColumn } from '../../shared/interfaces';
+import { User, AccessType } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   SetSelectedUser = '[Users] Set Selected User',
@@ -8,13 +8,13 @@ export enum UsersActionTypes {
   SaveUser = '[Users] Save User',
   SaveUserSuccess = '[Users] Save User Success',
   SaveUserFail = '[Users] Save User Fail',
-  AddNewUser = '[Uers] Add New User',
-  AddNewUserSuccess = '[Uers] Add New User Success',
-  AddNewUserFail = '[Uers] Add New User Fail',
+  AddNewUser = '[Users] Add New User',
+  AddNewUserSuccess = '[Users] Add New User Success',
+  AddNewUserFail = '[Users] Add New User Fail',
   DeleteUser = '[Users] Delete User',
   DeleteUserSuccess = '[Users] Delete User Success',
   DeleteUserFail = '[Users] Delete User Fail',
-  SetLoggedInUserName = '[Users] Set Loggedin User Name',
+  SetLoggedInUserName = '[Users] Set LoggedIn User Name',
   SetAccessType = '[Users] Set Access Type',
 }
 
@@ -54,7 +54,6 @@ export class AddNewUser implements Action {
 
 export class AddNewUserSuccess implements Action {
   readonly type = UsersActionTypes.AddNewUserSuccess;
-  // constructor(public payload: User) {}
 }
 
 export class AddNewUserFail implements Action {

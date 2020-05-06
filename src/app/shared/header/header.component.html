@@ -1,12 +1,12 @@
 <div class="header-section">
-  <div class="title">Welcom to NgRx test project<span>.</span></div>
+  <div class="title">Welcome to NgRx test project<span>.</span></div>
   <div class="user-info">
     <div class="user-info-title">You are singed in as:</div>
     <div class="user-info-name">{{ userName$ |async }}</div>
     <div class="user-info-access-type">Access type: {{ accessType$ |async }}</div>
   </div>
   <div class="navigation">
-    <button (click)=navToPoductList() class="header-navigation-btn">Product List</button>
+    <button (click)=navToProductList() class="header-navigation-btn">Product List</button>
     <button (click)=navToUserList() class="header-navigation-btn">User List</button>
     <button (click)=logout() class="header-navigation-btn">Log out</button>
   </div>

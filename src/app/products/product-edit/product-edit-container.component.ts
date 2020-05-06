@@ -5,7 +5,7 @@ import { Product } from 'src/app/shared/interfaces';
 import { getEditProduct } from '../state/products.selectors';
 import { ClearEditProduct } from '../state/products.actions';
 import { Router } from '@angular/router';
-import { ProductsService } from '../produts.service';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-edit-container',

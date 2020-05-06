@@ -3,9 +3,9 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { UsersService } from '../users.service';
 import { UsersFacade } from '../state/users.facade';
 import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ProductsService } from 'src/app/products/produts.service';
+import { ProductsService } from 'src/app/products/products.service';
 
 @Component({
   selector: 'app-user-purchases-container',
@@ -17,7 +17,7 @@ import { ProductsService } from 'src/app/products/produts.service';
       [selectedUser]="selectedUser$ | async"
       [purchasedProducts]="purchasedProducts$ | async"
       (navBack)="onNavBack()"
-      (showPurchaseDitails)="onShowPurchaseDitails($event)"
+      (showPurchaseDetails)="onShowPurchaseDetails($event)"
     ></app-user-purchases>
   `
 })
@@ -26,7 +26,7 @@ export class UserPurchasesContainerComponent {
   selectedUser$: Observable<User>;
   purchases$: Observable<any>;
   purchasedProducts$: Observable<Product[]>;
-  purchaseDetailsQuery$: Subject<PurchaseDetailsQuery> = new Subject<PurchaseDetailsQuery>()
+  purchaseDetailsQuery$: Subject<PurchaseDetailsQuery> = new Subject<PurchaseDetailsQuery>();
 
   constructor(
     private usersService: UsersService,
@@ -52,7 +52,7 @@ export class UserPurchasesContainerComponent {
     );
   }
 
-  onShowPurchaseDitails(purchaseDetailsQuery: PurchaseDetailsQuery) {
+  onShowPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {
     this.purchaseDetailsQuery$.next(purchaseDetailsQuery);
   }
 

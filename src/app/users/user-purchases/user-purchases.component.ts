@@ -11,7 +11,7 @@ export class UserPurchasesComponent implements OnInit {
   @Input() purchases: Purchase[];
   @Input() selectedUser: User;
   @Input() purchasedProducts: Product[];
-  @Output() showPurchaseDitails = new EventEmitter<PurchaseDetailsQuery>();
+  @Output() showPurchaseDetails = new EventEmitter<PurchaseDetailsQuery>();
   @Output() navBack = new EventEmitter<void>();
 
   date: string;
@@ -27,7 +27,7 @@ export class UserPurchasesComponent implements OnInit {
   }
 
   purchaseDetails(purchase: Purchase) {
-    this.showPurchaseDitails.emit({
+    this.showPurchaseDetails.emit({
       userId: this.selectedUser.id,
       purchaseId: purchase.id
     });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../produts.service';
+import { ProductsService } from '../products.service';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
 import { SetEditProduct } from '../state/products.actions';

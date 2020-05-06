@@ -28,7 +28,7 @@ export class UserListContainerComponent implements OnInit {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
-  loggedinUser$: Observable<any>;
+  loggedInUser$: Observable<any>;
   accessType$: Observable<AccessType>;
 
   constructor(

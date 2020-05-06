@@ -4,7 +4,7 @@ import { UsersState } from './users.reducer';
 import {
   getError,
   getAccessType,
-  getLoggedinUserName,
+  getLoggedInUserName,
   getSelectedUser} from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType } from '../../shared/interfaces';
@@ -17,7 +17,7 @@ export class UsersFacade {
   error$: Observable<string>;
   selectedUser$: Observable<User>;
   accessType$: Observable<AccessType>;
-  loggedinUserName$: Observable<string>;
+  loggedInUserName$: Observable<string>;
 
   constructor(
     private store: Store<UsersState>,
@@ -26,7 +26,7 @@ export class UsersFacade {
     this.error$ = this.store.pipe(select(getError));
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.accessType$ = this.store.pipe(select(getAccessType));
-    this.loggedinUserName$ = store.pipe(select(getLoggedinUserName));
+    this.loggedInUserName$ = store.pipe(select(getLoggedInUserName));
   }
 
   load(sortColumn, direction) {
@@ -57,7 +57,7 @@ export class UsersFacade {
     this.store.dispatch(new userActions.SetAccessType(value));
   }
 
-  setLoggedinUserName(name) {
+  setLoggedInUserName(name) {
     this.store.dispatch(new userActions.SetLoggedInUserName(name));
   }
 

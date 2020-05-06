@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private usersFacade: UsersFacade
   ) {
-    this.userName$ = this.usersFacade.loggedinUserName$;
+    this.userName$ = this.usersFacade.loggedInUserName$;
     this.accessType$ = this.usersFacade.accessType$;
   }
 
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  navToPoductList() {
+  navToProductList() {
     this.router.navigate(['product-list']);
   }
 

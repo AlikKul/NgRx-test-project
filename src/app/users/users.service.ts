@@ -22,7 +22,7 @@ export class UsersService {
     return this.usersRef.valueChanges({ idField: 'id' });
   }
 
-  getLoggedinUser(email) {
+  getLoggedInUser(email) {
     return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges();
   }
 
