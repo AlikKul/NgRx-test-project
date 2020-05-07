@@ -2,9 +2,9 @@ import { Action } from '@ngrx/store';
 import { Product } from 'src/app/shared/interfaces';
 
 export enum ProductsActionsTypes {
-  GetAllProducts = '[Products] Get All Products',
-  GetAllProductsSuccess = '[Products] Get All Products Success',
-  GetAllProductsFail = '[Products] Get All Products Fail',
+  GetProducts = '[Products] Get Products',
+  GetProductsSuccess = '[Products] Get Products Success',
+  GetProductsFail = '[Products] Get Products Fail',
   AddNewProduct = '[Products] Add New Product',
   AddNewProductSuccess = '[Products] Add New Product Success',
   AddNewProductFail = '[Products] Add New Product Fail',
@@ -18,17 +18,18 @@ export enum ProductsActionsTypes {
   ClearEditProduct = '[Products] Clear Edit Product'
 }
 
-export class GetAllProducts implements Action {
-  readonly type = ProductsActionsTypes.GetAllProducts;
+export class GetProducts implements Action {
+  readonly type = ProductsActionsTypes.GetProducts;
+  constructor(public payload: string) {}
 }
 
-export class GetAllProductsSuccess implements Action {
-  readonly type = ProductsActionsTypes.GetAllProductsSuccess;
+export class GetProductsSuccess implements Action {
+  readonly type = ProductsActionsTypes.GetProductsSuccess;
   constructor(public payload: Product[]) {}
 }
 
-export class GetAllProductsFail implements Action {
-  readonly type = ProductsActionsTypes.GetAllProductsFail;
+export class GetProductsFail implements Action {
+  readonly type = ProductsActionsTypes.GetProductsFail;
   constructor(public payload: string) {}
 }
 
@@ -84,9 +85,9 @@ export class ClearEditProduct implements Action {
 }
 
 export type ProductsActions =
-    GetAllProducts
-  | GetAllProductsSuccess
-  | GetAllProductsFail
+    GetProducts
+  | GetProductsSuccess
+  | GetProductsFail
   | AddNewProduct
   | AddNewProductSuccess
   | AddNewProductFail

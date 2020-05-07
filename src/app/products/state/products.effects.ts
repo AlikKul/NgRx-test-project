@@ -18,10 +18,11 @@ export class ProductsEffects {
   ) {}
 
   @Effect()
-  getAllProducts$: Observable<Action> = this.actions$.pipe(
-    ofType(productsActions.ProductsActionsTypes.GetAllProducts),
-    switchMap(() => this.productsService.getAllProducts().pipe(
-      map((products: Product[]) => (new productsActions.GetAllProductsSuccess(products))),
+  getProducts$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.GetProducts),
+    map((action: productsActions.GetProducts) => action.payload),
+    switchMap((name: string) => this.productsService.getProducts(name).pipe(
+      map((products: Product[]) => (new productsActions.GetProductsSuccess(products))),
       catchError(error => of(new productsActions.AddNewProductFail(error)))
     ))
   );

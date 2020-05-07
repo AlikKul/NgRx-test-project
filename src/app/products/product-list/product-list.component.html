@@ -1,5 +1,17 @@
 <div class="page-title">Product List</div>
-<table class="table table-striped">
+
+<div class="actions">
+  <div class="search-section">
+    <label for="name">Search by product name (case sensitive):</label>
+    <input (input)="queryProductName($event)" type="text" id="name">
+    <p *ngIf="!products?.length">No matches found.</p>
+  </div>
+  <div class="buttons-container">
+    <button (click)="addProduct()" class="btn btn-primary">Add new</button>
+  </div>
+</div>
+
+<table *ngIf="products?.length" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -22,10 +34,6 @@
     </tr>
   </tbody>
 </table>
-
-<div class="buttons-container">
-  <button (click)="addProduct()" class="btn btn-primary">Add new</button>
-</div>
 
 <div *ngIf="error" class="error-section">Error occurred: <span>{{ error }}</span> Try reload the page.</div>
 

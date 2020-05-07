@@ -16,16 +16,16 @@ const initialState: ProductsState = {
 export function reducer(state: ProductsState = initialState, action: ProductsActions): ProductsState {
   switch (action.type) {
 
-    case ProductsActionsTypes.GetAllProducts:
+    case ProductsActionsTypes.GetProducts:
       return state;
 
-    case ProductsActionsTypes.GetAllProductsSuccess:
+    case ProductsActionsTypes.GetProductsSuccess:
       return {
         ...state,
         products: action.payload
       };
 
-    case ProductsActionsTypes.GetAllProductsFail:
+    case ProductsActionsTypes.GetProductsFail:
       return {
         ...state,
         error: action.payload

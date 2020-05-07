@@ -15,6 +15,7 @@ import { ProductsFacade } from '../state/products.facade';
       (editProduct)=editProduct($event)
       (deleteProductId)="deleteProduct($event)"
       (initializeNewProduct)="addNewProduct()"
+      (productNameQuery)="productNameQuery($event)"
     ></app-product-list>
   `
 })
@@ -32,7 +33,7 @@ export class ProductListContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsFacade.getAllProducts();
+    this.productsFacade.getProducts();
   }
 
   addNewProduct() {
@@ -52,6 +53,10 @@ export class ProductListContainerComponent implements OnInit {
   editProduct(product) {
     this.productsFacade.setSelectedProduct(product);
     this.router.navigate(['product-edit']);
+  }
+
+  productNameQuery(name: string) {
+    this.productsFacade.getProducts(name);
   }
 
 }

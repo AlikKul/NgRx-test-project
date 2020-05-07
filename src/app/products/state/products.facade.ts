@@ -19,8 +19,8 @@ export class ProductsFacade {
     this.error$ = this.store.pipe(select(getError));
   }
 
-  getAllProducts() {
-    this.store.dispatch(new productsActions.GetAllProducts());
+  getProducts(name?) {
+    this.store.dispatch(new productsActions.GetProducts(name));
   }
 
   setSelectedProduct(product) {

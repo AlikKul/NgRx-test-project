@@ -52,7 +52,7 @@ export class UserPurchasesContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsFacade.getAllProducts();
+    this.productsFacade.getProducts();
   }
 
   onShowPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Product } from '../shared/interfaces';
 import { Observable, from } from 'rxjs';
 
@@ -10,8 +10,13 @@ export class ProductsService {
     private afs: AngularFirestore
   ) {}
 
-  getAllProducts() {
-    return this.afs.collection<Product>('products').valueChanges({ idField: 'id' });
+  getProducts(name) {
+    if (!name) {
+      return this.afs.collection<Product>('products').valueChanges({ idField: 'id' });
+    }
+    return this.afs.collection<Product>('products', ref => {
+      return ref.orderBy('name').startAt(name).endAt(name + '\uf8ff');
+    }).valueChanges({ idField: 'id' });
   }
 
   addNewProduct(product: Product): Observable<any> {

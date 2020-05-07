@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   @Output() editProduct = new EventEmitter<Product>();
   @Output() deleteProductId = new EventEmitter<string>();
   @Output() initializeNewProduct = new EventEmitter<void>();
+  @Output() productNameQuery = new EventEmitter<string>();
 
   name: string;
   id: string;
@@ -47,6 +48,10 @@ export class ProductListComponent implements OnInit {
 
   deleteCanceled() {
     this.modalService.dismissAll();
+  }
+
+  queryProductName(event) {
+    this.productNameQuery.emit(event.target.value);
   }
 
 }
