@@ -2,9 +2,9 @@ import { Action } from '@ngrx/store';
 import { Product } from 'src/app/shared/interfaces';
 
 export enum ProductsActionsTypes {
-  GetAllProducts = '[Products] GetAllProducts',
-  GetAllProductsSuccess = '[Products] GetAllProducts Success',
-  GetAllProductsFail = '[Products] GetAllProducts Fail',
+  GetAllProducts = '[Products] Get All Products',
+  GetAllProductsSuccess = '[Products] Get All Products Success',
+  GetAllProductsFail = '[Products] Get All Products Fail',
   AddNewProduct = '[Products] Add New Product',
   AddNewProductSuccess = '[Products] Add New Product Success',
   AddNewProductFail = '[Products] Add New Product Fail',

@@ -5,7 +5,6 @@ import { UsersFacade } from '../state/users.facade';
 import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ProductsService } from 'src/app/products/products.service';
 import { ProductsFacade } from 'src/app/products/state/products.facade';
 
 @Component({
@@ -52,7 +51,9 @@ export class UserPurchasesContainerComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.productsFacade.getAllProducts();
+  }
 
   onShowPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {
     this.purchaseDetailsQuery$.next(purchaseDetailsQuery);

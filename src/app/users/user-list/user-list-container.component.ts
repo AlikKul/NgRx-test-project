@@ -62,7 +62,6 @@ export class UserListContainerComponent implements OnInit {
 
   onShowPurchases(user) {
     this.usersFacade.setSelectedUser(user);
-    this.productsFacade.getAllProducts();
     this.router.navigate(['user-purchases']);
   }
 
