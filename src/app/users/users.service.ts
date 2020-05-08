@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User, PurchaseDetailsQuery } from '../shared/interfaces';
+import { User, PurchaseDetailsQuery, Purchase } from '../shared/interfaces';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -43,12 +44,14 @@ export class UsersService {
     return from(this.usersRef.valueChanges({ idField: 'id' }));
   }
 
-  getPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {
+  getPurchasedProductsIds(purchaseDetailsQuery: PurchaseDetailsQuery) {
     return this.afs.collection('users')
       .doc(purchaseDetailsQuery.userId)
       .collection('purchases')
       .doc(purchaseDetailsQuery.purchaseId)
-      .collection<{itemId: string}>('purchasedItems')
-      .valueChanges();
+      .valueChanges()
+        .pipe(
+          map((purchase: Purchase) => purchase.purchasedItems)
+        );
   }
 }

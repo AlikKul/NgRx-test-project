@@ -19,6 +19,7 @@ export interface Purchase {
   id: string;
   date: string;
   location: string;
+  purchasedItems: string[];
 }
 
 export interface PurchaseDetailsQuery {

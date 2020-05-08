@@ -42,10 +42,10 @@ export class UserPurchasesContainerComponent implements OnInit {
     this.purchasedProducts$ = this.purchaseDetailsQuery$.pipe(
       switchMap((purchaseDetailsQuery) => combineLatest(
         this.productsFacade.products$,
-        this.usersService.getPurchaseDetails(purchaseDetailsQuery)),
+        this.usersService.getPurchasedProductsIds(purchaseDetailsQuery)),
       ),
       map(([products, itemIds]) =>
-        itemIds.map(id => products.find(product => product.id === id.itemId),
+        itemIds.map(id => products.find(product => product.id === id),
         ),
       ),
     );

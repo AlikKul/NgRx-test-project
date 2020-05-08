@@ -76,7 +76,10 @@ export class UserEditComponent implements OnInit {
 
   submit() {
     if (!this.selectedUser.id) {
-      this.addNewUser.emit(this.form.value);
+      this.addNewUser.emit({
+        ...this.form.value,
+        purchasedItems: []
+      });
       return;
     }
     this.updatedUser.emit({
