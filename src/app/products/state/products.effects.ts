@@ -4,7 +4,7 @@ import { ProductsService } from '../products.service';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as productsActions from './products.actions';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, debounceTime } from 'rxjs/operators';
 import { Product } from 'src/app/shared/interfaces';
 import { Router } from '@angular/router';
 

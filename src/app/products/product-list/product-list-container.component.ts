@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, from, Subject, Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
 import { Router } from '@angular/router';
 import { ProductsFacade } from '../state/products.facade';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list-container',
@@ -19,9 +20,11 @@ import { ProductsFacade } from '../state/products.facade';
     ></app-product-list>
   `
 })
-export class ProductListContainerComponent implements OnInit {
+export class ProductListContainerComponent implements OnInit, OnDestroy {
 
   products$: Observable<Product[]>;
+  productNameQuery$: Subject<string> = new Subject<string>();
+  querySub: Subscription;
   error$: Observable<string>;
 
   constructor(
@@ -33,7 +36,14 @@ export class ProductListContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.querySub = this.productNameQuery$.pipe(
+      debounceTime(500)
+    ).subscribe(name => this.productsFacade.getProducts(name));
     this.productsFacade.getProducts();
+  }
+
+  ngOnDestroy() {
+    this.querySub.unsubscribe();
   }
 
   addNewProduct() {
@@ -56,7 +66,7 @@ export class ProductListContainerComponent implements OnInit {
   }
 
   productNameQuery(name: string) {
-    this.productsFacade.getProducts(name);
+    this.productNameQuery$.next(name);
   }
 
 }
