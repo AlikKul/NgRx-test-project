@@ -54,7 +54,8 @@ export class UserAddPurchaseComponent implements OnInit {
     if (event.target.value === '') {
       this.products = [];
     } else {
-      this.productNameQuery.emit(event.target.value);
+      this.productNameQuery.emit((event.target.value).toString()[0].toUpperCase() +
+        (event.target.value).toString().slice(1));
     }
   }
 

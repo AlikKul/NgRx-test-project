@@ -51,7 +51,12 @@ export class ProductListComponent implements OnInit {
   }
 
   queryProductName(event) {
-    this.productNameQuery.emit(event.target.value);
+    if (event.target.value) {
+      this.productNameQuery.emit((event.target.value).toString()[0].toUpperCase() +
+        (event.target.value).toString().slice(1));
+    } else {
+      this.productNameQuery.emit('');
+    }
   }
 
 }

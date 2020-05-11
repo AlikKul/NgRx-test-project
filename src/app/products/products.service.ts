@@ -15,7 +15,9 @@ export class ProductsService {
       return this.afs.collection<Product>('products').valueChanges({ idField: 'id' });
     }
     return this.afs.collection<Product>('products', ref => {
-      return ref.orderBy('name').startAt(name).endAt(name + '\uf8ff');
+      return ref.orderBy('name')
+        .startAt(name)
+        .endAt(name + '\uf8ff');
     }).valueChanges({ idField: 'id' });
   }
 
