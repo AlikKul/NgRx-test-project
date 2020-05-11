@@ -3,7 +3,12 @@
 <div class="actions">
   <div class="search-section">
     <label for="name">Search by product name (case sensitive):</label>
-    <input (input)="queryProductName($event)" type="text" id="name">
+    <input
+      (input)="queryProductName($event)"
+      id="name"
+      autocomplete="off"
+      type="text"
+    />
     <p *ngIf="!products?.length">No matches found.</p>
   </div>
   <div class="buttons-container">
