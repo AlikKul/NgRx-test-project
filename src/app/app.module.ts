@@ -2,10 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UsersModule } from './users/users.module';
-import { ProductsModule } from './products/products.module'
+import { ProductsModule } from './products/products.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,7 +30,6 @@ import { firebaseConfig } from '../environments/env';
   ],
   imports: [
     SharedModule,
-    NgbModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

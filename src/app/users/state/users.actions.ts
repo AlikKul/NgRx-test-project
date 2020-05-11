@@ -14,6 +14,9 @@ export enum UsersActionTypes {
   DeleteUser = '[Users] Delete User',
   DeleteUserSuccess = '[Users] Delete User Success',
   DeleteUserFail = '[Users] Delete User Fail',
+  AddPurchase = '[Users] Add Purchase',
+  AddPurchaseSuccess = '[Users] Add Purchase Success',
+  AddPurchaseFail = '[Users] Add Purchase Fail',
   GetUsersPurchases = '[Users] Get Users Purchases',
   GetUsersPurchasesSuccess = '[Users] Get Users Purchases Success',
   GetUsersPurchasesFail = '[Users] Get Users Purchases Fail',
@@ -78,6 +81,20 @@ export class DeleteUserFail implements Action {
   constructor(public payload: string) {}
 }
 
+export class AddPurchase implements Action {
+  readonly type = UsersActionTypes.AddPurchase;
+  constructor(public payload: {userId: string, purchase: Purchase}) {}
+}
+
+export class AddPurchaseSuccess implements Action {
+  readonly type = UsersActionTypes.AddPurchaseSuccess;
+}
+
+export class AddPurchaseFail implements Action {
+  readonly type = UsersActionTypes.AddPurchaseFail;
+  constructor(public payload: string) {}
+}
+
 export class GetUsersPurchases implements Action {
   readonly type = UsersActionTypes.GetUsersPurchases;
   constructor(public payload: string) {}
@@ -119,6 +136,9 @@ export type UsersActions = SetSelectedUser
   | DeleteUser
   | DeleteUserSuccess
   | DeleteUserFail
+  | AddPurchase
+  | AddPurchaseSuccess
+  | AddPurchaseFail
   | GetUsersPurchases
   | GetUsersPurchasesSuccess
   | GetUsersPurchasesFail

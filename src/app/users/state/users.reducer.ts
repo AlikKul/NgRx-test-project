@@ -65,6 +65,15 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         error: action.payload
       };
 
+    case UsersActionTypes.AddPurchaseSuccess:
+      return state;
+
+    case UsersActionTypes.AddPurchaseFail:
+      return {
+        ...state,
+        error: action.payload
+      };
+
     case UsersActionTypes.GetUsersPurchasesSuccess:
       return {
         ...state,

@@ -64,6 +64,10 @@ export class UsersFacade {
     this.store.dispatch(new usersActions.ClearUsersPurchases());
   }
 
+  addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase}) {
+    this.store.dispatch(new usersActions.AddPurchase(purchaseWithUserId));
+  }
+
   setAccessType(value) {
     this.store.dispatch(new usersActions.SetAccessType(value));
   }

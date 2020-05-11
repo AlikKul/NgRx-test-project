@@ -16,7 +16,7 @@ export interface Product {
 }
 
 export interface Purchase {
-  id: string;
+  id?: string;
   date: string;
   location: string;
   purchasedItems: string[];

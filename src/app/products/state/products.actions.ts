@@ -15,7 +15,8 @@ export enum ProductsActionsTypes {
   DeleteProductSuccess = '[Products] Delete Product Success',
   DeleteProductFail = '[Products] Delete Product Fail',
   SetEditProduct = '[Products] Set Edit Product',
-  ClearEditProduct = '[Products] Clear Edit Product'
+  ClearEditProduct = '[Products] Clear Edit Product',
+  ClearProducts = '[Products] Clear Products'
 }
 
 export class GetProducts implements Action {
@@ -84,6 +85,10 @@ export class ClearEditProduct implements Action {
   readonly type = ProductsActionsTypes.ClearEditProduct;
 }
 
+export class ClearProducts implements Action {
+  readonly type = ProductsActionsTypes.ClearProducts;
+}
+
 export type ProductsActions =
     GetProducts
   | GetProductsSuccess
@@ -98,4 +103,5 @@ export type ProductsActions =
   | DeleteProductSuccess
   | DeleteProductFail
   | SetEditProduct
-  | ClearEditProduct;
+  | ClearEditProduct
+  | ClearProducts;

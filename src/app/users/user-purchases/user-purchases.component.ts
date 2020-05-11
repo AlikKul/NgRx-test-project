@@ -12,6 +12,7 @@ export class UserPurchasesComponent implements OnInit {
   @Input() selectedUser: User;
   @Input() purchasedProducts: Product[];
   @Output() showPurchaseDetails = new EventEmitter<PurchaseDetailsQuery>();
+  @Output() addNewPurchase = new EventEmitter<void>();
   @Output() navBack = new EventEmitter<void>();
 
   date: string;
@@ -33,6 +34,10 @@ export class UserPurchasesComponent implements OnInit {
     });
     this.date = purchase.date;
     this.location = purchase.location;
+  }
+
+  onAddNewPurchase() {
+    this.addNewPurchase.emit();
   }
 
 }

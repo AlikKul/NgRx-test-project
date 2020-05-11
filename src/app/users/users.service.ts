@@ -40,8 +40,18 @@ export class UsersService {
   }
 
   getAllPurchases(id: string): Observable<any> {
-    this.usersRef = this.afs.collection('users').doc(id).collection('purchases');
-    return from(this.usersRef.valueChanges({ idField: 'id' }));
+    return from(this.afs.collection('users')
+      .doc(id)
+      .collection('purchases')
+      .valueChanges({ idField: 'id' })
+    );
+  }
+
+  addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase}): Observable<any> {
+    return from(this.usersRef
+      .doc(purchaseWithUserId.userId)
+      .collection('purchases')
+      .add(purchaseWithUserId.purchase));
   }
 
   getPurchasedProductsIds(purchaseDetailsQuery: PurchaseDetailsQuery) {
@@ -49,8 +59,7 @@ export class UsersService {
       .doc(purchaseDetailsQuery.userId)
       .collection('purchases')
       .doc(purchaseDetailsQuery.purchaseId)
-      .valueChanges()
-        .pipe(
+      .valueChanges().pipe(
           map((purchase: Purchase) => purchase.purchasedItems)
         );
   }

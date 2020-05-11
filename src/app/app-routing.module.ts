@@ -6,6 +6,7 @@ import { UserEditContainerComponent } from './users/user-edit/user-edit-containe
 import { ProductListContainerComponent } from './products/product-list/product-list-container.component';
 import { ProductEditContainerComponent } from './products/product-edit/product-edit-container.component';
 import { UserPurchasesContainerComponent } from './users/user-purchases/user-purchases-container.component';
+import { UserAddPurchaseContainerComponent} from './users/user-add-purchase/user-add-purchase-container.component'
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'user-list', component: UserListContainerComponent },
   { path: 'user-edit', component: UserEditContainerComponent },
   { path: 'user-purchases', component: UserPurchasesContainerComponent },
+  { path: 'add-purchase', component: UserAddPurchaseContainerComponent },
   { path: 'product-list', component: ProductListContainerComponent},
   { path: 'product-edit', component: ProductEditContainerComponent }
 ];

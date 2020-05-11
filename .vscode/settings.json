@@ -1,8 +1,12 @@
 {
     "cSpell.ignoreWords": [
+        "debounced",
         "firestore",
         "minlength",
+        "ngb",
         "ngbd",
-        "ngrx"
+        "ngrx",
+        "text",
+        "typeahead"
     ]
 }

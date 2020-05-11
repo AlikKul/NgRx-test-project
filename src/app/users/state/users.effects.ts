@@ -2,17 +2,19 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { User, Purchase } from '../../shared/interfaces';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UsersEffects {
 
   constructor(
     private actions$: Actions,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   @Effect()
@@ -59,6 +61,19 @@ export class UsersEffects {
       this.usersService.getAllPurchases(id).pipe(
         map((purchases: Purchase[]) => (new usersActions.GetUsersPurchasesSuccess(purchases))),
         catchError(error => of(new usersActions.GetUsersPurchasesFail(error.message)))
+      )
+    )
+  );
+
+  @Effect()
+  addPurchase$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.AddPurchase),
+    map((action: usersActions.AddPurchase) => action.payload),
+    switchMap((purchase: {userId: string, purchase: Purchase}) =>
+      this.usersService.addPurchase(purchase).pipe(
+        map(() => (new usersActions.AddPurchaseSuccess())),
+        tap(() => this.router.navigate(['user-purchases'])),
+        catchError(error => of(new usersActions.AddPurchaseFail(error)))
       )
     )
   );

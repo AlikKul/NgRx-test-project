@@ -9,16 +9,11 @@ form {
     font-size: small;
   }
 
-  .title {
-    font-weight: bold;
-    text-align: center;
-  }
-
   label {
     margin-top: 10px;
   }
 
-  input, select {
+  input {
     padding: 5px;
     border: 1px solid black;
     border-radius: 5px;

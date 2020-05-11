@@ -1,0 +1,22 @@
+input {
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.controls {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+span {
+  color: red;
+  margin-left: 20px;
+  font-size: small;
+}
+
+.purchase-list {
+  border: 1px solid #DEE2E6;
+  border-radius: 5px;
+}

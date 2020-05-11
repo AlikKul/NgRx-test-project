@@ -70,6 +70,12 @@ export function reducer(state: ProductsState = initialState, action: ProductsAct
         editProduct: null
       };
 
+    case ProductsActionsTypes.ClearProducts:
+      return {
+        ...state,
+        products: []
+      };
+
     default:
       return state;
   }

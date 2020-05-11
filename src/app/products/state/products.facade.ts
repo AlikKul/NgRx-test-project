@@ -39,4 +39,8 @@ export class ProductsFacade {
     this.store.dispatch(new productsActions.DeleteProduct(id));
   }
 
+  clearProducts() {
+    this.store.dispatch(new productsActions.ClearProducts());
+  }
+
 }

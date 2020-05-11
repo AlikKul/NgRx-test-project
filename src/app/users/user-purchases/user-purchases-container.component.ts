@@ -18,6 +18,7 @@ import { ProductsFacade } from 'src/app/products/state/products.facade';
       [purchasedProducts]="purchasedProducts$ | async"
       (navBack)="onNavBack()"
       (showPurchaseDetails)="onShowPurchaseDetails($event)"
+      (addNewPurchase)="addNewPurchase()"
     ></app-user-purchases>
   `
 })
@@ -57,6 +58,10 @@ export class UserPurchasesContainerComponent implements OnInit {
 
   onShowPurchaseDetails(purchaseDetailsQuery: PurchaseDetailsQuery) {
     this.purchaseDetailsQuery$.next(purchaseDetailsQuery);
+  }
+
+  addNewPurchase() {
+    this.router.navigate(['add-purchase']);
   }
 
   onNavBack() {

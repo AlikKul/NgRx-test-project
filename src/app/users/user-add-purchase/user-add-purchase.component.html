@@ -1,0 +1,59 @@
+<div class="page-title">Add New Purchase Page</div>
+
+<form class="card" (ngSubmit)="submit()" [formGroup]="form">
+
+  <label for="location">Location</label>
+  <input
+    formControlName="location"
+    id="location"
+    [ngbTypeahead]="search"
+    (focus)="focus$.next($any($event).target.value)"
+    (click)="click$.next($any($event).target.value)"
+    type="text"
+    placeholder="Location..."
+    #instance="ngbTypeahead"
+  />
+
+  <div class="purchase-list-title">Purchases</div>
+  <div class="purchase-list">
+    <span *ngIf="!purchasedProducts.length">Empty</span>
+    <table class="table table-striped">
+      <tbody>
+        <tr *ngFor="let product of purchasedProducts">
+          <td>{{ product.name }}, ${{ product.price }}</td>
+          <td><button type="button" (click)="removeProduct(product.id)" class="btn btn-danger">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <label for="name">Product search (case sensitive)</label>
+  <input
+    (input)="queryProductName($event)"
+    id="name"
+    placeholder="Start entering product name..."
+    type="text"
+  />
+  <div class="product-query">
+    <table class="table table-striped">
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.name }}</td>
+          <td><button type="button" (click)="addProduct(product)" class="btn btn-primary">Add</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="controls">
+    <button
+      [disabled]="form.invalid || !purchasedProducts.length"
+      (submit)="submit()"
+      type="submit"
+      class="btn btn-primary"
+    >Save</button>
+    <button type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
+  </div>
+
+</form>

@@ -1,5 +1,10 @@
 <div class="page-title">{{ selectedUser.name }}'s Purchases</div>
 
+<div class="actions">
+  <button (click)="onAddNewPurchase()" class="btn btn-primary">Add new purchase</button>
+  <button (click)="back()" class="btn btn-primary">Back to users list</button>
+</div>
+
 <div class="content-container">
 
   <div *ngIf="!purchases?.length">This user didn't make any purchases yet.</div>
@@ -27,7 +32,7 @@
     </table>
   </div>
 
-  <div *ngIf="purchasedProducts?.length" class="purchase-ditails">
+  <div *ngIf="purchasedProducts?.length" class="purchase-details">
     <div class="purchase-title">Purchase was made on {{ date }} in {{ location }}</div>
     <table class="table table-striped">
       <thead>
@@ -48,6 +53,3 @@
   </div>
 </div>
 
-<div class="buttons-container">
-  <button (click)="back()" class="btn btn-primary">Back</button>
-</div>

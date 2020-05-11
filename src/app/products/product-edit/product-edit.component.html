@@ -1,10 +1,11 @@
+<div *ngIf="!editProduct.id" class="page-title">
+  <p>Add New Product Page</p>
+</div>
+<div *ngIf="editProduct.id" class="page-title">
+  <p>Product Edit Page</p>
+</div>
+
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
-  <div *ngIf="!editProduct.id" class="title">
-    <p>Add New Product Page</p>
-  </div>
-  <div *ngIf="editProduct.id" class="title">
-    <p>Product Edit Page</p>
-  </div>
 
   <label for="name">
     Product Name
