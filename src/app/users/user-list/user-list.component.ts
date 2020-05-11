@@ -83,7 +83,9 @@ export class UserListComponent implements OnInit {
         header.direction = '';
       }
     });
-    this.sort.emit({column, direction});
+    if (direction !== '') {
+      this.sort.emit({column, direction});
+    }
   }
 
   showUserPurchases(user: User) {

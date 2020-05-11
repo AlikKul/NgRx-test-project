@@ -14,13 +14,8 @@ export class UsersService {
   ) {}
 
   getAllUsers(sortColumn, direction) {
-    this.usersRef = this.afs.collection('users', ref => {
-      if (direction) {
-        return ref.orderBy(sortColumn, direction);
-      }
-      return ref.orderBy(sortColumn);
-    });
-    return this.usersRef.valueChanges({ idField: 'id' });
+    return this.afs.collection('users', ref =>
+      ref.orderBy(sortColumn, direction)).valueChanges({ idField: 'id' });
   }
 
   getLoggedInUser(email) {
