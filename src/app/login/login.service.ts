@@ -13,7 +13,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private usersSrevice: UsersService
+    private usersService: UsersService
   ) {}
 
   login(loginData: LoginData): Observable<any> {
@@ -21,7 +21,7 @@ export class LoginService {
       .pipe(
         tap(this.setToken),
         mergeMap((resp: FirebaseAuthResponse) => {
-          return this.usersSrevice.getLoggedInUser(resp.email);
+          return this.usersService.getLoggedInUser(resp.email);
         })
       );
   }
