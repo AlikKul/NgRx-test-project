@@ -7,8 +7,6 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class UsersService {
 
-  private usersRef: AngularFirestoreCollection<User>;
-
   constructor(
     private afs: AngularFirestore
   ) {}
@@ -23,15 +21,23 @@ export class UsersService {
   }
 
   saveUser(user: User): Observable<any> {
-    return from(this.usersRef.doc(user.id).update(user));
+    return from(this.afs.collection('users')
+      .doc(user.id)
+      .update(user)
+    );
   }
 
   addNewUser(user: User): Observable<any> {
-    return from(this.usersRef.add(user));
+    return from(this.afs.collection('users')
+      .add(user)
+    );
   }
 
   deleteUser(id: string): Observable<any> {
-    return from(this.usersRef.doc(id).delete());
+    return from(this.afs.collection('users')
+      .doc(id)
+      .delete()
+    );
   }
 
   getAllPurchases(id: string): Observable<any> {
@@ -43,7 +49,7 @@ export class UsersService {
   }
 
   addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase}): Observable<any> {
-    return from(this.usersRef
+    return from(this.afs.collection('users')
       .doc(purchaseWithUserId.userId)
       .collection('purchases')
       .add(purchaseWithUserId.purchase));
