@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
-import { User, AccessType, Purchase } from '../../shared/interfaces';
+import { User, AccessType, Purchase, SortEvent } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   SetSelectedUser = '[Users] Set Selected User',
   ClearSelectedUser = '[Users] Clear Selected User',
-  LoadFail = '[Users] Load Fail',
+  GetUsers = '[Users] Get Users',
+  GetUsersSuccess = '[Users] Get Users Success',
+  GetUsersFail = '[Users] Get Users Fail',
   SaveUser = '[Users] Save User',
   SaveUserSuccess = '[Users] Save User Success',
   SaveUserFail = '[Users] Save User Fail',
@@ -34,8 +36,18 @@ export class ClearSelectedUser implements Action {
   readonly type = UsersActionTypes.ClearSelectedUser;
 }
 
-export class LoadFail implements Action {
-  readonly type = UsersActionTypes.LoadFail;
+export class GetUsers implements Action {
+  readonly type = UsersActionTypes.GetUsers;
+  constructor(public payload: SortEvent) {}
+}
+
+export class GetUsersSuccess implements Action {
+  readonly type = UsersActionTypes.GetUsersSuccess;
+  constructor(public payload: User[]) {}
+}
+
+export class GetUsersFail implements Action {
+  readonly type = UsersActionTypes.GetUsersFail;
   constructor(public payload: string) {}
 }
 
@@ -126,7 +138,9 @@ export class SetAccessType implements Action {
 
 export type UsersActions = SetSelectedUser
   | ClearSelectedUser
-  | LoadFail
+  | GetUsers
+  | GetUsersSuccess
+  | GetUsersFail
   | SaveUser
   | SaveUserSuccess
   | SaveUserFail

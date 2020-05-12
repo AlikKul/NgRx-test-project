@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, PurchaseDetailsQuery, Purchase } from '../shared/interfaces';
+import { User, PurchaseDetailsQuery, Purchase, SortEvent } from '../shared/interfaces';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,9 +13,9 @@ export class UsersService {
     private afs: AngularFirestore
   ) {}
 
-  getAllUsers(sortColumn, direction): Observable<any> {
+  getUsers(sortEvent: SortEvent): Observable<any> {
     return this.afs.collection('users', ref =>
-      ref.orderBy(sortColumn, direction)).valueChanges({ idField: 'id' });
+      ref.orderBy(sortEvent.column, sortEvent.direction)).valueChanges({ idField: 'id' });
   }
 
   getLoggedInUser(email) {

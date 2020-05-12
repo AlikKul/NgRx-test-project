@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { UsersState } from './users.reducer';
 import {
+  getUsers,
   getError,
   getAccessType,
   getLoggedInUserName,
@@ -15,6 +16,7 @@ import { UsersService } from '../users.service';
 @Injectable({providedIn: 'root'})
 export class UsersFacade {
 
+  users$: Observable<User[]>;
   error$: Observable<string>;
   selectedUser$: Observable<User>;
   usersPurchases$: Observable<Purchase[]>;
@@ -25,6 +27,7 @@ export class UsersFacade {
     private store: Store<UsersState>,
     private usersService: UsersService
   ) {
+    this.users$ = this.store.pipe(select(getUsers));
     this.error$ = this.store.pipe(select(getError));
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.usersPurchases$ = this.store.pipe(select(getUsersPurchases));
@@ -32,8 +35,8 @@ export class UsersFacade {
     this.loggedInUserName$ = store.pipe(select(getLoggedInUserName));
   }
 
-  load(sortColumn, direction) {
-    return this.usersService.getAllUsers(sortColumn, direction);
+  getUsers(sortEvent) {
+    this.store.dispatch(new usersActions.GetUsers(sortEvent));
   }
 
   setSelectedUser(user) {

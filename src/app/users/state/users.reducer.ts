@@ -2,6 +2,7 @@ import { User, AccessType, Purchase } from '../../shared/interfaces';
 import { UsersActions, UsersActionTypes } from './users.actions';
 
 export interface UsersState {
+  users: User[];
   selectedUser: User | null;
   usersPurchases: Purchase[];
   error: string;
@@ -10,6 +11,7 @@ export interface UsersState {
 }
 
 const initialState: UsersState = {
+  users: [],
   selectedUser: null,
   usersPurchases: [],
   error: '',
@@ -32,10 +34,16 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         selectedUser: null
       };
 
-    case UsersActionTypes.LoadFail:
+    case UsersActionTypes.GetUsersSuccess:
       return {
         ...state,
-        error: action.payload,
+        users: action.payload,
+      };
+
+    case UsersActionTypes.GetUsersFail:
+      return {
+        ...state,
+        error: action.payload
       };
 
     case UsersActionTypes.SaveUserSuccess:

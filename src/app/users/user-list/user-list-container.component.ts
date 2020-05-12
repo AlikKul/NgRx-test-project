@@ -36,12 +36,13 @@ export class UserListContainerComponent implements OnInit {
     private router: Router,
     private loginService: LoginService
   ) {
-    this.users$ = this.usersFacade.load('name', 'asc');
+    this.users$ = this.usersFacade.users$;
     this.error$ = this.usersFacade.error$;
     this.accessType$ = this.usersFacade.accessType$;
   }
 
   ngOnInit() {
+    this.usersFacade.getUsers({column: 'name', direction: 'asc'});
     if (!this.loginService.isAuthenticated()) {
       localStorage.clear();
       this.router.navigate(['']);
@@ -76,7 +77,7 @@ export class UserListContainerComponent implements OnInit {
   }
 
   onSort({column, direction}: SortEvent) {
-    this.users$ = this.usersFacade.load(column, direction);
+    this.usersFacade.getUsers({column, direction});
   }
 
 }

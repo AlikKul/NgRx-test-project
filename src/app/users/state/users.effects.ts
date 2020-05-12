@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UsersService } from '../users.service';
 import * as usersActions from './users.actions';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
-import { User, Purchase } from '../../shared/interfaces';
+import { User, Purchase, SortEvent } from '../../shared/interfaces';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -18,7 +18,19 @@ export class UsersEffects {
   ) { }
 
   @Effect()
-  saveUser$: Observable<Action> = this.actions$.pipe(
+  getUsers$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.GetUsers),
+    map((action: usersActions.GetUsers) => action.payload),
+    switchMap((sortEvent: SortEvent) =>
+      this.usersService.getUsers(sortEvent).pipe(
+        map((users: User[]) => (new usersActions.GetUsersSuccess(users))),
+        catchError(error => of(new usersActions.GetUsersFail(error)))
+      )
+    )
+  );
+
+  @Effect()
+  updateUser$: Observable<Action> = this.actions$.pipe(
     ofType(usersActions.UsersActionTypes.SaveUser),
     map((action: usersActions.SaveUser) => action.payload),
     switchMap((user: User) =>
