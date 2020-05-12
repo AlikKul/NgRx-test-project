@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, from, Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
 import { Router } from '@angular/router';
 import { ProductsFacade } from '../state/products.facade';

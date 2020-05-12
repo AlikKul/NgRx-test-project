@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User, PurchaseDetailsQuery, Purchase, SortEvent } from '../shared/interfaces';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { User, PurchaseDetailsQuery, Purchase } from '../shared/interfaces';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
