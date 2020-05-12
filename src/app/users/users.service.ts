@@ -13,7 +13,7 @@ export class UsersService {
     private afs: AngularFirestore
   ) {}
 
-  getUsers(sortEvent: SortEvent): Observable<any> {
+  getUsers(sortEvent): Observable<any> {
     return this.afs.collection('users', ref =>
       ref.orderBy(sortEvent.column, sortEvent.direction)).valueChanges({ idField: 'id' });
   }
