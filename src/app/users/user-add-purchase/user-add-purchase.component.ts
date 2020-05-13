@@ -47,20 +47,22 @@ export class UserAddPurchaseComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       location: new FormControl('', [Validators.required]),
+      name: new FormControl('')
     });
   }
 
-  queryProductName(event) {
-    if (event.target.value === '') {
+  queryProductName(name) {
+    if (name === '') {
       this.products = [];
     } else {
-      this.productNameQuery.emit((event.target.value).toString()[0].toUpperCase() +
-        (event.target.value).toString().slice(1));
+      this.productNameQuery.emit((name).toString()[0].toUpperCase() + (name).toString().slice(1));
     }
   }
 
   addProduct(product) {
     this.purchasedProducts.push(product);
+    this.form.get('name').setValue('');
+    this.products = [];
   }
 
   removeProduct(id) {
@@ -71,7 +73,7 @@ export class UserAddPurchaseComponent implements OnInit {
     this.addPurchase.emit({
       userId: this.selectedUser.id,
       purchase: {
-        date: `${new Date().getDay()}.${new Date().getMonth()}.${new Date().getFullYear()}`,
+        date: `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`,
         location: this.form.get('location').value,
         purchasedItems: this.purchasedProducts.map(product => product.id)
       }

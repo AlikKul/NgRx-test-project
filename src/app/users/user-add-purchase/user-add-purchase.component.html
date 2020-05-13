@@ -29,18 +29,22 @@
 
   <label for="name">Product search</label>
   <input
-    (input)="queryProductName($event)"
+    (input)="queryProductName($event.target.value)"
     id="name"
+    formControlName="name"
     placeholder="Start entering product name..."
     type="text"
     autocomplete="off"
   />
   <div class="product-query">
-    <table class="table table-striped">
+    <table class="table">
       <tbody>
-        <tr *ngFor="let product of products">
+        <tr
+          *ngFor="let product of products"
+          (click)="addProduct(product)"
+          class="found-product"
+        >
           <td>{{ product.name }}</td>
-          <td><button type="button" (click)="addProduct(product)" class="btn btn-primary">Add</button></td>
         </tr>
       </tbody>
     </table>
