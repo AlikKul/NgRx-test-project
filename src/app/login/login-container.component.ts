@@ -39,7 +39,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
       .subscribe((resp: User[]) => {
         this.usersFacade.setLoggedInUserName(resp[0].name);
         this.usersFacade.setAccessType(resp[0].accessType);
-        this.router.navigate(['user-list']);
+        this.router.navigate(['dashboard']);
       },
       error => this.loginError$ = of(error.error.error.message)
       );

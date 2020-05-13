@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -35,6 +37,7 @@ import { firebaseConfig } from '../environments/env';
     HttpClientModule,
     UsersModule,
     ProductsModule,
+    DashboardModule,
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot({}),

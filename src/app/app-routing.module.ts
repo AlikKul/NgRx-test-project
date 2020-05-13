@@ -7,6 +7,7 @@ import { ProductListContainerComponent } from './products/product-list/product-l
 import { ProductEditContainerComponent } from './products/product-edit/product-edit-container.component';
 import { UserPurchasesContainerComponent } from './users/user-purchases/user-purchases-container.component';
 import { UserAddPurchaseContainerComponent} from './users/user-add-purchase/user-add-purchase-container.component'
+import { DashboardHomeContainerComponent } from './dashboard/dashboard-home/dashboard-home-container.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'user-purchases', component: UserPurchasesContainerComponent },
   { path: 'add-purchase', component: UserAddPurchaseContainerComponent },
   { path: 'product-list', component: ProductListContainerComponent},
-  { path: 'product-edit', component: ProductEditContainerComponent }
+  { path: 'product-edit', component: ProductEditContainerComponent },
+  { path: 'dashboard', component: DashboardHomeContainerComponent }
 ];
 
 @NgModule({
