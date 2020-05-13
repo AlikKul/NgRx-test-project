@@ -76,6 +76,14 @@ export function reducer(state: ProductsState = initialState, action: ProductsAct
         products: []
       };
 
+    case ProductsActionsTypes.SortProducts:
+      const direction = action.payload.direction === 'asc' ? 1 : -1;
+      const sortByKey = key => (a, b) => a[key] > b[key] ? 1 * direction : -1 * direction;
+      return {
+        ...state,
+        products: [...state.products].sort(sortByKey(action.payload.column))
+      };
+
     default:
       return state;
   }

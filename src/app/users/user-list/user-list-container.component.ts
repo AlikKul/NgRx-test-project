@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { User, AccessType, SortEvent } from '../../shared/interfaces';
+import { User, AccessType, UserSortEvent } from '../../shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/login/login.service';
@@ -76,7 +76,7 @@ export class UserListContainerComponent implements OnInit {
     this.router.navigate(['user-edit']);
   }
 
-  onSort({column, direction}: SortEvent) {
+  onSort({column, direction}: UserSortEvent) {
     this.usersFacade.getUsers({column, direction});
   }
 

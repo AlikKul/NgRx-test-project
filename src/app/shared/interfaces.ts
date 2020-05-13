@@ -57,9 +57,16 @@ export enum AccessType {
   Admin = 'admin'
 }
 
-export type SortColumn = keyof User | '';
 export type SortDirection = 'asc' | 'desc' | '';
-export interface SortEvent {
-  column: SortColumn;
+
+export type UserSortColumn = keyof User | '';
+export interface UserSortEvent {
+  column: UserSortColumn;
+  direction: SortDirection;
+}
+
+export type ProductSortColumn = keyof Product | '';
+export interface ProductSortEvent {
+  column: ProductSortColumn;
   direction: SortDirection;
 }

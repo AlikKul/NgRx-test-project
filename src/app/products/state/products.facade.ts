@@ -3,7 +3,7 @@ import { ProductsState } from './products.reducer';
 import { Store, select } from '@ngrx/store';
 import * as productsActions from './products.actions';
 import { Observable } from 'rxjs';
-import { Product } from 'src/app/shared/interfaces';
+import { Product, ProductSortEvent } from 'src/app/shared/interfaces';
 import { getProducts, getError } from './products.selectors';
 
 @Injectable({providedIn: 'root'})
@@ -41,6 +41,10 @@ export class ProductsFacade {
 
   clearProducts() {
     this.store.dispatch(new productsActions.ClearProducts());
+  }
+
+  sortProducts(productSortEvent: ProductSortEvent) {
+    this.store.dispatch(new productsActions.SortProducts(productSortEvent));
   }
 
 }

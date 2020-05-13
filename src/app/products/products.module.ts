@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { ProductListComponent } from './product-list/product-list.component';
+
+import { ProductListComponent, NgbdSortableHeader } from './product-list/product-list.component';
 import { ProductListContainerComponent } from './product-list/product-list-container.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductEditContainerComponent } from './product-edit/product-edit-container.component';
@@ -24,6 +25,7 @@ import { ProductsEffects } from './state/products.effects';
   ],
   declarations: [
     ProductListComponent,
+    NgbdSortableHeader,
     ProductListContainerComponent,
     ProductEditComponent,
     ProductEditContainerComponent

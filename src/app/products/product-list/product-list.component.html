@@ -20,8 +20,8 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name of product</th>
-      <th scope="col">Description</th>
+      <th scope="col" sortable="name" (sort)="onSort($event)">Name of product</th>
+      <th scope="col" sortable="description" (sort)="onSort($event)">Description</th>
       <th scope="col">Price</th>
       <th scope="col">Actions</th>
     </tr>

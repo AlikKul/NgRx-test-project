@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Product } from 'src/app/shared/interfaces';
+import { Product, ProductSortEvent } from 'src/app/shared/interfaces';
 
 export enum ProductsActionsTypes {
   GetProducts = '[Products] Get Products',
@@ -16,7 +16,8 @@ export enum ProductsActionsTypes {
   DeleteProductFail = '[Products] Delete Product Fail',
   SetEditProduct = '[Products] Set Edit Product',
   ClearEditProduct = '[Products] Clear Edit Product',
-  ClearProducts = '[Products] Clear Products'
+  ClearProducts = '[Products] Clear Products',
+  SortProducts = '[Products] Sort'
 }
 
 export class GetProducts implements Action {
@@ -89,6 +90,11 @@ export class ClearProducts implements Action {
   readonly type = ProductsActionsTypes.ClearProducts;
 }
 
+export class SortProducts implements Action {
+  readonly type = ProductsActionsTypes.SortProducts;
+  constructor(public payload: ProductSortEvent) {}
+}
+
 export type ProductsActions =
     GetProducts
   | GetProductsSuccess
@@ -104,4 +110,5 @@ export type ProductsActions =
   | DeleteProductFail
   | SetEditProduct
   | ClearEditProduct
-  | ClearProducts;
+  | ClearProducts
+  | SortProducts;

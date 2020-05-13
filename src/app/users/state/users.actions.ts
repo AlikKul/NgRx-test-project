@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, AccessType, Purchase, SortEvent } from '../../shared/interfaces';
+import { User, AccessType, Purchase, UserSortEvent } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   SetSelectedUser = '[Users] Set Selected User',
@@ -38,7 +38,7 @@ export class ClearSelectedUser implements Action {
 
 export class GetUsers implements Action {
   readonly type = UsersActionTypes.GetUsers;
-  constructor(public payload: SortEvent) {}
+  constructor(public payload: UserSortEvent) {}
 }
 
 export class GetUsersSuccess implements Action {

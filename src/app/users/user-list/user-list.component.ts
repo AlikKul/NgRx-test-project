@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
-import { User, SortDirection, SortColumn, SortEvent } from '../../shared/interfaces';
+import { User, SortDirection, UserSortColumn, UserSortEvent } from '../../shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
@@ -14,9 +14,9 @@ const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 
 })
 export class NgbdSortableHeader {
 
-  @Input() sortable: SortColumn = '';
+  @Input() sortable: UserSortColumn = '';
   @Input() direction: SortDirection = '';
-  @Output() sort = new EventEmitter<SortEvent>();
+  @Output() sort = new EventEmitter<UserSortEvent>();
 
   rotate() {
     this.direction = rotate[this.direction];
@@ -43,7 +43,7 @@ export class UserListComponent implements OnInit {
   @Output() deleteUserId = new EventEmitter<string>();
   @Output() edit = new EventEmitter<User>();
   @Output() showPurchases = new EventEmitter<User>();
-  @Output() sort = new EventEmitter<SortEvent>();
+  @Output() sort = new EventEmitter<UserSortEvent>();
 
   name: string;
   id: string;
@@ -77,7 +77,7 @@ export class UserListComponent implements OnInit {
     this.edit.emit(user);
   }
 
-  onSort({column, direction}: SortEvent) {
+  onSort({column, direction}: UserSortEvent) {
     this.headers.forEach(header => {
       if (header.sortable !== column) {
         header.direction = '';

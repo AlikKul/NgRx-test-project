@@ -1,6 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Product } from 'src/app/shared/interfaces';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
+import { Product, SortDirection, ProductSortColumn, ProductSortEvent } from 'src/app/shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+@Directive({
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()'
+  }
+})
+export class NgbdSortableHeader {
+
+  @Input() sortable: ProductSortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<ProductSortEvent>();
+
+  rotate() {
+    this.direction = rotate[this.direction];
+    this.sort.emit({column: this.sortable, direction: this.direction});
+  }
+}
 
 @Component({
   selector: 'app-product-list',
@@ -10,12 +32,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProductListComponent implements OnInit {
 
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
   @Input() products: Product[];
   @Input() error: string;
   @Output() editProduct = new EventEmitter<Product>();
   @Output() deleteProductId = new EventEmitter<string>();
   @Output() initializeNewProduct = new EventEmitter<void>();
   @Output() productNameQuery = new EventEmitter<string>();
+  @Output() productSortEvent = new EventEmitter<ProductSortEvent>();
 
   name: string;
   id: string;
@@ -56,6 +81,17 @@ export class ProductListComponent implements OnInit {
         (event.target.value).toString().slice(1));
     } else {
       this.productNameQuery.emit('');
+    }
+  }
+
+  onSort({column, direction}: ProductSortEvent) {
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+    if (direction !== '') {
+      this.productSortEvent.emit({column, direction});
     }
   }
 

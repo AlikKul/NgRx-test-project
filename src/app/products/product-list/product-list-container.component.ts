@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { Product } from 'src/app/shared/interfaces';
+import { Product, ProductSortEvent } from 'src/app/shared/interfaces';
 import { Router } from '@angular/router';
 import { ProductsFacade } from '../state/products.facade';
 import { debounceTime } from 'rxjs/operators';
@@ -17,6 +17,7 @@ import { debounceTime } from 'rxjs/operators';
       (deleteProductId)="deleteProduct($event)"
       (initializeNewProduct)="addNewProduct()"
       (productNameQuery)="productNameQuery($event)"
+      (productSortEvent)="productSortEvent($event)"
     ></app-product-list>
   `
 })
@@ -67,6 +68,10 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
 
   productNameQuery(name: string) {
     this.productNameQuery$.next(name);
+  }
+
+  productSortEvent({column, direction}: ProductSortEvent) {
+    this.productsFacade.sortProducts({column, direction});
   }
 
 }
