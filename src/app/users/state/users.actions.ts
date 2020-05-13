@@ -7,9 +7,9 @@ export enum UsersActionTypes {
   GetUsers = '[Users] Get Users',
   GetUsersSuccess = '[Users] Get Users Success',
   GetUsersFail = '[Users] Get Users Fail',
-  SaveUser = '[Users] Save User',
-  SaveUserSuccess = '[Users] Save User Success',
-  SaveUserFail = '[Users] Save User Fail',
+  UpdateUser = '[Users] Update User',
+  UpdateUserSuccess = '[Users] Update User Success',
+  UpdateUserFail = '[Users] Update User Fail',
   AddNewUser = '[Users] Add New User',
   AddNewUserSuccess = '[Users] Add New User Success',
   AddNewUserFail = '[Users] Add New User Fail',
@@ -51,17 +51,17 @@ export class GetUsersFail implements Action {
   constructor(public payload: string) {}
 }
 
-export class SaveUser implements Action {
-  readonly type = UsersActionTypes.SaveUser;
+export class UpdateUser implements Action {
+  readonly type = UsersActionTypes.UpdateUser;
   constructor(public payload: User) {}
 }
 
-export class SaveUserSuccess implements Action {
-  readonly type = UsersActionTypes.SaveUserSuccess;
+export class UpdateUserSuccess implements Action {
+  readonly type = UsersActionTypes.UpdateUserSuccess;
 }
 
-export class SaveUserFail implements Action {
-  readonly type = UsersActionTypes.SaveUserFail;
+export class UpdateUserFail implements Action {
+  readonly type = UsersActionTypes.UpdateUserFail;
   constructor(public payload: string) {}
 }
 
@@ -141,9 +141,9 @@ export type UsersActions = SetSelectedUser
   | GetUsers
   | GetUsersSuccess
   | GetUsersFail
-  | SaveUser
-  | SaveUserSuccess
-  | SaveUserFail
+  | UpdateUser
+  | UpdateUserSuccess
+  | UpdateUserFail
   | AddNewUser
   | AddNewUserSuccess
   | AddNewUserFail

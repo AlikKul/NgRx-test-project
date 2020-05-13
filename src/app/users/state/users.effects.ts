@@ -31,11 +31,12 @@ export class UsersEffects {
 
   @Effect()
   updateUser$: Observable<Action> = this.actions$.pipe(
-    ofType(usersActions.UsersActionTypes.SaveUser),
-    map((action: usersActions.SaveUser) => action.payload),
+    ofType(usersActions.UsersActionTypes.UpdateUser),
+    map((action: usersActions.UpdateUser) => action.payload),
     switchMap((user: User) =>
-      this.usersService.saveUser(user).pipe(
-        map(() => (new usersActions.SaveUserSuccess())),
+      this.usersService.updateUser(user).pipe(
+        map(() => (new usersActions.UpdateUserSuccess())),
+        tap(() => this.router.navigate(['user-list'])),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )
@@ -48,6 +49,7 @@ export class UsersEffects {
     switchMap((user: User) =>
       this.usersService.addNewUser(user).pipe(
         map(() => (new usersActions.AddNewUserSuccess())),
+        tap(() => this.router.navigate(['user-list'])),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )

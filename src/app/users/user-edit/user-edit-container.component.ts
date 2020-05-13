@@ -32,12 +32,10 @@ export class UserEditContainerComponent implements OnInit {
 
   addNewUser(user: User) {
     this.usersFacade.addNewUser(user);
-    this.router.navigate(['user-list']);
   }
 
   updateUser(updatedUser) {
     this.usersFacade.updateUser(updatedUser);
-    this.router.navigate(['user-list']);
   }
 
   cancelChanges() {

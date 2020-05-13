@@ -20,7 +20,7 @@ export class UsersService {
     return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges();
   }
 
-  saveUser(user: User): Observable<any> {
+  updateUser(user: User): Observable<any> {
     return from(this.afs.collection('users')
       .doc(user.id)
       .update(user)

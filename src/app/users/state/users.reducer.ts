@@ -46,10 +46,10 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         error: action.payload
       };
 
-    case UsersActionTypes.SaveUserSuccess:
+    case UsersActionTypes.UpdateUserSuccess:
       return state;
 
-    case UsersActionTypes.SaveUserFail:
+    case UsersActionTypes.UpdateUserFail:
       return {
         ...state,
         error: action.payload

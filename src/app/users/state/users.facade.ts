@@ -52,11 +52,11 @@ export class UsersFacade {
   }
 
   updateUser(updatedUser) {
-    this.store.dispatch(new usersActions.SaveUser(updatedUser));
+    this.store.dispatch(new usersActions.UpdateUser(updatedUser));
   }
 
   addNewUser(user) {
-    return this.usersService.addNewUser(user);
+    return this.store.dispatch(new usersActions.AddNewUser(user));
   }
 
   getUsersPurchases(id) {
