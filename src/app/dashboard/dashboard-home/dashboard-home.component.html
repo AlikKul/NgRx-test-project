@@ -1,9 +1,32 @@
 <div class="page-title">Dashboard</div>
 <div class="card">
-  <highcharts-chart
-    [Highcharts]="Highcharts"
-    [options]="chartOptions"
 
-    style="width: 100%; height: 400px; display: block;"
-  ></highcharts-chart>
+  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Shops Stats</a>
+      <ng-template ngbNavContent>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="chartOptions"
+
+          style="width: 100%; height: 400px; display: block;"
+        ></highcharts-chart>
+      </ng-template>
+    </li>
+
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Users Stats</a>
+      <ng-template ngbNavContent>
+        <p>Top 5 most active users.<br>
+          1) Total money spent<br>
+          2) Number of purchases
+        </p>
+      </ng-template>
+    </li>
+
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
 </div>
