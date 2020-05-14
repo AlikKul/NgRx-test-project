@@ -2,7 +2,7 @@
 
 <form class="card" (ngSubmit)="submit()" [formGroup]="form">
 
-  <label for="location">Location</label>
+  <label for="location">Shop</label>
   <input
     formControlName="location"
     id="location"
@@ -10,7 +10,7 @@
     (focus)="focus$.next($any($event).target.value)"
     (click)="click$.next($any($event).target.value)"
     type="text"
-    placeholder="Location..."
+    placeholder="Shop..."
     #instance="ngbTypeahead"
   />
 
