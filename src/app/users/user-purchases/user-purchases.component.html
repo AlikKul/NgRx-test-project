@@ -15,7 +15,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Date of purchase</th>
-          <th scope="col">Location</th>
+          <th scope="col">Shop</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -33,7 +33,7 @@
   </div>
 
   <div *ngIf="purchasedProducts?.length" class="purchase-details">
-    <div class="purchase-title">Purchase was made on {{ date }} in {{ location }}</div>
+    <div class="purchase-title">Purchase was made on {{ date }} at {{ location }}</div>
     <table class="table table-striped">
       <thead>
         <tr>

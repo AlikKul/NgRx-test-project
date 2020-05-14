@@ -5,9 +5,7 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Product, Purchase, User } from 'src/app/shared/interfaces';
 
-const cities = ['Minsk', 'Brussels', 'Prague', 'Copenhagen', 'Berlin', 'Paris', 'Budapest',
-  'Dublin', 'Rome', 'Riga', 'Vilnius', 'Monaco', 'Amsterdam',
-  'Warsaw', 'Bucharest', 'Moscow', 'Madrid', 'Stockholm', 'Kiev', 'Kansas', 'London'];
+const shops = ['NewEgg', 'Amazon', 'Tesco', 'ShopDirect', 'Walmart', 'BestBuy', 'AliExpress', 'Ebay'];
 
 @Component({
   selector: 'app-user-add-purchase',
@@ -37,8 +35,8 @@ export class UserAddPurchaseComponent implements OnInit {
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? cities
-        : cities.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+      map(term => (term === '' ? shops
+        : shops.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
 
