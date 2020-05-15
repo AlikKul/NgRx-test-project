@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { firebaseConfig } from '../environments/env';
 
 @NgModule({
@@ -48,7 +49,8 @@ import { firebaseConfig } from '../environments/env';
       logOnly: environment.production
     }),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

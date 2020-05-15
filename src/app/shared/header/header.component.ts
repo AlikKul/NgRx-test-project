@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.userName$.subscribe(userName => {
       if (!userName) {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }
     });
   }

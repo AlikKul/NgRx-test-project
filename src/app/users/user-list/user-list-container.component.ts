@@ -43,10 +43,6 @@ export class UserListContainerComponent implements OnInit {
 
   ngOnInit() {
     this.usersFacade.getUsers({column: 'name', direction: 'asc'});
-    if (!this.loginService.isAuthenticated()) {
-      localStorage.clear();
-      this.router.navigate(['']);
-    }
     this.usersFacade.clearUsersPurchases();
   }
 

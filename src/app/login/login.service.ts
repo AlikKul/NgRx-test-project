@@ -1,46 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LoginData, FirebaseAuthResponse } from '../shared/interfaces';
+import { LoginData } from '../shared/interfaces';
 import { firebaseConfig } from '../../environments/env';
-import { tap, mergeMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { from } from 'rxjs';
 import { UsersService } from '../users/users.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
 
-  private apiKey = firebaseConfig.apiKey;
-
   constructor(
-    private http: HttpClient,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private router: Router,
+    public afAuth: AngularFireAuth
   ) {}
 
-  login(loginData: LoginData): Observable<any> {
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`, loginData)
+  login(loginData: LoginData) {
+    return from(this.afAuth.auth.signInWithEmailAndPassword(loginData.email, loginData.password))
       .pipe(
-        tap(this.setToken),
-        mergeMap((resp: FirebaseAuthResponse) => {
-          return this.usersService.getLoggedInUser(resp.email);
+        mergeMap(resp => {
+          return this.usersService.getLoggedInUser(resp.user.email);
         })
       );
   }
 
-  private setToken(response: FirebaseAuthResponse | null) {
-    if (response) {
-      localStorage.setItem('userEmail', response.email);
-      localStorage.setItem('idToken', response.idToken);
-      localStorage.setItem('tokenExpDate', (new Date().getTime() + parseInt(response.expiresIn) * 1000).toString());
-    } else {
-      localStorage.clear();
-    }
+  logout() {
+    this.afAuth.auth.signOut();
+    this.router.navigate(['']);
   }
 
   isAuthenticated() {
-    if (new Date() > new Date(parseInt(localStorage.getItem('tokenExpDate')))) {
-      localStorage.clear();
-      return false;
-    }
-    return true;
+    // To Do
   }
 }

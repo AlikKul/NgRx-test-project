@@ -26,22 +26,22 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
     private usersFacade: UsersFacade
   ) { }
 
-  ngOnInit() {
-    localStorage.clear();
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
   login(loginData: LoginData) {
-    this.sub = this.loginService.login(Object.assign(loginData, {returnSecureToken: true}))
+    this.sub = this.loginService.login(loginData)
       .subscribe((resp: User[]) => {
         this.usersFacade.setLoggedInUserName(resp[0].name);
         this.usersFacade.setAccessType(resp[0].accessType);
         this.router.navigate(['dashboard']);
       },
-      error => this.loginError$ = of(error.error.error.message)
+      error => {
+        this.loginError$ = of(error.message);
+      }
       );
   }
 
