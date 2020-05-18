@@ -21,7 +21,10 @@ export class UserAddPurchaseComponent implements OnInit {
   @Input() products: Product[] = [];
   @Input() error: string;
   @Input() selectedUser: User;
-  @Output() addPurchase = new EventEmitter<{userId: string, purchase: Purchase}>();
+  @Output() addPurchase = new EventEmitter<{
+    userId: string,
+    purchase: Purchase,
+    totalMoneySpent: number}>();
   @Output() productNameQuery = new EventEmitter<string>();
   @Output() cancelChanges = new EventEmitter<void>();
 
@@ -74,7 +77,8 @@ export class UserAddPurchaseComponent implements OnInit {
         date: `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`,
         location: this.form.get('location').value,
         purchasedItems: this.purchasedProducts.map(product => product.id)
-      }
+      },
+      totalMoneySpent: this.selectedUser.totalMoneySpent + this.purchasedProducts.reduce((sum, current) => (sum + current.price), 0)
     });
   }
 

@@ -38,6 +38,9 @@ export class UsersFacade {
   getUsers(sortEvent) {
     this.store.dispatch(new usersActions.GetUsers(sortEvent));
   }
+  clearUsers() {
+    this.store.dispatch(new usersActions.ClearUsers());
+  }
 
   setSelectedUser(user) {
     this.store.dispatch(new usersActions.SetSelectedUser(user));

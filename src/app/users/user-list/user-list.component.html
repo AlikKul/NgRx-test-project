@@ -1,4 +1,9 @@
 <div class="page-title">User List</div>
+
+<div *ngIf="accessType === 'admin'" class="buttons-container">
+  <button (click)="addUser()" class="btn btn-primary">Add new</button>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -29,10 +34,6 @@
     </tr>
   </tbody>
 </table>
-
-<div *ngIf="accessType === 'admin'" class="buttons-container">
-  <button (click)="addUser()" class="btn btn-primary">Add new</button>
-</div>
 
 <div
   i18n

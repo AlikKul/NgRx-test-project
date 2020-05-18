@@ -64,6 +64,12 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         error: action.payload
       };
 
+    case UsersActionTypes.ClearUsers:
+      return {
+        ...state,
+        users: []
+      };
+
     case UsersActionTypes.DeleteUserSuccess:
       return state;
 

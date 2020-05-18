@@ -49,8 +49,7 @@ export class ProductListComponent implements OnInit {
     private modalService: NgbModal
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   addProduct() {
     this.initializeNewProduct.emit();

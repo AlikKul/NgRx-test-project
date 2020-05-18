@@ -53,12 +53,16 @@ export class ProductEditComponent implements OnInit {
 
   submit() {
     if (!this.editProduct.id) {
-      this.addNewProduct.emit(this.form.value);
+      this.addNewProduct.emit({
+        ...this.form.value,
+        price: Number(this.price.value)
+      });
       return;
     }
     this.updateProduct.emit({
       ...this.form.value,
-      id: this.editProduct.id
+      id: this.editProduct.id,
+      price: Number(this.price.value)
     });
   }
 

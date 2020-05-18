@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User, PurchaseDetailsQuery, Purchase, UserSortEvent } from '../shared/interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -48,11 +48,17 @@ export class UsersService {
     );
   }
 
-  addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase}): Observable<any> {
+  addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase, totalMoneySpent: number}): Observable<any> {
     return from(this.afs.collection('users')
       .doc(purchaseWithUserId.userId)
       .collection('purchases')
-      .add(purchaseWithUserId.purchase));
+      .add(purchaseWithUserId.purchase)).pipe(
+        tap(() => {
+          this.afs.collection('users')
+            .doc(purchaseWithUserId.userId)
+            .update({totalMoneySpent: purchaseWithUserId.totalMoneySpent});
+        })
+      );
   }
 
   getPurchasedProductsIds(purchaseDetailsQuery: PurchaseDetailsQuery) {

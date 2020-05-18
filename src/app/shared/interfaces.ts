@@ -6,6 +6,7 @@ export interface User {
   phone: string;
   website: string;
   accessType: AccessType;
+  totalMoneySpent: number;
 }
 
 export interface Product {

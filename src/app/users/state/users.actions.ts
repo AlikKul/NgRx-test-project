@@ -7,6 +7,7 @@ export enum UsersActionTypes {
   GetUsers = '[Users] Get Users',
   GetUsersSuccess = '[Users] Get Users Success',
   GetUsersFail = '[Users] Get Users Fail',
+  ClearUsers = '[Users] Clear Users',
   UpdateUser = '[Users] Update User',
   UpdateUserSuccess = '[Users] Update User Success',
   UpdateUserFail = '[Users] Update User Fail',
@@ -49,6 +50,10 @@ export class GetUsersSuccess implements Action {
 export class GetUsersFail implements Action {
   readonly type = UsersActionTypes.GetUsersFail;
   constructor(public payload: string) {}
+}
+
+export class ClearUsers implements Action {
+  readonly type = UsersActionTypes.ClearUsers;
 }
 
 export class UpdateUser implements Action {
@@ -141,6 +146,7 @@ export type UsersActions = SetSelectedUser
   | GetUsers
   | GetUsersSuccess
   | GetUsersFail
+  | ClearUsers
   | UpdateUser
   | UpdateUserSuccess
   | UpdateUserFail
