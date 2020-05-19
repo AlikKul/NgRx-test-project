@@ -10,14 +10,17 @@ import * as Highcharts from 'highcharts';
 export class DashboardHomeComponent implements OnInit {
 
   @Input() chartOptions: Highcharts.Options;
+  @Input() storedNumberOfUsersToDisplay: number;
   @Output() numberOfUsersToDisplay = new EventEmitter<number>();
 
   Highcharts = Highcharts;
-  num = 10;
+  num: number;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.num = this.storedNumberOfUsersToDisplay;
+  }
 
   usersToDisplay(num) {
     this.num = num;

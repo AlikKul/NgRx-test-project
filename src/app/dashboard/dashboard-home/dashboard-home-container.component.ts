@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersFacade } from 'src/app/users/state/users.facade';
-import { Observable, Subject, combineLatest } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { User } from 'src/app/shared/interfaces';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-home-container',
@@ -11,6 +10,7 @@ import { User } from 'src/app/shared/interfaces';
 
     <app-dashboard-home
       [chartOptions]="chartOptions$ | async"
+      [storedNumberOfUsersToDisplay]="storedNumberOfUsersToDisplay$ | async"
 
       (numberOfUsersToDisplay)="numberOfUsersToDisplay($event)"
     ></app-dashboard-home>
@@ -19,11 +19,12 @@ import { User } from 'src/app/shared/interfaces';
 export class DashboardHomeContainerComponent implements OnInit {
 
   chartOptions$: Observable<Highcharts.Options>;
-  updateFlag$ = new Subject<boolean>();
+  storedNumberOfUsersToDisplay$: Observable<number>;
 
   constructor(
     private usersFacade: UsersFacade
   ) {
+    this.storedNumberOfUsersToDisplay$ = usersFacade.numberOfUsersToDisplay$;
     this.chartOptions$ = combineLatest(usersFacade.users$, usersFacade.numberOfUsersToDisplay$).pipe(
       map(([users, num]) => {
 
@@ -63,43 +64,6 @@ export class DashboardHomeContainerComponent implements OnInit {
         } as Highcharts.Options;
       })
     );
-    // this.chartOptions$ = usersFacade.users$.pipe(
-    //   map(users => {
-    //     const moneySpentByUser = users.map(user => {
-    //       return {
-    //         name: user.name,
-    //         y: user.totalMoneySpent
-    //       };
-    //     });
-    //     return {
-    //       chart: { type: 'column'},
-    //       title: {text: 'Total money spent'},
-    //       xAxis: {
-    //         type: 'category'
-    //       },
-    //       yAxis: {
-    //         title: { text: 'Total money spent, USD' }
-    //       },
-    //       legend: {
-    //         enabled: false
-    //       },
-    //       plotOptions: {
-    //         series: {
-    //             borderWidth: 0,
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 format: '{point.y} USD'
-    //             }
-    //         }
-    //       },
-    //       tooltip: { enabled: false },
-    //       series: [{
-    //         colorByPoint: true,
-    //         data: moneySpentByUser
-    //       }]
-    //     } as Highcharts.Options;
-    //   })
-    // );
   }
 
   ngOnInit() {
