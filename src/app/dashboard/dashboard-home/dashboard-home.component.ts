@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -10,11 +10,18 @@ import * as Highcharts from 'highcharts';
 export class DashboardHomeComponent implements OnInit {
 
   @Input() chartOptions: Highcharts.Options;
+  @Output() numberOfUsersToDisplay = new EventEmitter<number>();
 
   Highcharts = Highcharts;
+  num = 5;
 
   constructor() { }
 
   ngOnInit() {}
+
+  usersToDisplay(num) {
+    this.num = num;
+    this.numberOfUsersToDisplay.emit(num);
+  }
 
 }

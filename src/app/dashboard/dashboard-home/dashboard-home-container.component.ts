@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersFacade } from 'src/app/users/state/users.facade';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-home-container',
@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 
     <app-dashboard-home
       [chartOptions]="chartOptions$ | async"
+
+      (numberOfUsersToDisplay)="numberOfUsersToDisplay($event)"
     ></app-dashboard-home>
   `
 })
@@ -63,6 +65,10 @@ export class DashboardHomeContainerComponent implements OnInit {
   ngOnInit() {
     this.usersFacade.clearUsers();
     this.usersFacade.getUsers({column: 'totalMoneySpent', direction: 'desc'});
+  }
+
+  numberOfUsersToDisplay(num: number) {
+    this.usersFacade.setNumberOfUsersToDisplay(num);
   }
 
 }

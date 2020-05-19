@@ -83,7 +83,7 @@ export class UsersEffects {
   addPurchase$: Observable<Action> = this.actions$.pipe(
     ofType(usersActions.UsersActionTypes.AddPurchase),
     map((action: usersActions.AddPurchase) => action.payload),
-    switchMap((purchase: {userId: string, purchase: Purchase}) =>
+    switchMap((purchase: {userId: string, purchase: Purchase, totalMoneySpent: number}) =>
       this.usersService.addPurchase(purchase).pipe(
         map(() => (new usersActions.AddPurchaseSuccess())),
         tap(() => this.router.navigate(['user-purchases'])),

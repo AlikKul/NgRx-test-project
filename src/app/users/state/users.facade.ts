@@ -7,11 +7,11 @@ import {
   getAccessType,
   getLoggedInUserName,
   getSelectedUser,
-  getUsersPurchases} from './users.selectors';
+  getUsersPurchases,
+  getNumberOfUsersToDisplay} from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, AccessType, Purchase } from '../../shared/interfaces';
 import * as usersActions from './users.actions';
-import { UsersService } from '../users.service';
 
 @Injectable({providedIn: 'root'})
 export class UsersFacade {
@@ -20,17 +20,18 @@ export class UsersFacade {
   error$: Observable<string>;
   selectedUser$: Observable<User>;
   usersPurchases$: Observable<Purchase[]>;
+  numberOfUsersToDisplay$: Observable<number>;
   accessType$: Observable<AccessType>;
   loggedInUserName$: Observable<string>;
 
   constructor(
-    private store: Store<UsersState>,
-    private usersService: UsersService
+    private store: Store<UsersState>
   ) {
     this.users$ = this.store.pipe(select(getUsers));
     this.error$ = this.store.pipe(select(getError));
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.usersPurchases$ = this.store.pipe(select(getUsersPurchases));
+    this.numberOfUsersToDisplay$ = this.store.pipe(select(getNumberOfUsersToDisplay));
     this.accessType$ = this.store.pipe(select(getAccessType));
     this.loggedInUserName$ = store.pipe(select(getLoggedInUserName));
   }
@@ -72,6 +73,10 @@ export class UsersFacade {
 
   addPurchase(purchaseWithUserId: {userId: string, purchase: Purchase}) {
     this.store.dispatch(new usersActions.AddPurchase(purchaseWithUserId));
+  }
+
+  setNumberOfUsersToDisplay(num) {
+    this.store.dispatch(new usersActions.SetNumberOfUsersToDisplay(num));
   }
 
   setAccessType(value) {

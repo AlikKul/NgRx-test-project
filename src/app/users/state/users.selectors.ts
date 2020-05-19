@@ -18,6 +18,11 @@ export const getUsersPurchases = createSelector(
   state => state.usersPurchases
 );
 
+export const getNumberOfUsersToDisplay = createSelector(
+  getUsersFeatureState,
+  state => state.numberOfUsersToDisplay
+);
+
 export const getError = createSelector(
   getUsersFeatureState,
   state => state.error

@@ -5,6 +5,7 @@ export interface UsersState {
   users: User[];
   selectedUser: User | null;
   usersPurchases: Purchase[];
+  numberOfUsersToDisplay: number;
   error: string;
   loggedInUserName: string;
   accessType: AccessType;
@@ -14,6 +15,7 @@ const initialState: UsersState = {
   users: [],
   selectedUser: null,
   usersPurchases: [],
+  numberOfUsersToDisplay: 5,
   error: '',
   loggedInUserName: '',
   accessType: AccessType.Visitor,
@@ -69,6 +71,12 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
         ...state,
         users: []
       };
+
+    case UsersActionTypes.SetNumberOfUsersToDisplay:
+      return {
+        ...state,
+        numberOfUsersToDisplay: action.payload
+      }
 
     case UsersActionTypes.DeleteUserSuccess:
       return state;
