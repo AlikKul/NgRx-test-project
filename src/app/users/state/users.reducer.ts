@@ -15,7 +15,7 @@ const initialState: UsersState = {
   users: [],
   selectedUser: null,
   usersPurchases: [],
-  numberOfUsersToDisplay: 5,
+  numberOfUsersToDisplay: 10,
   error: '',
   loggedInUserName: '',
   accessType: AccessType.Visitor,

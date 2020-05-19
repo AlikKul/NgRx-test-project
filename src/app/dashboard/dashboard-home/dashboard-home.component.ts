@@ -13,7 +13,7 @@ export class DashboardHomeComponent implements OnInit {
   @Output() numberOfUsersToDisplay = new EventEmitter<number>();
 
   Highcharts = Highcharts;
-  num = 5;
+  num = 10;
 
   constructor() { }
 

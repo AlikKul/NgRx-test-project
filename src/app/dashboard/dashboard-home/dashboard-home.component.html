@@ -5,7 +5,7 @@
 
     <li [ngbNavItem]="1">
       <a ngbNavLink>Users</a>
-      <div class="chart-options">Top
+      <div class="chart-options">Display top
         <span>
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{ num }}</button>
@@ -16,7 +16,7 @@
             </div>
           </div>
         </span>
-        users to display.
+        users.
       </div>
       <ng-template ngbNavContent>
         <highcharts-chart *ngIf="chartOptions"
