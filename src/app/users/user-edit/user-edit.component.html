@@ -1,9 +1,9 @@
-<form class="card" (ngSubmit)="submit()" [formGroup]="form">
-  <div *ngIf="!selectedUser.id" class="title">
-    <p>Add New User Page</p>
+<form class="modal-form" (ngSubmit)="submit()" [formGroup]="form">
+  <div *ngIf="!selectedUser.id" class="page-title">
+    <p>Add New User</p>
   </div>
-  <div *ngIf="selectedUser.id" class="title">
-    <p>User Edit Page</p>
+  <div *ngIf="selectedUser.id" class="page-title">
+    <p>Edit User</p>
   </div>
 
   <label i18n for="name">

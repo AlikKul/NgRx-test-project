@@ -52,7 +52,6 @@ export class UserListContainerComponent implements OnInit {
 
   onEdit(user) {
     this.usersFacade.setSelectedUser(user);
-    this.router.navigate(['user-edit']);
   }
 
   onShowPurchases(user) {
@@ -69,7 +68,6 @@ export class UserListContainerComponent implements OnInit {
       website: '',
       accessType: AccessType.Visitor
     });
-    this.router.navigate(['user-edit']);
   }
 
   onSort({column, direction}: UserSortEvent) {

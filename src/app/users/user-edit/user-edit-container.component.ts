@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
-import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-edit-container',
   template: `
-    <app-header></app-header>
-
     <app-user-edit
       [selectedUser]="selectedUser$ | async"
       (addNewUser)="addNewUser($event)"
@@ -23,7 +21,7 @@ export class UserEditContainerComponent implements OnInit {
 
   constructor(
     private usersFacade: UsersFacade,
-    private router: Router,
+    private modalService: NgbModal
   ) {
     this.selectedUser$ = this.usersFacade.selectedUser$;
   }
@@ -32,15 +30,17 @@ export class UserEditContainerComponent implements OnInit {
 
   addNewUser(user: User) {
     this.usersFacade.addNewUser(user);
+    this.modalService.dismissAll();
   }
 
   updateUser(updatedUser) {
     this.usersFacade.updateUser(updatedUser);
+    this.modalService.dismissAll();
   }
 
   cancelChanges() {
     this.usersFacade.clearSelectedUser();
-    this.router.navigate(['user-list']);
+    this.modalService.dismissAll();
   }
 
 }

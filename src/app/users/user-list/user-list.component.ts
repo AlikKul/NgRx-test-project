@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
 import { User, SortDirection, UserSortColumn, UserSortEvent } from '../../shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserEditContainerComponent } from '../user-edit/user-edit-container.component';
 
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
@@ -56,6 +57,12 @@ export class UserListComponent implements OnInit {
 
   addUser() {
     this.initializeNewUser.emit();
+    this.modalService.open(UserEditContainerComponent);
+  }
+
+  editUser(user) {
+    this.edit.emit(user);
+    this.modalService.open(UserEditContainerComponent);
   }
 
   showDeleteModal(content, user: User) {
@@ -71,10 +78,6 @@ export class UserListComponent implements OnInit {
 
   deleteCanceled() {
     this.modalService.dismissAll();
-  }
-
-  editUser(user) {
-    this.edit.emit(user);
   }
 
   onSort({column, direction}: UserSortEvent) {
