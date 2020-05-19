@@ -54,7 +54,6 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
       description: '',
       price: 0
     });
-    this.router.navigate(['product-edit']);
   }
 
   deleteProduct(id) {
@@ -63,7 +62,6 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
 
   editProduct(product) {
     this.productsFacade.setSelectedProduct(product);
-    this.router.navigate(['product-edit']);
   }
 
   productNameQuery(name: string) {

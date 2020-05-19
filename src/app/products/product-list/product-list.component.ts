@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, Directive, ViewChildren, QueryList } from '@angular/core';
 import { Product, SortDirection, ProductSortColumn, ProductSortEvent } from 'src/app/shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProductEditContainerComponent } from '../product-edit/product-edit-container.component';
 
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
@@ -53,11 +54,20 @@ export class ProductListComponent implements OnInit {
 
   addProduct() {
     this.initializeNewProduct.emit();
+    this.modalService.open(ProductEditContainerComponent, { centered: true });
   }
 
   edit(product) {
     this.editProduct.emit(product);
+    this.modalService.open(ProductEditContainerComponent, { centered: true });
   }
+
+  showEditModal(product) {
+    this.editProduct.emit(product);
+    this.modalService.open(ProductEditContainerComponent, { centered: true });
+  }
+
+  saveProduct() {}
 
   showDeleteModal(content, product: Product) {
     this.modalService.open(content, { centered: true });
@@ -71,6 +81,10 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteCanceled() {
+    this.modalService.dismissAll();
+  }
+
+  closeModal() {
     this.modalService.dismissAll();
   }
 

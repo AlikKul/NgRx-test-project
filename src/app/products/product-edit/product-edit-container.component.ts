@@ -3,14 +3,12 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
 import { getEditProduct, getError } from '../state/products.selectors';
-import { Router } from '@angular/router';
 import { ProductsFacade } from '../state/products.facade';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product-edit-container',
   template: `
-    <app-header></app-header>
-
     <app-product-edit
       [editProduct]="editProduct$ | async"
       (addNewProduct)="addNewProduct($event)"
@@ -26,8 +24,8 @@ export class ProductEditContainerComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private router: Router,
-    private productsFacade: ProductsFacade
+    private productsFacade: ProductsFacade,
+    private modalService: NgbModal
   ) {
     this.editProduct$ = this.store.pipe(select(getEditProduct));
     this.error$ = this.store.pipe(select(getError));
@@ -38,14 +36,16 @@ export class ProductEditContainerComponent implements OnInit {
 
   addNewProduct(product) {
     this.productsFacade.addNewProduct(product);
+    this.modalService.dismissAll();
   }
 
   updateProduct(product) {
     this.productsFacade.saveEditedProduct(product);
+    this.modalService.dismissAll();
   }
 
   cancelChanges() {
-    this.router.navigate(['product-list']);
+    this.modalService.dismissAll();
   }
 
 }
