@@ -3,6 +3,7 @@ import { User, PurchaseDetailsQuery, Purchase, UserSortEvent } from '../shared/i
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -57,6 +58,11 @@ export class UsersService {
           this.afs.collection('users')
             .doc(purchaseWithUserId.userId)
             .update({totalMoneySpent: purchaseWithUserId.totalMoneySpent});
+          purchaseWithUserId.purchase.purchasedItems.forEach(id => {
+            this.afs.collection('products')
+              .doc(id)
+              .update({ salesCount: firebase.firestore.FieldValue.increment(1) });
+          });
         })
       );
   }

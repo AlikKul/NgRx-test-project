@@ -14,6 +14,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  salesCount: number;
 }
 
 export interface Purchase {
@@ -26,10 +27,6 @@ export interface Purchase {
 export interface PurchaseDetailsQuery {
   userId: string;
   purchaseId: string;
-}
-
-export interface PurchasedItem {
-  id: string;
 }
 
 export interface LoggedInUserInfo {
