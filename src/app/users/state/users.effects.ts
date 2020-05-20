@@ -5,8 +5,9 @@ import * as usersActions from './users.actions';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { User, Purchase, UserSortEvent } from '../../shared/interfaces';
 import { of, Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import * as globalActions from '../../shared/state/global.actions';
 
 @Injectable()
 export class UsersEffects {
@@ -14,7 +15,8 @@ export class UsersEffects {
   constructor(
     private actions$: Actions,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   @Effect()
@@ -36,7 +38,7 @@ export class UsersEffects {
     switchMap((user: User) =>
       this.usersService.updateUser(user).pipe(
         map(() => (new usersActions.UpdateUserSuccess())),
-        tap(() => this.router.navigate(['user-list'])),
+        tap(() => this.store.dispatch(new globalActions.SetAlert('User successfully updated.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )
@@ -49,7 +51,7 @@ export class UsersEffects {
     switchMap((user: User) =>
       this.usersService.addNewUser(user).pipe(
         map(() => (new usersActions.AddNewUserSuccess())),
-        tap(() => this.router.navigate(['user-list'])),
+        tap(() => this.store.dispatch(new globalActions.SetAlert('New user successfully added.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )
@@ -62,6 +64,7 @@ export class UsersEffects {
     switchMap((id: string) =>
       this.usersService.deleteUser(id).pipe(
         map(() => (new usersActions.DeleteUserSuccess())),
+        tap(() => this.store.dispatch(new globalActions.SetAlert('User deleted.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error.message)))
       )
     )
@@ -86,7 +89,10 @@ export class UsersEffects {
     switchMap((purchase: {userId: string, purchase: Purchase, totalMoneySpent: number}) =>
       this.usersService.addPurchase(purchase).pipe(
         map(() => (new usersActions.AddPurchaseSuccess())),
-        tap(() => this.router.navigate(['user-purchases'])),
+        tap(() => {
+          this.router.navigate(['user-purchases']);
+          this.store.dispatch(new globalActions.SetAlert('Purchase successfully added.'));
+        }),
         catchError(error => of(new usersActions.AddPurchaseFail(error)))
       )
     )

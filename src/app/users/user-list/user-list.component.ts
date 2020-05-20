@@ -37,8 +37,8 @@ export class UserListComponent implements OnInit {
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   @Input() users: User[];
-  @Input() currentUserId: string;
   @Input() error: string;
+  @Input() alert: string;
   @Input() accessType: string;
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();

@@ -6,6 +6,7 @@ import { Product, PurchaseDetailsQuery, User } from 'src/app/shared/interfaces';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ProductsFacade } from 'src/app/products/state/products.facade';
+import { GlobalFacade } from 'src/app/shared/state/global.facade';
 
 @Component({
   selector: 'app-user-purchases-container',
@@ -13,6 +14,7 @@ import { ProductsFacade } from 'src/app/products/state/products.facade';
     <app-header></app-header>
 
     <app-user-purchases
+      [alert]="alert$ | async"
       [purchases]="purchases$ | async"
       [selectedUser]="selectedUser$ | async"
       [purchasedProducts]="purchasedProducts$ | async"
@@ -24,6 +26,7 @@ import { ProductsFacade } from 'src/app/products/state/products.facade';
 })
 export class UserPurchasesContainerComponent implements OnInit {
 
+  alert$: Observable<string>;
   selectedUser$: Observable<User>;
   purchases$: Observable<any>;
   purchasedProducts$: Observable<Product[]>;
@@ -31,10 +34,12 @@ export class UserPurchasesContainerComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
+    private globalFacade: GlobalFacade,
     private productsFacade: ProductsFacade,
     private usersFacade: UsersFacade,
     private router: Router
   ) {
+    this.alert$ = globalFacade.alert$;
     this.selectedUser$ = this.usersFacade.selectedUser$
       .pipe(
         tap((user: User) => this.usersFacade.getUsersPurchases(user.id))

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { User, AccessType, UserSortEvent } from '../../shared/interfaces';
 import { UsersFacade } from '../state/users.facade';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
+import { GlobalFacade } from 'src/app/shared/state/global.facade';
 
 @Component({
   selector: 'app-user-list-container',
@@ -14,6 +14,7 @@ import { LoginService } from 'src/app/login/login.service';
     <app-user-list
       [users]="users$ | async"
       [error]="error$ | async"
+      [alert]="alert$ | async"
       [accessType]="accessType$ | async"
       (initializeNewUser)="addUser()"
       (deleteUserId)="deleteUser($event)"
@@ -28,16 +29,18 @@ export class UserListContainerComponent implements OnInit {
 
   users$: Observable<User[]>;
   error$: Observable<string>;
+  alert$: Observable<string>;
   loggedInUser$: Observable<any>;
   accessType$: Observable<AccessType>;
 
   constructor(
     private usersFacade: UsersFacade,
+    private globalFacade: GlobalFacade,
     private router: Router,
-    private loginService: LoginService
   ) {
     this.users$ = this.usersFacade.users$;
     this.error$ = this.usersFacade.error$;
+    this.alert$ = globalFacade.alert$;
     this.accessType$ = this.usersFacade.accessType$;
   }
 

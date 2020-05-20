@@ -8,6 +8,7 @@ import { Purchase, User, PurchaseDetailsQuery, Product } from 'src/app/shared/in
 })
 export class UserPurchasesComponent implements OnInit {
 
+  @Input() alert: string;
   @Input() purchases: Purchase[];
   @Input() selectedUser: User;
   @Input() purchasedProducts: Product[];

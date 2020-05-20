@@ -40,14 +40,8 @@
 }
 
 @keyframes fade-in {
-  from {
-    right: -300px;
-    opacity: 0;
-  }
-  to {
-    right: 150px;
-    opacity: 1;
-  }
+  from { right: -300px; }
+  to { right: 150px; }
 }
 
 .error-section {
