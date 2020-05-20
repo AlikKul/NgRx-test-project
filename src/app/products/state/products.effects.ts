@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ProductsService } from '../products.service';
 import { Observable, of } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import * as productsActions from './products.actions';
-import { map, switchMap, catchError, tap, debounceTime } from 'rxjs/operators';
+import * as globalActions from '../../shared/state/global.actions';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Product } from 'src/app/shared/interfaces';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class ProductsEffects {
@@ -14,7 +14,7 @@ export class ProductsEffects {
   constructor(
     private actions$: Actions,
     private productsService: ProductsService,
-    private router: Router,
+    private store: Store
   ) {}
 
   @Effect()
@@ -34,8 +34,8 @@ export class ProductsEffects {
     switchMap((product: Product) =>
       this.productsService.addNewProduct(product).pipe(
         map(() => (new productsActions.AddNewProductSuccess())),
-        catchError(error => of(new productsActions.AddNewProductFail(error))),
-        tap(() => this.router.navigate(['product-list']))
+        tap(() => this.store.dispatch(new globalActions.SetAlert('New product successfully added.'))),
+        catchError(error => of(new productsActions.AddNewProductFail(error)))
       )
     )
   );
@@ -47,8 +47,8 @@ export class ProductsEffects {
     switchMap((product: Product) =>
       this.productsService.updateProduct(product).pipe(
         map(() => (new productsActions.SaveEditedProductSuccess())),
-        catchError(error => of(new productsActions.SaveEditedProductFail(error))),
-        tap(() => this.router.navigate(['product-list']))
+        tap(() => this.store.dispatch(new globalActions.SetAlert('Product successfully updated.'))),
+        catchError(error => of(new productsActions.SaveEditedProductFail(error)))
       )
     )
   );
@@ -60,6 +60,7 @@ export class ProductsEffects {
     switchMap((id: string) =>
       this.productsService.deleteProduct(id).pipe(
         map(() => (new productsActions.DeleteProductSuccess())),
+        tap(() => this.store.dispatch(new globalActions.SetAlert('Product deleted.'))),
         catchError(error => of(new productsActions.DeleteProductFail(error)))
       )
     )

@@ -1,3 +1,7 @@
+<div *ngIf="alert" class="alert-section">
+  <ngb-alert [dismissible]="false" type="success">{{ alert }}</ngb-alert>
+</div>
+
 <div class="page-title">Product List</div>
 
 <div class="actions">

@@ -28,6 +28,28 @@
   text-decoration: underline;
 }
 
+.alert-section {
+  position: absolute;
+  top: 125px;
+  right: 150px;
+  width: fit-content;
+  margin: 0 auto;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+  animation-name: fade-in;
+}
+
+@keyframes fade-in {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 150px;
+    opacity: 1;
+  }
+}
+
 .error-section {
   border: 1px solid red;
   border-radius: 5px;

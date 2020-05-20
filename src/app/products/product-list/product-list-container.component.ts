@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Product, ProductSortEvent } from 'src/app/shared/interfaces';
-import { Router } from '@angular/router';
 import { ProductsFacade } from '../state/products.facade';
 import { debounceTime } from 'rxjs/operators';
+import { GlobalFacade } from 'src/app/shared/state/global.facade';
 
 @Component({
   selector: 'app-product-list-container',
@@ -13,6 +13,7 @@ import { debounceTime } from 'rxjs/operators';
     <app-product-list
       [products]="products$ | async"
       [error]="error$ | async"
+      [alert]="alert$ | async"
       (editProduct)=editProduct($event)
       (deleteProductId)="deleteProduct($event)"
       (initializeNewProduct)="addNewProduct()"
@@ -27,13 +28,15 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
   productNameQuery$: Subject<string> = new Subject<string>();
   querySub: Subscription;
   error$: Observable<string>;
+  alert$: Observable<string>;
 
   constructor(
-    private router: Router,
-    private productsFacade: ProductsFacade
+    private productsFacade: ProductsFacade,
+    private globalFacade: GlobalFacade
   ) {
     this.products$ = this.productsFacade.products$;
     this.error$ = this.productsFacade.error$;
+    this.alert$ = globalFacade.alert$;
   }
 
   ngOnInit() {
