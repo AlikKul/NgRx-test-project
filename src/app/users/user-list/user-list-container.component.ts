@@ -41,7 +41,7 @@ export class UserListContainerComponent implements OnInit {
     this.users$ = this.usersFacade.users$;
     this.error$ = this.usersFacade.error$;
     this.alert$ = globalFacade.alert$;
-    this.accessType$ = this.usersFacade.accessType$;
+    this.accessType$ = this.globalFacade.accessType$;
   }
 
   ngOnInit() {

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginData, User } from '../shared/interfaces';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { UsersFacade } from '../users/state/users.facade';
 import { Observable, of, Subscription } from 'rxjs';
+import { GlobalFacade } from '../shared/state/global.facade';
 
 @Component({
   selector: 'app-login-container',
@@ -23,7 +23,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private usersFacade: UsersFacade
+    private globalFacade: GlobalFacade
   ) { }
 
   ngOnInit() {}
@@ -35,8 +35,8 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
   login(loginData: LoginData) {
     this.sub = this.loginService.login(loginData)
       .subscribe((resp: User[]) => {
-        this.usersFacade.setLoggedInUserName(resp[0].name);
-        this.usersFacade.setAccessType(resp[0].accessType);
+        this.globalFacade.setLoggedInUserName(resp[0].name);
+        this.globalFacade.setAccessType(resp[0].accessType);
         this.router.navigate(['dashboard']);
       },
       error => {

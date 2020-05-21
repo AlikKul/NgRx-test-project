@@ -4,13 +4,11 @@ import { UsersState } from './users.reducer';
 import {
   getUsers,
   getError,
-  getAccessType,
-  getLoggedInUserName,
   getSelectedUser,
   getUsersPurchases,
   getNumberOfUsersToDisplay} from './users.selectors';
 import { Observable } from 'rxjs';
-import { User, AccessType, Purchase } from '../../shared/interfaces';
+import { User, Purchase } from '../../shared/interfaces';
 import * as usersActions from './users.actions';
 
 @Injectable({providedIn: 'root'})
@@ -21,8 +19,6 @@ export class UsersFacade {
   selectedUser$: Observable<User>;
   usersPurchases$: Observable<Purchase[]>;
   numberOfUsersToDisplay$: Observable<number>;
-  accessType$: Observable<AccessType>;
-  loggedInUserName$: Observable<string>;
 
   constructor(
     private store: Store<UsersState>
@@ -32,8 +28,6 @@ export class UsersFacade {
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.usersPurchases$ = this.store.pipe(select(getUsersPurchases));
     this.numberOfUsersToDisplay$ = this.store.pipe(select(getNumberOfUsersToDisplay));
-    this.accessType$ = this.store.pipe(select(getAccessType));
-    this.loggedInUserName$ = store.pipe(select(getLoggedInUserName));
   }
 
   getUsers(sortEvent) {
@@ -77,14 +71,6 @@ export class UsersFacade {
 
   setNumberOfUsersToDisplay(num) {
     this.store.dispatch(new usersActions.SetNumberOfUsersToDisplay(num));
-  }
-
-  setAccessType(value) {
-    this.store.dispatch(new usersActions.SetAccessType(value));
-  }
-
-  setLoggedInUserName(name) {
-    this.store.dispatch(new usersActions.SetLoggedInUserName(name));
   }
 
 }

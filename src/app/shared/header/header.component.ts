@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersFacade } from 'src/app/users/state/users.facade';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { GlobalFacade } from '../state/global.facade';
 
 @Component({
   selector: 'app-header',
@@ -12,27 +12,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   userName$: Observable<string>;
   accessType$: Observable<string>;
-  sub: Subscription;
 
   constructor(
     private router: Router,
-    private usersFacade: UsersFacade
+    private globalFacade: GlobalFacade
   ) {
-    this.userName$ = this.usersFacade.loggedInUserName$;
-    this.accessType$ = this.usersFacade.accessType$;
+    this.userName$ = this.globalFacade.loggedInUserName$;
+    this.accessType$ = this.globalFacade.accessType$;
   }
 
-  ngOnInit() {
-    this.sub = this.userName$.subscribe(userName => {
-      if (!userName) {
-        // this.router.navigate(['']);
-      }
-    });
-  }
+  ngOnInit() {}
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+  ngOnDestroy() {}
 
   navToDashboard() {
     this.router.navigate(['dashboard']);

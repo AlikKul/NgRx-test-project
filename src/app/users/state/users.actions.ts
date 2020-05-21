@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, AccessType, Purchase, UserSortEvent } from '../../shared/interfaces';
+import { User, Purchase, UserSortEvent } from '../../shared/interfaces';
 
 export enum UsersActionTypes {
   SetSelectedUser = '[Users] Set Selected User',
@@ -24,9 +24,7 @@ export enum UsersActionTypes {
   GetUsersPurchases = '[Users] Get Users Purchases',
   GetUsersPurchasesSuccess = '[Users] Get Users Purchases Success',
   GetUsersPurchasesFail = '[Users] Get Users Purchases Fail',
-  ClearUsersPurchases = '[Users] Clear Users Purchases',
-  SetLoggedInUserName = '[Users] Set LoggedIn User Name',
-  SetAccessType = '[Users] Set Access Type',
+  ClearUsersPurchases = '[Users] Clear Users Purchases'
 }
 
 export class SetSelectedUser implements Action {
@@ -137,16 +135,6 @@ export class ClearUsersPurchases implements Action {
   readonly type = UsersActionTypes.ClearUsersPurchases;
 }
 
-export class SetLoggedInUserName implements Action {
-  readonly type = UsersActionTypes.SetLoggedInUserName;
-  constructor(public payload: string) {}
-}
-
-export class SetAccessType implements Action {
-  readonly type = UsersActionTypes.SetAccessType;
-  constructor(public payload: AccessType) {}
-}
-
 export type UsersActions = SetSelectedUser
   | ClearSelectedUser
   | GetUsers
@@ -169,6 +157,4 @@ export type UsersActions = SetSelectedUser
   | GetUsersPurchases
   | GetUsersPurchasesSuccess
   | GetUsersPurchasesFail
-  | ClearUsersPurchases
-  | SetLoggedInUserName
-  | SetAccessType;
+  | ClearUsersPurchases;

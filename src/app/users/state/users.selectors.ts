@@ -27,13 +27,3 @@ export const getError = createSelector(
   getUsersFeatureState,
   state => state.error
 );
-
-export const getAccessType = createSelector(
-  getUsersFeatureState,
-  state => state.accessType
-);
-
-export const getLoggedInUserName = createSelector(
-  getUsersFeatureState,
-  state => state.loggedInUserName
-);

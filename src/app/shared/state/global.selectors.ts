@@ -7,3 +7,13 @@ export const getAlert = createSelector(
   getGlobalFeatureSlice,
   state => state.alert
 );
+
+export const getAccessType = createSelector(
+  getGlobalFeatureSlice,
+  state => state.accessType
+);
+
+export const getLoggedInUserName = createSelector(
+  getGlobalFeatureSlice,
+  state => state.loggedInUserName
+);

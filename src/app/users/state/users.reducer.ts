@@ -7,8 +7,6 @@ export interface UsersState {
   usersPurchases: Purchase[];
   numberOfUsersToDisplay: number;
   error: string;
-  loggedInUserName: string;
-  accessType: AccessType;
 }
 
 const initialState: UsersState = {
@@ -16,9 +14,7 @@ const initialState: UsersState = {
   selectedUser: null,
   usersPurchases: [],
   numberOfUsersToDisplay: 10,
-  error: '',
-  loggedInUserName: '',
-  accessType: AccessType.Visitor,
+  error: ''
 };
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
@@ -112,18 +108,6 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       return {
         ...state,
         usersPurchases: []
-      };
-
-    case UsersActionTypes.SetLoggedInUserName:
-      return {
-        ...state,
-        loggedInUserName: action.payload
-      };
-
-    case UsersActionTypes.SetAccessType:
-      return {
-        ...state,
-        accessType: action.payload
       };
 
     default:
