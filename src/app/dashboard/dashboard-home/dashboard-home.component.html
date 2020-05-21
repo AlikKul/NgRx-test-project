@@ -19,9 +19,9 @@
           </span>
           users.
         </div>
-        <highcharts-chart *ngIf="chartOptions"
+        <highcharts-chart *ngIf="usersChartOptions"
           [Highcharts]="Highcharts"
-          [options]="chartOptions"
+          [options]="usersChartOptions"
 
           style="width: 100%; height: 400px; display: block;"
         ></highcharts-chart>
@@ -29,9 +29,14 @@
     </li>
 
     <li [ngbNavItem]="2">
-      <a ngbNavLink>Shops</a>
+      <a ngbNavLink>Products</a>
       <ng-template ngbNavContent>
-        <p>Shops chart</p>
+        <highcharts-chart *ngIf="productsChartOptions"
+          [Highcharts]="Highcharts"
+          [options]="productsChartOptions"
+
+          style="width: 100%; height: 600px; display: block;"
+        ></highcharts-chart>
       </ng-template>
     </li>
 

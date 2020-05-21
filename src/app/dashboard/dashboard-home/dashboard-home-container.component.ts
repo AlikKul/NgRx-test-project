@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersFacade } from 'src/app/users/state/users.facade';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProductsFacade } from 'src/app/products/state/products.facade';
 
 @Component({
   selector: 'app-dashboard-home-container',
@@ -9,8 +10,9 @@ import { map } from 'rxjs/operators';
     <app-header></app-header>
 
     <app-dashboard-home
-      [chartOptions]="chartOptions$ | async"
+      [usersChartOptions]="usersChartOptions$ | async"
       [storedNumberOfUsersToDisplay]="storedNumberOfUsersToDisplay$ | async"
+      [productsChartOptions]="productsChartOptions$ | async"
 
       (numberOfUsersToDisplay)="numberOfUsersToDisplay($event)"
     ></app-dashboard-home>
@@ -18,14 +20,16 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardHomeContainerComponent implements OnInit {
 
-  chartOptions$: Observable<Highcharts.Options>;
+  usersChartOptions$: Observable<Highcharts.Options>;
   storedNumberOfUsersToDisplay$: Observable<number>;
+  productsChartOptions$: Observable<Highcharts.Options>;
 
   constructor(
-    private usersFacade: UsersFacade
+    private usersFacade: UsersFacade,
+    private productsFacade: ProductsFacade
   ) {
     this.storedNumberOfUsersToDisplay$ = usersFacade.numberOfUsersToDisplay$;
-    this.chartOptions$ = combineLatest(usersFacade.users$, usersFacade.numberOfUsersToDisplay$).pipe(
+    this.usersChartOptions$ = combineLatest(usersFacade.users$, usersFacade.numberOfUsersToDisplay$).pipe(
       map(([users, num]) => {
 
         const moneySpentByUser = users.map(user => {
@@ -37,7 +41,7 @@ export class DashboardHomeContainerComponent implements OnInit {
 
         return {
           chart: { type: 'column'},
-          title: {text: 'Total money spent'},
+          title: {text: 'Most active users'},
           xAxis: {
             type: 'category'
           },
@@ -64,11 +68,56 @@ export class DashboardHomeContainerComponent implements OnInit {
         } as Highcharts.Options;
       })
     );
+
+    this.productsChartOptions$ = this.productsFacade.products$.pipe(
+      map(products => {
+
+        const topSellingProducts = products
+          .filter(item => item.salesCount > 0)
+          .map(item => {
+            return {
+              name: item.name,
+              y: item.salesCount
+            };
+          })
+          .sort((a, b) => b.y - a.y);
+
+        return {
+          chart: { type: 'bar'},
+          title: {text: 'Top selling products'},
+          xAxis: {
+            type: 'category'
+          },
+          yAxis: {
+            title: { text: 'Total units sold' }
+          },
+          legend: {
+            enabled: false
+          },
+          plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
+                }
+            }
+          },
+          tooltip: { enabled: false },
+          series: [{
+            colorByPoint: true,
+            data: topSellingProducts
+          }]
+        } as Highcharts.Options;
+      })
+    );
   }
 
   ngOnInit() {
     this.usersFacade.clearUsers();
     this.usersFacade.getUsers({column: 'totalMoneySpent', direction: 'desc'});
+    this.productsFacade.clearProducts();
+    this.productsFacade.getProducts();
   }
 
   numberOfUsersToDisplay(num: number) {

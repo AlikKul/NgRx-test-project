@@ -9,8 +9,9 @@ import * as Highcharts from 'highcharts';
 })
 export class DashboardHomeComponent implements OnInit {
 
-  @Input() chartOptions: Highcharts.Options;
+  @Input() usersChartOptions: Highcharts.Options;
   @Input() storedNumberOfUsersToDisplay: number;
+  @Input() productsChartOptions: Highcharts.Options;
   @Output() numberOfUsersToDisplay = new EventEmitter<number>();
 
   Highcharts = Highcharts;
