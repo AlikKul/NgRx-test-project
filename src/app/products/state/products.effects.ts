@@ -34,10 +34,15 @@ export class ProductsEffects {
     switchMap((product: Product) =>
       this.productsService.addNewProduct(product).pipe(
         map(() => (new productsActions.AddNewProductSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('New product successfully added.'))),
         catchError(error => of(new productsActions.AddNewProductFail(error)))
       )
     )
+  );
+
+  @Effect()
+  addNewProductSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.AddNewProductSuccess),
+    switchMap(() => of(new globalActions.SetAlert('New product successfully added.')))
   );
 
   @Effect()
@@ -47,10 +52,15 @@ export class ProductsEffects {
     switchMap((product: Product) =>
       this.productsService.updateProduct(product).pipe(
         map(() => (new productsActions.SaveEditedProductSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('Product successfully updated.'))),
         catchError(error => of(new productsActions.SaveEditedProductFail(error)))
       )
     )
+  );
+
+  @Effect()
+  saveEditedProductSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.SaveEditedProductSuccess),
+    switchMap(() => of(new globalActions.SetAlert('Product successfully updated.')))
   );
 
   @Effect()
@@ -60,10 +70,15 @@ export class ProductsEffects {
     switchMap((id: string) =>
       this.productsService.deleteProduct(id).pipe(
         map(() => (new productsActions.DeleteProductSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('Product deleted.'))),
         catchError(error => of(new productsActions.DeleteProductFail(error)))
       )
     )
+  );
+
+  @Effect()
+  deleteProductSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.DeleteProductSuccess),
+    switchMap(() => of(new globalActions.SetAlert('Product deleted.')))
   );
 
 }

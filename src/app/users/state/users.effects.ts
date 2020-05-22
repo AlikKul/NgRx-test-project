@@ -38,10 +38,15 @@ export class UsersEffects {
     switchMap((user: User) =>
       this.usersService.updateUser(user).pipe(
         map(() => (new usersActions.UpdateUserSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('User successfully updated.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )
+  );
+
+  @Effect()
+  updateUserSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.UpdateUserSuccess),
+    switchMap(() => of(new globalActions.SetAlert('User successfully updated.')))
   );
 
   @Effect()
@@ -51,10 +56,15 @@ export class UsersEffects {
     switchMap((user: User) =>
       this.usersService.addNewUser(user).pipe(
         map(() => (new usersActions.AddNewUserSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('New user successfully added.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error)))
       )
     )
+  );
+
+  @Effect()
+  addNewUserSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.AddNewUserSuccess),
+    switchMap(() => of(new globalActions.SetAlert('New user successfully added.')))
   );
 
   @Effect()
@@ -64,10 +74,15 @@ export class UsersEffects {
     switchMap((id: string) =>
       this.usersService.deleteUser(id).pipe(
         map(() => (new usersActions.DeleteUserSuccess())),
-        tap(() => this.store.dispatch(new globalActions.SetAlert('User deleted.'))),
         catchError(error => of(new usersActions.AddNewUserFail(error.message)))
       )
     )
+  );
+
+  @Effect()
+  deleteUserSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.DeleteUserSuccess),
+    switchMap(() => of(new globalActions.SetAlert('User deleted.')))
   );
 
   @Effect()
@@ -89,13 +104,15 @@ export class UsersEffects {
     switchMap((purchase: {userId: string, purchase: Purchase, totalMoneySpent: number}) =>
       this.usersService.addPurchase(purchase).pipe(
         map(() => (new usersActions.AddPurchaseSuccess())),
-        tap(() => {
-          this.router.navigate(['user-purchases']);
-          this.store.dispatch(new globalActions.SetAlert('Purchase successfully added.'));
-        }),
         catchError(error => of(new usersActions.AddPurchaseFail(error)))
       )
     )
+  );
+
+  @Effect()
+  addPurchaseSuccess$: Observable<Action> = this.actions$.pipe(
+    ofType(usersActions.UsersActionTypes.AddPurchaseSuccess),
+    switchMap(() => of(new globalActions.SetAlert('Purchase successfully added.')))
   );
 
 }
