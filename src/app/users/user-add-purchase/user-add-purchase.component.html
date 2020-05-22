@@ -1,6 +1,6 @@
 <div class="page-title">Add New Purchase Page</div>
 
-<form class="card" (ngSubmit)="submit()" [formGroup]="form">
+<form class="modal-form" (ngSubmit)="submit()" [formGroup]="form">
 
   <label for="location">Shop</label>
   <input
@@ -58,7 +58,12 @@
       type="submit"
       class="btn btn-primary"
     >Save</button>
-    <button type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
+    <button
+      type="button"
+      (click)="cancel()"
+      class="btn btn-danger"
+      ngbAutofocus
+    >Cancel</button>
   </div>
 
 </form>

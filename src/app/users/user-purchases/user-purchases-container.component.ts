@@ -65,9 +65,7 @@ export class UserPurchasesContainerComponent implements OnInit {
     this.purchaseDetailsQuery$.next(purchaseDetailsQuery);
   }
 
-  addNewPurchase() {
-    this.router.navigate(['add-purchase']);
-  }
+  addNewPurchase() {}
 
   onNavBack() {
     this.router.navigate(['user-list']);

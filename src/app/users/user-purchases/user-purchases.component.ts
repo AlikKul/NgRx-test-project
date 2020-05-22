@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Purchase, User, PurchaseDetailsQuery, Product } from 'src/app/shared/interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserAddPurchaseContainerComponent } from '../user-add-purchase/user-add-purchase-container.component';
 
 @Component({
   selector: 'app-user-purchases',
@@ -28,6 +29,10 @@ export class UserPurchasesComponent implements OnInit {
 
   onAddNewPurchase() {
     this.addNewPurchase.emit();
+    this.modalService.open(UserAddPurchaseContainerComponent, {
+      size: 'xl',
+      windowClass: 'add-purchase-modal'
+    });
   }
 
   back() {

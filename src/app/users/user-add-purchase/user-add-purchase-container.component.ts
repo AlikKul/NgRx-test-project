@@ -1,16 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Product, User } from 'src/app/shared/interfaces';
-import { Router } from '@angular/router';
 import { ProductsFacade } from 'src/app/products/state/products.facade';
 import { debounceTime } from 'rxjs/operators';
 import { UsersFacade } from '../state/users.facade';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-add-purchase-container',
   template: `
-    <app-header></app-header>
-
     <app-user-add-purchase
       [products]="products$ | async"
       [selectedUser]="selectedUser$ | async"
@@ -30,9 +28,9 @@ export class UserAddPurchaseContainerComponent implements OnInit, OnDestroy {
   error$: Observable<string>;
 
   constructor(
-    private router: Router,
     private productsFacade: ProductsFacade,
-    private usersFacade: UsersFacade
+    private usersFacade: UsersFacade,
+    private modalService: NgbModal
   ) {
     this.products$ = this.productsFacade.products$;
     this.selectedUser$ = this.usersFacade.selectedUser$;
@@ -52,6 +50,7 @@ export class UserAddPurchaseContainerComponent implements OnInit, OnDestroy {
 
   addPurchase(purchaseWithUserId) {
     this.usersFacade.addPurchase(purchaseWithUserId);
+    this.modalService.dismissAll();
   }
 
   productNameQuery(name: string) {
@@ -59,7 +58,7 @@ export class UserAddPurchaseContainerComponent implements OnInit, OnDestroy {
   }
 
   cancelChanges() {
-    this.router.navigate(['user-purchases']);
+    this.modalService.dismissAll();
   }
 
 }
