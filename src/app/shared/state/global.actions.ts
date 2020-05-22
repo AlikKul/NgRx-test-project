@@ -5,7 +5,8 @@ export enum GlobalActionsTypes {
   SetAlert = '[Global] Set Alert',
   ClearAlert = '[Global] Clear Alert',
   SetLoggedInUserName = '[Global] Set LoggedIn User Name',
-  SetAccessType = '[Global] Set Access Type'
+  SetAccessType = '[Global] Set Access Type',
+  SetShowLoader = '[Global] Set Show Loader'
 }
 
 export class SetAlert implements Action {
@@ -27,7 +28,13 @@ export class SetAccessType implements Action {
   constructor(public payload: AccessType) {}
 }
 
+export class SetShowLoader implements Action {
+  readonly type = GlobalActionsTypes.SetShowLoader;
+  constructor(public payload: boolean) {}
+}
+
 export type GlobalActions = SetAlert
   | ClearAlert
   | SetLoggedInUserName
-  | SetAccessType;
+  | SetAccessType
+  | SetShowLoader;

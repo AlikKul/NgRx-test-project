@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import * as globalActions from './global.actions';
-import { map, switchMap, debounceTime } from 'rxjs/operators';
+import { switchMap, debounceTime } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 
 @Injectable()

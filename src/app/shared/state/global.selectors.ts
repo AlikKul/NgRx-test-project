@@ -17,3 +17,8 @@ export const getLoggedInUserName = createSelector(
   getGlobalFeatureSlice,
   state => state.loggedInUserName
 );
+
+export const getShowLoader = createSelector(
+  getGlobalFeatureSlice,
+  state => state.showLoader
+);
