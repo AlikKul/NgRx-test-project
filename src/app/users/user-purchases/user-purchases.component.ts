@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Purchase, User, PurchaseDetailsQuery, Product } from 'src/app/shared/interfaces';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-purchases',
@@ -19,26 +20,32 @@ export class UserPurchasesComponent implements OnInit {
   date: string;
   location: string;
 
-  constructor() { }
+  constructor(
+    private modalService: NgbModal
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onAddNewPurchase() {
+    this.addNewPurchase.emit();
   }
 
   back() {
     this.navBack.emit();
   }
 
-  purchaseDetails(purchase: Purchase) {
+  onShowPurchaseDetails(content, purchase: Purchase) {
     this.showPurchaseDetails.emit({
       userId: this.selectedUser.id,
       purchaseId: purchase.id
     });
     this.date = purchase.date;
     this.location = purchase.location;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
-  onAddNewPurchase() {
-    this.addNewPurchase.emit();
+  closeModal() {
+    this.modalService.dismissAll();
   }
 
 }
