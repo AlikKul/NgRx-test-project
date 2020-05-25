@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import * as productsActions from './products.actions';
 import * as globalActions from '../../shared/state/global.actions';
-import { map, switchMap, catchError, tap, mergeMap } from 'rxjs/operators';
+import { map, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import { Product } from 'src/app/shared/interfaces';
 
 @Injectable()
@@ -37,6 +37,12 @@ export class ProductsEffects {
   );
 
   @Effect()
+  getProductsFail$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.GetProductsFail),
+    switchMap(() => of(new globalActions.SetShowLoader(false)))
+  );
+
+  @Effect()
   addNewProduct$: Observable<Action> = this.actions$.pipe(
     ofType(productsActions.ProductsActionsTypes.AddNewProduct),
     map((action: productsActions.AddNewProduct) => {
@@ -58,6 +64,12 @@ export class ProductsEffects {
       new globalActions.SetAlert('New product successfully added.'),
       new globalActions.SetShowLoader(false)
     ])
+  );
+
+  @Effect()
+  addNewProductFail$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.AddNewProductFail),
+    switchMap(() => of(new globalActions.SetShowLoader(false)))
   );
 
   @Effect()
@@ -85,6 +97,12 @@ export class ProductsEffects {
   );
 
   @Effect()
+  saveEditedProductFail$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.SaveEditedProductFail),
+    switchMap(() => of(new globalActions.SetShowLoader(false)))
+  );
+
+  @Effect()
   deleteProduct$: Observable<Action> = this.actions$.pipe(
     ofType(productsActions.ProductsActionsTypes.DeleteProduct),
     map((action: productsActions.DeleteProduct) => {
@@ -106,6 +124,12 @@ export class ProductsEffects {
       new globalActions.SetAlert('Product deleted.'),
       new globalActions.SetShowLoader(false)
     ])
+  );
+
+  @Effect()
+  deleteProductFail$: Observable<Action> = this.actions$.pipe(
+    ofType(productsActions.ProductsActionsTypes.DeleteProductFail),
+    switchMap(() => of(new globalActions.SetShowLoader(false)))
   );
 
 }
