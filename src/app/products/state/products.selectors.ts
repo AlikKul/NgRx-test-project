@@ -17,3 +17,8 @@ export const getError = createSelector(
   getProductsFeatureSlice,
   state => state.error
 );
+
+export const getIsLoading = createSelector(
+  getProductsFeatureSlice,
+  state => state.isLoading
+);

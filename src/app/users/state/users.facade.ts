@@ -6,7 +6,8 @@ import {
   getError,
   getSelectedUser,
   getUsersPurchases,
-  getNumberOfUsersToDisplay} from './users.selectors';
+  getNumberOfUsersToDisplay,
+  getIsLoading } from './users.selectors';
 import { Observable } from 'rxjs';
 import { User, Purchase } from '../../shared/interfaces';
 import * as usersActions from './users.actions';
@@ -19,6 +20,7 @@ export class UsersFacade {
   selectedUser$: Observable<User>;
   usersPurchases$: Observable<Purchase[]>;
   numberOfUsersToDisplay$: Observable<number>;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private store: Store<UsersState>
@@ -28,6 +30,8 @@ export class UsersFacade {
     this.selectedUser$ = this.store.pipe(select(getSelectedUser));
     this.usersPurchases$ = this.store.pipe(select(getUsersPurchases));
     this.numberOfUsersToDisplay$ = this.store.pipe(select(getNumberOfUsersToDisplay));
+    this.isLoading$ = this.store.pipe(select(getIsLoading));
+
   }
 
   getUsers(sortEvent) {

@@ -20,7 +20,6 @@ export class GlobalFacade {
     this.alert$ = this.store.pipe(select(globalSelectors.getAlert));
     this.accessType$ = this.store.pipe(select(globalSelectors.getAccessType));
     this.loggedInUserName$ = store.pipe(select(globalSelectors.getLoggedInUserName));
-    this.showLoader$ = this.store.pipe(select(globalSelectors.getShowLoader));
   }
 
   setAlert(message: string) {
@@ -33,9 +32,6 @@ export class GlobalFacade {
 
   setLoggedInUserName(name) {
     this.store.dispatch(new globalActions.SetLoggedInUserName(name));
-  }
-  setShowLoader(value: boolean) {
-    this.store.dispatch(new globalActions.SetShowLoader(value));
   }
 
 }

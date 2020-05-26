@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   userName$: Observable<string>;
   accessType$: Observable<string>;
-  showLoader$: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -20,7 +19,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {
     this.userName$ = this.globalFacade.loggedInUserName$;
     this.accessType$ = this.globalFacade.accessType$;
-    this.showLoader$ = this.globalFacade.showLoader$;
   }
 
   ngOnInit() {}

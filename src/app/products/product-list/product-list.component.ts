@@ -38,6 +38,7 @@ export class ProductListComponent implements OnInit {
   @Input() products: Product[];
   @Input() error: string;
   @Input() alert: string;
+  @Input() isLoading: boolean;
   @Output() editProduct = new EventEmitter<Product>();
   @Output() deleteProductId = new EventEmitter<string>();
   @Output() initializeNewProduct = new EventEmitter<void>();

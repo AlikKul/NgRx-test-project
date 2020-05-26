@@ -1,3 +1,5 @@
+<div *ngIf="isLoading" class="loader"></div>
+
 <div *ngIf="alert" class="alert-section">
   <ngb-alert [dismissible]="false" type="success">{{ alert }}</ngb-alert>
 </div>

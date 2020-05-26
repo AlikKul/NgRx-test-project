@@ -40,6 +40,7 @@ export class UserListComponent implements OnInit {
   @Input() error: string;
   @Input() alert: string;
   @Input() accessType: string;
+  @Input() isLoading: boolean;
   @Output() initializeNewUser = new EventEmitter<void>();
   @Output() deleteUserId = new EventEmitter<string>();
   @Output() edit = new EventEmitter<User>();

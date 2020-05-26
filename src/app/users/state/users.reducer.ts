@@ -7,6 +7,7 @@ export interface UsersState {
   usersPurchases: Purchase[];
   numberOfUsersToDisplay: number;
   error: string;
+  isLoading: boolean;
 }
 
 const initialState: UsersState = {
@@ -14,11 +15,23 @@ const initialState: UsersState = {
   selectedUser: null,
   usersPurchases: [],
   numberOfUsersToDisplay: 10,
-  error: ''
+  error: '',
+  isLoading: false
 };
 
 export function reducer(state: UsersState = initialState, action: UsersActions): UsersState {
   switch (action.type) {
+
+    case UsersActionTypes.GetUsers:
+    case UsersActionTypes.UpdateUser:
+    case UsersActionTypes.AddNewUser:
+    case UsersActionTypes.DeleteUser:
+    case UsersActionTypes.AddPurchase:
+    case UsersActionTypes.GetUsersPurchases:
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case UsersActionTypes.SetSelectedUser:
       return {
@@ -36,30 +49,40 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       return {
         ...state,
         users: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.GetUsersFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.UpdateUserSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case UsersActionTypes.UpdateUserFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.AddNewUserSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case UsersActionTypes.AddNewUserFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.ClearUsers:
@@ -72,36 +95,46 @@ export function reducer(state: UsersState = initialState, action: UsersActions):
       return {
         ...state,
         numberOfUsersToDisplay: action.payload
-      }
+      };
 
     case UsersActionTypes.DeleteUserSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case UsersActionTypes.DeleteUserFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.AddPurchaseSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case UsersActionTypes.AddPurchaseFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.GetUsersPurchasesSuccess:
       return {
         ...state,
-        usersPurchases: action.payload
+        usersPurchases: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.GetUsersPurchasesFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case UsersActionTypes.ClearUsersPurchases:

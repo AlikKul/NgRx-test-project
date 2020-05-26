@@ -27,3 +27,8 @@ export const getError = createSelector(
   getUsersFeatureState,
   state => state.error
 );
+
+export const getIsLoading = createSelector(
+  getUsersFeatureState,
+  state => state.isLoading
+);

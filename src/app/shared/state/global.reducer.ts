@@ -5,14 +5,12 @@ export interface GlobalState {
   alert: string;
   loggedInUserName: string;
   accessType: AccessType;
-  showLoader: boolean;
 }
 
 const initialState: GlobalState = {
   alert: '',
   loggedInUserName: '',
-  accessType: AccessType.Visitor,
-  showLoader: false
+  accessType: AccessType.Visitor
 };
 
 export function reducer(state: GlobalState = initialState, action: GlobalActions): GlobalState {
@@ -40,12 +38,6 @@ export function reducer(state: GlobalState = initialState, action: GlobalActions
       return {
         ...state,
         accessType: action.payload
-      };
-
-    case GlobalActionsTypes.SetShowLoader:
-      return {
-        ...state,
-        showLoader: action.payload
       };
 
     default:

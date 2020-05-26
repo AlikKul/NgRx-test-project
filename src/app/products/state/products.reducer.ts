@@ -5,57 +5,79 @@ export interface ProductsState {
   products: Product[];
   editProduct: Product | null;
   error: string;
+  isLoading: boolean;
 }
 
-const initialState: ProductsState = {
+export const initialState: ProductsState = {
   products: [],
   editProduct: null,
-  error: ''
+  error: '',
+  isLoading: false
 };
 
 export function reducer(state: ProductsState = initialState, action: ProductsActions): ProductsState {
   switch (action.type) {
 
     case ProductsActionsTypes.GetProducts:
-      return state;
+    case ProductsActionsTypes.AddNewProduct:
+    case ProductsActionsTypes.SaveEditedProduct:
+    case ProductsActionsTypes.DeleteProduct:
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case ProductsActionsTypes.GetProductsSuccess:
       return {
         ...state,
-        products: action.payload
+        products: action.payload,
+        isLoading: false
       };
 
     case ProductsActionsTypes.GetProductsFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case ProductsActionsTypes.AddNewProductSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case ProductsActionsTypes.AddNewProductFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case ProductsActionsTypes.SaveEditedProductSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case ProductsActionsTypes.AddNewProductFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case ProductsActionsTypes.DeleteProductSuccess:
-      return state;
+      return {
+        ...state,
+        isLoading: false
+      };
 
     case ProductsActionsTypes.DeleteProductFail:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
 
     case ProductsActionsTypes.SetEditProduct:

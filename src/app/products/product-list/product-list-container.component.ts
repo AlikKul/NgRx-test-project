@@ -14,6 +14,7 @@ import { GlobalFacade } from 'src/app/shared/state/global.facade';
       [products]="products$ | async"
       [error]="error$ | async"
       [alert]="alert$ | async"
+      [isLoading]="isLoading$ | async"
       (editProduct)=editProduct($event)
       (deleteProductId)="deleteProduct($event)"
       (initializeNewProduct)="addNewProduct()"
@@ -29,6 +30,7 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
   querySub: Subscription;
   error$: Observable<string>;
   alert$: Observable<string>;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private productsFacade: ProductsFacade,
@@ -37,6 +39,7 @@ export class ProductListContainerComponent implements OnInit, OnDestroy {
     this.products$ = this.productsFacade.products$;
     this.error$ = this.productsFacade.error$;
     this.alert$ = globalFacade.alert$;
+    this.isLoading$ = productsFacade.isLoading$;
   }
 
   ngOnInit() {

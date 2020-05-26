@@ -16,6 +16,7 @@ import { GlobalFacade } from 'src/app/shared/state/global.facade';
       [error]="error$ | async"
       [alert]="alert$ | async"
       [accessType]="accessType$ | async"
+      [isLoading]="isLoading$ | async"
       (initializeNewUser)="addUser()"
       (deleteUserId)="deleteUser($event)"
       (edit)="onEdit($event)"
@@ -32,16 +33,18 @@ export class UserListContainerComponent implements OnInit {
   alert$: Observable<string>;
   loggedInUser$: Observable<any>;
   accessType$: Observable<AccessType>;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private usersFacade: UsersFacade,
     private globalFacade: GlobalFacade,
-    private router: Router,
+    private router: Router
   ) {
     this.users$ = this.usersFacade.users$;
     this.error$ = this.usersFacade.error$;
-    this.alert$ = globalFacade.alert$;
+    this.alert$ = this.globalFacade.alert$;
     this.accessType$ = this.globalFacade.accessType$;
+    this.isLoading$ = this.usersFacade.isLoading$;
   }
 
   ngOnInit() {
