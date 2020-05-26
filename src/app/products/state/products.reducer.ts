@@ -24,6 +24,7 @@ export function reducer(state: ProductsState = initialState, action: ProductsAct
     case ProductsActionsTypes.DeleteProduct:
       return {
         ...state,
+        error: '',
         isLoading: true
       };
 
@@ -31,48 +32,21 @@ export function reducer(state: ProductsState = initialState, action: ProductsAct
       return {
         ...state,
         products: action.payload,
-        isLoading: false
-      };
-
-    case ProductsActionsTypes.GetProductsFail:
-      return {
-        ...state,
-        error: action.payload,
+        error: '',
         isLoading: false
       };
 
     case ProductsActionsTypes.AddNewProductSuccess:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case ProductsActionsTypes.AddNewProductFail:
-      return {
-        ...state,
-        error: action.payload,
-        isLoading: false
-      };
-
     case ProductsActionsTypes.SaveEditedProductSuccess:
-      return {
-        ...state,
-        isLoading: false
-      };
-
-    case ProductsActionsTypes.AddNewProductFail:
-      return {
-        ...state,
-        error: action.payload,
-        isLoading: false
-      };
-
     case ProductsActionsTypes.DeleteProductSuccess:
       return {
         ...state,
+        error: '',
         isLoading: false
       };
 
+    case ProductsActionsTypes.GetProductsFail:
+    case ProductsActionsTypes.AddNewProductFail:
     case ProductsActionsTypes.DeleteProductFail:
       return {
         ...state,
