@@ -47,6 +47,7 @@ export function reducer(state: ProductsState = initialState, action: ProductsAct
 
     case ProductsActionsTypes.GetProductsFail:
     case ProductsActionsTypes.AddNewProductFail:
+    case ProductsActionsTypes.SaveEditedProductFail:
     case ProductsActionsTypes.DeleteProductFail:
       return {
         ...state,
