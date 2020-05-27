@@ -22,7 +22,7 @@ export class ProductsEffects {
     map((action: productsActions.GetProducts) => action.payload),
     switchMap((name: string) => this.productsService.getProducts(name).pipe(
       map((products: Product[]) => (new productsActions.GetProductsSuccess(products))),
-      catchError(error => of(new productsActions.AddNewProductFail(error)))
+      catchError(error => of(new productsActions.GetProductsFail(error)))
     ))
   );
 
