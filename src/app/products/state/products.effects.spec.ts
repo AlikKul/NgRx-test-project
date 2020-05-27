@@ -6,8 +6,15 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Product } from 'src/app/shared/interfaces';
 import { GetProducts,
   GetProductsSuccess,
-  GetProductsFail } from './products.actions';
+  GetProductsFail,
+  AddNewProduct,
+  AddNewProductSuccess,
+  AddNewProductFail,
+  SaveEditedProduct,
+  SaveEditedProductSuccess,
+  SaveEditedProductFail} from './products.actions';
 import { cold, hot } from 'jest-marbles';
+import { SetAlert } from 'src/app/shared/state/global.actions';
 
 describe('ProductsEffects', () => {
   let actions: Observable<any>;
@@ -38,7 +45,8 @@ describe('ProductsEffects', () => {
         {
           provide: ProductsService,
           useValue: {
-            getProducts: jest.fn()
+            getProducts: jest.fn(),
+            addNewProduct: jest.fn()
           }
         }
       ]
@@ -53,7 +61,6 @@ describe('ProductsEffects', () => {
   });
 
   describe('getProducts', () => {
-
     it('should return GetProductsSuccess action with products on success', () => {
       const products = [ mockProduct1, mockProduct2 ];
       const action = new GetProducts('');
@@ -81,5 +88,82 @@ describe('ProductsEffects', () => {
 
   });
 
+  describe('addNewProduct', () => {
+    it('should return AddNewProductSuccess action on success', () => {
+      const action = new AddNewProduct(mockProduct1);
+      const outcome = new AddNewProductSuccess();
+
+      actions = hot('-a', { a: action});
+      const response = cold('-a|', {});
+      const expected = cold('--b', { b: outcome });
+      productsService.addNewProduct = jest.fn(() => response);
+
+      expect(effects.addNewProduct$).toBeObservable(expected);
+    });
+
+    it('should return AddNewProductFail action with an error message, on failure', () => {
+      const action = new AddNewProduct(mockProduct1);
+      const outcome = new AddNewProductFail('what went wrong');
+
+      actions = hot('-a', { a: action});
+      const response = cold('-#|', {}, 'what went wrong');
+      const expected = cold('--b', { b: outcome });
+      productsService.addNewProduct = jest.fn(() => response);
+
+      expect(effects.addNewProduct$).toBeObservable(expected);
+    });
+
+  });
+
+  describe('addNewProductSuccess', () => {
+    it('should return SetAlert with success message', () => {
+      const action = new AddNewProductSuccess();
+      const outcome = new SetAlert('New product successfully added.');
+
+      actions = hot('-a', { a: action});
+      const expected = cold('-b', { b: outcome });
+
+      expect(effects.addNewProductSuccess$).toBeObservable(expected);
+    });
+  });
+
+  describe('saveEditedProduct', () => {
+    it('should return SaveEditedProductSuccess action on success', () => {
+      const action = new SaveEditedProduct(mockProduct1);
+      const outcome = new SaveEditedProductSuccess();
+
+      actions = hot('-a', { a: action} );
+      const response = cold('-a|', {});
+      const expected = cold('--b', { b: outcome });
+      productsService.updateProduct = jest.fn(() => response);
+
+      expect(effects.saveEditedProduct$).toBeObservable(expected);
+    });
+
+    it('should return SaveEditedProductFail action, with a error message, on failure', () => {
+      const action = new SaveEditedProduct(mockProduct1);
+      const outcome = new SaveEditedProductFail('what went wrong');
+
+      actions = hot('-a', { a: action });
+      const response = cold('-#|', {}, 'what went wrong');
+      const expected = cold('--b', { b: outcome });
+      productsService.updateProduct = jest.fn(() => response);
+
+      expect(effects.saveEditedProduct$).toBeObservable(expected);
+    });
+
+  });
+
+  describe('saveEditedProductSuccess', () => {
+    it('should return SetAlert with success message', () => {
+      const action = new SaveEditedProductSuccess();
+      const outcome = new SetAlert('Product successfully updated.');
+
+      actions = hot('-a', { a: action});
+      const expected = cold('-b', { b: outcome });
+
+      expect(effects.saveEditedProductSuccess$).toBeObservable(expected);
+    });
+  });
 
 });
