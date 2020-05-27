@@ -12,7 +12,10 @@ import { GetProducts,
   AddNewProductFail,
   SaveEditedProduct,
   SaveEditedProductSuccess,
-  SaveEditedProductFail} from './products.actions';
+  SaveEditedProductFail,
+  DeleteProduct,
+  DeleteProductSuccess,
+  DeleteProductFail} from './products.actions';
 import { cold, hot } from 'jest-marbles';
 import { SetAlert } from 'src/app/shared/state/global.actions';
 
@@ -140,7 +143,7 @@ describe('ProductsEffects', () => {
       expect(effects.saveEditedProduct$).toBeObservable(expected);
     });
 
-    it('should return SaveEditedProductFail action, with a error message, on failure', () => {
+    it('should return SaveEditedProductFail action, with an error message, on failure', () => {
       const action = new SaveEditedProduct(mockProduct1);
       const outcome = new SaveEditedProductFail('what went wrong');
 
@@ -163,6 +166,44 @@ describe('ProductsEffects', () => {
       const expected = cold('-b', { b: outcome });
 
       expect(effects.saveEditedProductSuccess$).toBeObservable(expected);
+    });
+  });
+
+  describe('deleteProduct', () => {
+    it('should return DeleteProductSuccess action on success', () => {
+      const action = new DeleteProduct(mockProduct1.id);
+      const outcome = new DeleteProductSuccess();
+
+      actions = hot('-a', { a: action} );
+      const response = cold('-a|', {});
+      const expected = cold('--b', { b: outcome });
+      productsService.deleteProduct = jest.fn(() => response);
+
+      expect(effects.deleteProduct$).toBeObservable(expected);
+    });
+
+    it('should return DeleteProductFail action, with an error message, on failure', () => {
+      const action = new DeleteProduct(mockProduct1.id);
+      const outcome = new DeleteProductFail('what went wrong');
+
+      actions = hot('-a', { a: action });
+      const response = cold('-#|', {}, 'what went wrong');
+      const expected = cold('--b', { b: outcome });
+      productsService.deleteProduct = jest.fn(() => response);
+
+      expect(effects.deleteProduct$).toBeObservable(expected);
+    });
+  });
+
+  describe('deleteProductSuccess', () => {
+    it('should return SetAlert with success message', () => {
+      const action = new DeleteProductSuccess();
+      const outcome = new SetAlert('Product deleted.');
+
+      actions = hot('-a', { a: action});
+      const expected = cold('-b', { b: outcome });
+
+      expect(effects.deleteProductSuccess$).toBeObservable(expected);
     });
   });
 
