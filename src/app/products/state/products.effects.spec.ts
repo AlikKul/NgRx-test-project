@@ -49,7 +49,9 @@ describe('ProductsEffects', () => {
           provide: ProductsService,
           useValue: {
             getProducts: jest.fn(),
-            addNewProduct: jest.fn()
+            addNewProduct: jest.fn(),
+            updateProduct: jest.fn(),
+            deleteProduct: jest.fn()
           }
         }
       ]
